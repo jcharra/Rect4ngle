@@ -1,4 +1,4 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import React, { useState } from "react";
 import "./MainArea.css";
 
@@ -10,8 +10,8 @@ function Tappable({ value, onClick }: { value: number; onClick: Function }) {
   );
 }
 
-function CurrentCalculation() {
-  return <div className="currentCalculation">5 x 7</div>;
+function CurrentCalculation({ num }: { num: number }) {
+  return <div className="currentCalculation">{num}</div>;
 }
 
 function Dot() {
@@ -58,6 +58,7 @@ function TappableTuples({ add }: { add: Function }) {
 
 export function MainArea() {
   const [summands, setSummands] = useState<number[]>([]);
+  const [num, setNum] = useState(0);
 
   const add = (n: number) => {
     setSummands((oldVal: number[]) => {
@@ -65,12 +66,41 @@ export function MainArea() {
     });
   };
 
+  function getRandomInt(max: number) {
+    return Math.ceil(Math.random() * (max - 1)) + 1;
+  }
+
+  const newNum = () => {
+    const [fac1, fac2] = [getRandomInt(10), getRandomInt(10)];
+    setNum(fac1 * fac2);
+    setSummands([]);
+  };
+
+  const retry = () => {
+    setSummands([]);
+  };
+
+  const backspace = () => {
+    setSummands((oldVal: number[]) =>
+      oldVal.length > 0 ? oldVal.slice(0, oldVal.length - 1) : []
+    );
+  };
+
+  const check = () => {
+    const sum = summands.reduce((a, b) => a + b, 0);
+    if (sum === num) {
+      alert("Yes");
+    } else {
+      alert("NOPE!");
+    }
+  };
+
   return (
     <>
       <IonGrid>
         <IonRow>
           <IonCol>
-            <CurrentCalculation />
+            <CurrentCalculation num={num} />
           </IonCol>
           <IonCol>
             <TappableTuples add={add} />
@@ -78,7 +108,12 @@ export function MainArea() {
         </IonRow>
         <IonRow>
           <IonCol>
-            <div>Type here</div>
+            <IonButton onClick={() => newNum()}>New</IonButton>
+            <IonButton onClick={() => retry()}>Retry</IonButton>
+            <IonButton onClick={() => backspace()}>Del</IonButton>
+            <IonButton color="success" onClick={() => check()}>
+              Check
+            </IonButton>
             <CalculationFeedback />
           </IonCol>
           <IonCol>
