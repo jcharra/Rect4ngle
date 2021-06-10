@@ -1,6 +1,20 @@
-import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
+import { arrowUndo, diamondOutline, trashOutline } from "ionicons/icons";
 import React, { useState } from "react";
 import "./MainArea.css";
+
+const isPrime = (n: number) => {
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const PRIMES = Array.from(Array(100))
+  .map((_, idx) => idx)
+  .filter((i) => i > 10 && isPrime(i));
 
 function Tappable({ value, onClick }: { value: number; onClick: Function }) {
   return (
@@ -38,18 +52,21 @@ function CalculationMainArea({ summands }: { summands: number[] }) {
 
   return (
     <div className="mainArea">
-      <div className="mainAreaHeader">Calculate here:</div>
       <div className="mainAreaGeoPanel">{tupels}</div>
     </div>
   );
 }
 
-function CalculationFeedback() {
-  return <div className="feedback">Well done!</div>;
+function CalculationFeedback({ diamonds }: { diamonds: number }) {
+  return (
+    <div className="feedback">
+      <IonIcon size="4x" icon={diamondOutline}></IonIcon> &nbsp;{diamonds}
+    </div>
+  );
 }
 
 function TappableTuples({ add }: { add: Function }) {
-  const tappables = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+  const tappables = [2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
     <Tappable value={n} onClick={() => add(n)} />
   ));
 
@@ -59,6 +76,7 @@ function TappableTuples({ add }: { add: Function }) {
 export function MainArea() {
   const [summands, setSummands] = useState<number[]>([]);
   const [num, setNum] = useState(0);
+  const [diamonds, setDiamonds] = useState(0);
 
   const add = (n: number) => {
     setSummands((oldVal: number[]) => {
@@ -70,9 +88,22 @@ export function MainArea() {
     return Math.ceil(Math.random() * (max - 1)) + 1;
   }
 
+  function generateRandomNumber() {
+    if (Math.random() > 0.1) {
+      const [fac1, fac2] = [getRandomInt(10), getRandomInt(10)];
+      return fac1 * fac2;
+    } else {
+      const idx = Math.floor(Math.random() * PRIMES.length);
+      return PRIMES[idx];
+    }
+  }
+
   const newNum = () => {
-    const [fac1, fac2] = [getRandomInt(10), getRandomInt(10)];
-    setNum(fac1 * fac2);
+    let newRandomNum = generateRandomNumber();
+    while (newRandomNum === num) {
+      newRandomNum = generateRandomNumber();
+    }
+    setNum(newRandomNum);
     setSummands([]);
   };
 
@@ -89,34 +120,64 @@ export function MainArea() {
   const check = () => {
     const sum = summands.reduce((a, b) => a + b, 0);
     if (sum === num) {
-      alert("Yes");
+      bonus(1);
     } else {
-      alert("NOPE!");
+      malus(5);
     }
+    newNum();
+  };
+
+  const checkPrime = () => {
+    if (PRIMES.indexOf(num) > -1) {
+      bonus(20);
+    } else {
+      malus(10);
+    }
+    newNum();
+  };
+
+  const bonus = (n: number) => {
+    setDiamonds((oldVal) => oldVal + n);
+  };
+  const malus = (n: number) => {
+    setDiamonds((oldVal) => Math.max(0, oldVal - n));
+  };
+
+  const skip = () => {
+    malus(1);
+    newNum();
   };
 
   return (
     <>
       <IonGrid>
         <IonRow>
-          <IonCol>
+          <IonCol size="3">
             <CurrentCalculation num={num} />
           </IonCol>
-          <IonCol>
+          <IonCol size="9">
             <TappableTuples add={add} />
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonCol>
-            <IonButton onClick={() => newNum()}>New</IonButton>
-            <IonButton onClick={() => retry()}>Retry</IonButton>
-            <IonButton onClick={() => backspace()}>Del</IonButton>
+          <IonCol size="3">
+            <CalculationFeedback diamonds={diamonds} />
+          </IonCol>
+          <IonCol size="9" className="ion-text-center">
             <IonButton color="success" onClick={() => check()}>
               Check
             </IonButton>
-            <CalculationFeedback />
-          </IonCol>
-          <IonCol>
+            <IonButton onClick={() => skip()}>Skip</IonButton>
+            <IonButton onClick={() => retry()}>
+              <IonIcon icon={trashOutline} />
+            </IonButton>
+            <IonButton onClick={() => backspace()}>
+              <IonIcon icon={arrowUndo} />
+            </IonButton>
+            <IonButton color="danger" onClick={() => checkPrime()}>
+              That's a prime
+            </IonButton>
+
             <CalculationMainArea summands={summands} />
           </IonCol>
         </IonRow>
