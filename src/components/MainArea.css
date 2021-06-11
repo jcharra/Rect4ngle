@@ -26,7 +26,7 @@
   background-color: black;
 }
 
-.feedback {
+.score {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +44,23 @@
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  background-color: green;
+}
+
+.activeDot {
+  background: radial-gradient(
+      circle farthest-corner at 33% 33%,
+      rgba(10, 255, 10, 0.85) 0%,
+      rgba(30, 30, 40, 0.85) 80%
+    ),
+    radial-gradient(
+      circle farthest-corner at 45% 45%,
+      rgba(0, 0, 0, 0) 50%,
+      #000000 80%
+    );
+}
+
+.disabledDot {
+  background-color: gray;
 }
 
 .tupelCaption {
@@ -56,4 +72,28 @@
 .mainAreaGeoPanel {
   display: flex;
   flex-direction: row;
+}
+
+.delta {
+  font-size: 24px;
+}
+
+.bonus {
+  color: green;
+}
+
+.malus {
+  color: red;
+}
+
+.comment {
+  font-size: 36px;
+}
+
+.good {
+  color: green;
+}
+
+.bad {
+  color: red;
 }
