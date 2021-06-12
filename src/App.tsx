@@ -24,41 +24,62 @@ import "@ionic/react/css/typography.css";
 import {
   ellipsisHorizontal,
   ellipsisVertical,
-  personCircle,
-  search,
+  gameControllerOutline,
+  statsChartOutline,
+  stopwatchOutline,
+  timerOutline,
 } from "ionicons/icons";
+import { useState } from "react";
 import { MainArea } from "./components/MainArea";
 /* Theme variables */
 import "./theme/variables.css";
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonContent>
-      <MainArea />
-    </IonContent>
-    <IonFooter>
-      <IonToolbar color="dark">
-        <IonButtons slot="secondary">
-          <IonButton>
-            <IonIcon slot="icon-only" icon={personCircle} />
-          </IonButton>
-          <IonButton>
-            <IonIcon slot="icon-only" icon={search} />
-          </IonButton>
-        </IonButtons>
-        <IonButtons slot="primary">
-          <IonButton color="danger">
-            <IonIcon
-              slot="icon-only"
-              ios={ellipsisHorizontal}
-              md={ellipsisVertical}
-            />
-          </IonButton>
-        </IonButtons>
-        <IonTitle>Dark Toolbar</IonTitle>
-      </IonToolbar>
-    </IonFooter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const [gameRunning, setGameRunning] = useState(false);
+
+  const openSettings = () => {
+    alert("No settings yet");
+  };
+
+  const startTraining = () => {
+    setGameRunning(true);
+  };
+  const startStopwatchGame = () => {
+    setGameRunning(true);
+  };
+
+  return (
+    <IonApp>
+      <IonContent>
+        <MainArea gameRunning={gameRunning} />
+      </IonContent>
+      <IonFooter>
+        <IonToolbar color="dark" mode="ios">
+          <IonTitle>Rect4ngle</IonTitle>
+          <IonButtons slot="start" className="ion-padding-horizontal">
+            <IonButton onClick={() => startTraining()}>
+              <IonIcon slot="icon-only" icon={gameControllerOutline} />
+            </IonButton>
+            <IonButton onClick={() => startStopwatchGame()}>
+              <IonIcon slot="icon-only" icon={stopwatchOutline} />
+            </IonButton>
+          </IonButtons>
+          <IonButtons slot="primary" className="ion-padding-horizontal">
+            <IonButton>
+              <IonIcon slot="icon-only" icon={statsChartOutline} />
+            </IonButton>
+            <IonButton onClick={() => openSettings()}>
+              <IonIcon
+                slot="icon-only"
+                ios={ellipsisHorizontal}
+                md={ellipsisVertical}
+              />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonFooter>
+    </IonApp>
+  );
+};
 
 export default App;

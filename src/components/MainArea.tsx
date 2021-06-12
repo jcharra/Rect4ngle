@@ -8,23 +8,13 @@ import {
 } from "@ionic/react";
 import { arrowUndo, diamondOutline, trashOutline } from "ionicons/icons";
 import React, { useState } from "react";
+import {
+  generateRandomNumber,
+  PRIMES,
+  PRIME_BONUS,
+  PRIME_MALUS,
+} from "../utils/numberUtils";
 import "./MainArea.css";
-
-const isPrime = (n: number) => {
-  for (let i = 2; i <= Math.sqrt(n); i++) {
-    if (n % i === 0) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const PRIMES = Array.from(Array(100))
-  .map((_, idx) => idx)
-  .filter((i) => i > 10 && isPrime(i));
-
-const PRIME_BONUS = 20;
-const PRIME_MALUS = -10;
 
 function Tappable({
   value,
@@ -146,25 +136,32 @@ function Score({
 function TappableTuples({
   add,
   selectedValue,
+  disabled,
 }: {
   add: Function;
   selectedValue: number | null;
+  disabled: boolean;
 }) {
   const tappables = [2, 3, 4, 5, 6, 7, 8, 9].map((n) => {
-    const disabled = !!selectedValue && n !== selectedValue;
+    const isDisabled = disabled || (!!selectedValue && n !== selectedValue);
     return (
       <Tappable
         value={n}
         onClick={() => !disabled && add(n)}
-        disabled={disabled}
+        disabled={isDisabled}
       />
     );
   });
 
   return <div className="headerTuples">{tappables}</div>;
 }
+interface MainAreaProps {
+  gameRunning: boolean;
+}
 
-export function MainArea() {
+export function MainArea(props: MainAreaProps) {
+  const { gameRunning } = props;
+
   const [summands, setSummands] = useState<number[]>([]);
   const [num, setNum] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
@@ -176,20 +173,6 @@ export function MainArea() {
       return [...oldVal, n];
     });
   };
-
-  function getRandomInt(max: number) {
-    return Math.ceil(Math.random() * (max - 1)) + 1;
-  }
-
-  function generateRandomNumber() {
-    if (Math.random() > 0.1) {
-      const [fac1, fac2] = [getRandomInt(9), getRandomInt(10)];
-      return fac1 * fac2;
-    } else {
-      const idx = Math.floor(Math.random() * PRIMES.length);
-      return PRIMES[idx];
-    }
-  }
 
   const newNum = () => {
     let newRandomNum = generateRandomNumber();
@@ -255,6 +238,7 @@ export function MainArea() {
             <TappableTuples
               add={add}
               selectedValue={summands.length > 0 ? summands[0] : null}
+              disabled={!gameRunning}
             />
           </IonCol>
         </IonRow>
@@ -262,27 +246,29 @@ export function MainArea() {
           <IonCol size="3">
             <Score diamonds={diamonds} delta={delta} comment={comment} />
           </IonCol>
-          <IonCol size="9" className="ion-text-center">
-            <IonButton
-              disabled={summands.length < 2}
-              color="success"
-              onClick={() => check()}
-            >
-              Check
-            </IonButton>
-            <IonButton onClick={() => skip()}>Skip</IonButton>
-            <IonButton onClick={() => retry()}>
-              <IonIcon icon={trashOutline} />
-            </IonButton>
-            <IonButton onClick={() => backspace()}>
-              <IonIcon icon={arrowUndo} />
-            </IonButton>
-            <IonButton color="danger" onClick={() => checkPrime()}>
-              That's a prime
-            </IonButton>
+          {gameRunning && (
+            <IonCol size="9" className="ion-text-center">
+              <IonButton
+                disabled={summands.length < 2}
+                color="success"
+                onClick={() => check()}
+              >
+                Check
+              </IonButton>
+              <IonButton onClick={() => skip()}>Skip</IonButton>
+              <IonButton onClick={() => retry()}>
+                <IonIcon icon={trashOutline} />
+              </IonButton>
+              <IonButton onClick={() => backspace()}>
+                <IonIcon icon={arrowUndo} />
+              </IonButton>
+              <IonButton color="warning" onClick={() => checkPrime()}>
+                That's a prime
+              </IonButton>
 
-            <CalculationMainArea summands={summands} />
-          </IonCol>
+              <CalculationMainArea summands={summands} />
+            </IonCol>
+          )}
         </IonRow>
       </IonGrid>
     </>
