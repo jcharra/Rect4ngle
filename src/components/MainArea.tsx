@@ -191,6 +191,17 @@ export function MainArea(props: MainAreaProps) {
     }
   }, [intervalRef, timer]);
 
+  useEffect(() => {
+    if (trainingMode) {
+      newNum();
+
+      if (!!intervalRef) {
+        clearInterval(intervalRef);
+        setTimer(0);
+      }
+    }
+  }, [trainingMode]);
+
   const add = (n: number) => {
     setSummands((oldVal: number[]) => {
       return [...oldVal, n];
@@ -270,7 +281,7 @@ export function MainArea(props: MainAreaProps) {
         <IonRow>
           <IonCol size="3">
             <Score diamonds={diamonds} delta={delta} comment={comment} />
-            Timer: {timer}
+            {timer > 0 && <span>Timer: {timer}</span>}
           </IonCol>
           {!controlsDisabled && (
             <IonCol size="9" className="ion-text-center">
