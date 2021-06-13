@@ -27,14 +27,15 @@ import {
   gameControllerOutline,
   statsChartOutline,
   stopwatchOutline,
-  timerOutline,
 } from "ionicons/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MainArea } from "./components/MainArea";
 /* Theme variables */
 import "./theme/variables.css";
 
 const App: React.FC = () => {
+  const [trainingMode, setTrainingMode] = useState(false);
+  const [timer, setTimer] = useState(0);
   const [gameRunning, setGameRunning] = useState(false);
 
   const openSettings = () => {
@@ -42,16 +43,39 @@ const App: React.FC = () => {
   };
 
   const startTraining = () => {
-    setGameRunning(true);
+    if (gameRunning) {
+      alert("Stopping game");
+      setGameRunning(false);
+    }
+    setTrainingMode(true);
   };
+
   const startStopwatchGame = () => {
-    setGameRunning(true);
+    if (gameRunning) {
+      alert("Game running");
+      return;
+    }
+
+    if (trainingMode) {
+      alert("Training mode stopped");
+      setTrainingMode(false);
+    }
+
+    setTimer(30);
+  };
+
+  const onGameFinished = (n: number) => {
+    alert("Your score: " + n);
   };
 
   return (
     <IonApp>
       <IonContent>
-        <MainArea gameRunning={gameRunning} />
+        <MainArea
+          trainingMode={trainingMode}
+          initialTimer={timer}
+          onGameFinished={onGameFinished}
+        />
       </IonContent>
       <IonFooter>
         <IonToolbar color="dark" mode="ios">

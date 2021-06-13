@@ -7,7 +7,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import { arrowUndo, diamondOutline, trashOutline } from "ionicons/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   generateRandomNumber,
   PRIMES,
@@ -156,17 +156,40 @@ function TappableTuples({
   return <div className="headerTuples">{tappables}</div>;
 }
 interface MainAreaProps {
-  gameRunning: boolean;
+  trainingMode: boolean;
+  initialTimer: number;
+  onGameFinished: (n: number) => void;
 }
 
 export function MainArea(props: MainAreaProps) {
-  const { gameRunning } = props;
+  const { trainingMode, initialTimer, onGameFinished } = props;
 
   const [summands, setSummands] = useState<number[]>([]);
   const [num, setNum] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
   const [delta, setDelta] = useState<number | undefined>();
   const [comment, setComment] = useState<string>("");
+  const [timer, setTimer] = useState(0);
+  const [intervalRef, setIntervalRef] = useState<any>(null);
+
+  useEffect(() => {
+    if (initialTimer !== 0) {
+      newNum();
+      setTimer(initialTimer);
+      const ref = setInterval(() => {
+        setTimer((t) => t - 1);
+      }, 1000);
+      setIntervalRef(ref);
+    }
+  }, [initialTimer]);
+
+  useEffect(() => {
+    if (!!intervalRef && timer === 0) {
+      clearInterval(intervalRef);
+      setSummands([]);
+      onGameFinished(diamonds);
+    }
+  }, [intervalRef, timer]);
 
   const add = (n: number) => {
     setSummands((oldVal: number[]) => {
@@ -227,6 +250,8 @@ export function MainArea(props: MainAreaProps) {
     newNum();
   };
 
+  const controlsDisabled = timer === 0 && !trainingMode;
+
   return (
     <>
       <IonGrid>
@@ -238,15 +263,16 @@ export function MainArea(props: MainAreaProps) {
             <TappableTuples
               add={add}
               selectedValue={summands.length > 0 ? summands[0] : null}
-              disabled={!gameRunning}
+              disabled={controlsDisabled}
             />
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol size="3">
             <Score diamonds={diamonds} delta={delta} comment={comment} />
+            Timer: {timer}
           </IonCol>
-          {gameRunning && (
+          {!controlsDisabled && (
             <IonCol size="9" className="ion-text-center">
               <IonButton
                 disabled={summands.length < 2}
