@@ -5,6 +5,7 @@ import {
   IonContent,
   IonFooter,
   IonIcon,
+  IonImg,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -28,10 +29,12 @@ import {
   statsChartOutline,
   stopwatchOutline,
 } from "ionicons/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MainArea } from "./components/MainArea";
 /* Theme variables */
 import "./theme/variables.css";
+import Background from "./pexels-hristo-fidanov-1252890.jpg";
+import "./App.css";
 
 const App: React.FC = () => {
   const [trainingMode, setTrainingMode] = useState(false);

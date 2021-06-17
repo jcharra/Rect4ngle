@@ -1,3 +1,16 @@
+.app {
+  /*background-image: url(../sky.jpg);*/
+  background-size: cover;
+}
+
+.upperRow {
+  height: 40vh;
+}
+
+.lowerRow {
+  height: 50vh;
+}
+
 .block {
   display: flex;
   justify-content: center;
@@ -63,6 +76,11 @@
   background-color: gray;
 }
 
+.outlinedDot {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid gray;
+}
+
 .tupelCaption {
   font-size: 16px;
   color: green;
@@ -72,6 +90,7 @@
 .mainAreaGeoPanel {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .delta {
@@ -96,4 +115,16 @@
 
 .bad {
   color: red;
+}
+
+.productDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 64pt;
+  font-weight: 700;
+  color: red;
+  background-color: black;
 }

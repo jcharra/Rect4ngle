@@ -9,6 +9,7 @@ import {
 import { arrowUndo, diamondOutline, trashOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import {
+  COLUMN_LIMIT,
   generateRandomNumber,
   PRIMES,
   PRIME_BONUS,
@@ -26,7 +27,7 @@ function Tappable({
   disabled: boolean;
 }) {
   return (
-    <div className="block" onClick={() => onClick()}>
+    <div className="block" onClick={() => !disabled && onClick()}>
       <VisualTupel
         colorClass={disabled ? "disabledDot" : "activeDot"}
         n={value}
@@ -48,18 +49,28 @@ function VisualTupel({
   n,
   offset,
   colorClass,
+  fillTo,
 }: {
   n: number;
-  offset: number;
+  offset?: number;
   colorClass: string;
+  fillTo?: number;
 }) {
-  const dots = Array.from(Array(n)).map((_, idx) => (
-    <Dot colorClass={colorClass} key={idx} />
-  ));
+  const dots = Array.from(Array(n))
+    .map((_, idx) => <Dot colorClass={colorClass} key={idx} />)
+    .concat(
+      fillTo && fillTo > n
+        ? Array.from(Array(9 - n)).map((_, idx) => (
+            <Dot colorClass="outlinedDot" key={idx} />
+          ))
+        : []
+    );
   return (
     <div>
       {dots}
-      <div className="tupelCaption">{offset + n}</div>
+      {(!!offset || offset === 0) && (
+        <div className="tupelCaption">{offset + n}</div>
+      )}
     </div>
   );
 }
@@ -69,10 +80,27 @@ function CalculationMainArea({ summands }: { summands: number[] }) {
   let sum = 0;
   summands.forEach((n, idx) => {
     tupels.push(
-      <VisualTupel key={idx} n={n} offset={sum} colorClass="activeDot" />
+      <VisualTupel
+        key={idx}
+        n={n}
+        offset={sum}
+        fillTo={9}
+        colorClass="activeDot"
+      />
     );
     sum += n;
   });
+
+  for (let i = COLUMN_LIMIT; i > summands.length; i--) {
+    tupels.push(
+      <VisualTupel
+        key={"empty" + i}
+        n={0}
+        fillTo={9}
+        colorClass="outlinedDot"
+      />
+    );
+  }
 
   return (
     <div className="mainArea">
@@ -144,16 +172,20 @@ function TappableTuples({
 }) {
   const tappables = [2, 3, 4, 5, 6, 7, 8, 9].map((n) => {
     const isDisabled = disabled || (!!selectedValue && n !== selectedValue);
-    return (
-      <Tappable
-        value={n}
-        onClick={() => !disabled && add(n)}
-        disabled={isDisabled}
-      />
-    );
+    return <Tappable value={n} onClick={() => add(n)} disabled={isDisabled} />;
   });
 
   return <div className="headerTuples">{tappables}</div>;
+}
+
+function CalculationProductDisplay({ summands }: { summands: number[] }) {
+  return (
+    <div className="productDisplay">
+      <div className="productDi">
+        {summands.length || "?"} x {summands[0] || "?"}
+      </div>
+    </div>
+  );
 }
 interface MainAreaProps {
   trainingMode: boolean;
@@ -203,9 +235,11 @@ export function MainArea(props: MainAreaProps) {
   }, [trainingMode]);
 
   const add = (n: number) => {
-    setSummands((oldVal: number[]) => {
-      return [...oldVal, n];
-    });
+    if (summands.length < COLUMN_LIMIT) {
+      setSummands((oldVal: number[]) => {
+        return [...oldVal, n];
+      });
+    }
   };
 
   const newNum = () => {
@@ -265,10 +299,23 @@ export function MainArea(props: MainAreaProps) {
 
   return (
     <>
-      <IonGrid>
-        <IonRow>
+      <IonGrid className="app">
+        <IonRow className="upperRow">
           <IonCol size="3">
             <CurrentCalculation num={num} />
+          </IonCol>
+          <IonCol size="6">
+            <CalculationMainArea summands={summands} />
+          </IonCol>
+          <IonCol size="3">
+            <CalculationProductDisplay summands={summands} />
+          </IonCol>
+        </IonRow>
+
+        <IonRow className="lowerRow">
+          <IonCol size="3">
+            <Score diamonds={diamonds} delta={delta} comment={comment} />
+            {timer > 0 && <span>Timer: {timer}</span>}
           </IonCol>
           <IonCol size="9">
             <TappableTuples
@@ -276,36 +323,29 @@ export function MainArea(props: MainAreaProps) {
               selectedValue={summands.length > 0 ? summands[0] : null}
               disabled={controlsDisabled}
             />
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol size="3">
-            <Score diamonds={diamonds} delta={delta} comment={comment} />
-            {timer > 0 && <span>Timer: {timer}</span>}
-          </IonCol>
-          {!controlsDisabled && (
-            <IonCol size="9" className="ion-text-center">
-              <IonButton
-                disabled={summands.length < 2}
-                color="success"
-                onClick={() => check()}
-              >
-                Check
-              </IonButton>
-              <IonButton onClick={() => skip()}>Skip</IonButton>
-              <IonButton onClick={() => retry()}>
-                <IonIcon icon={trashOutline} />
-              </IonButton>
-              <IonButton onClick={() => backspace()}>
-                <IonIcon icon={arrowUndo} />
-              </IonButton>
-              <IonButton color="warning" onClick={() => checkPrime()}>
-                That's a prime
-              </IonButton>
 
-              <CalculationMainArea summands={summands} />
-            </IonCol>
-          )}
+            {!controlsDisabled && (
+              <IonCol size="9" className="ion-text-center">
+                <IonButton
+                  disabled={summands.length < 2}
+                  color="success"
+                  onClick={() => check()}
+                >
+                  Check
+                </IonButton>
+                <IonButton onClick={() => skip()}>Skip</IonButton>
+                <IonButton onClick={() => retry()}>
+                  <IonIcon icon={trashOutline} />
+                </IonButton>
+                <IonButton onClick={() => backspace()}>
+                  <IonIcon icon={arrowUndo} />
+                </IonButton>
+                <IonButton color="warning" onClick={() => checkPrime()}>
+                  That's a prime
+                </IonButton>
+              </IonCol>
+            )}
+          </IonCol>
         </IonRow>
       </IonGrid>
     </>

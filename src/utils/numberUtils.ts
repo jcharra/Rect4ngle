@@ -1,3 +1,5 @@
+export const COLUMN_LIMIT = 20;
+
 const isPrime = (n: number) => {
   for (let i = 2; i <= Math.sqrt(n); i++) {
     if (n % i === 0) {
