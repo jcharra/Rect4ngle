@@ -5,6 +5,7 @@ import {
   IonContent,
   IonFooter,
   IonIcon,
+  IonLabel,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -30,6 +31,7 @@ import {
 } from "ionicons/icons";
 import { useState } from "react";
 import { MainArea } from "./components/MainArea";
+import Timer from "./components/parts/Timer";
 /* Theme variables */
 import "./theme/variables.css";
 

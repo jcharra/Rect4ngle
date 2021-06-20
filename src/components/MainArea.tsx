@@ -1,12 +1,5 @@
-import {
-  CreateAnimation,
-  IonButton,
-  IonCol,
-  IonGrid,
-  IonIcon,
-  IonRow,
-} from "@ionic/react";
-import { arrowUndo, diamondOutline, trashOutline } from "ionicons/icons";
+import { IonButton, IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
+import { arrowUndo, trashOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import {
   COLUMN_LIMIT,
@@ -17,7 +10,6 @@ import {
 } from "../utils/numberUtils";
 import Blackboard from "./Blackboard";
 import "./MainArea.css";
-import Tappable from "./parts/Tappable";
 import { TappableTuples } from "./parts/TappableTuples";
 import { RectangleArea } from "./RectangleArea";
 import Scoreboard from "./Scoreboard";
@@ -157,8 +149,9 @@ export function MainArea(props: MainAreaProps) {
             />
 
             {!controlsDisabled && (
-              <IonCol size="9" className="ion-text-center">
+              <div className="ion-text-center">
                 <IonButton
+                  size="large"
                   disabled={summands.length < 2}
                   color="success"
                   onClick={() => check()}
@@ -175,7 +168,7 @@ export function MainArea(props: MainAreaProps) {
                 <IonButton color="warning" onClick={() => checkPrime()}>
                   That's a prime
                 </IonButton>
-              </IonCol>
+              </div>
             )}
           </IonCol>
         </IonRow>
