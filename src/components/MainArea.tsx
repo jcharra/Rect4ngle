@@ -15,6 +15,7 @@ import {
   PRIME_BONUS,
   PRIME_MALUS,
 } from "../utils/numberUtils";
+import Blackboard from "./Blackboard";
 import "./MainArea.css";
 
 function Tappable({
@@ -35,10 +36,6 @@ function Tappable({
       />
     </div>
   );
-}
-
-function CurrentCalculation({ num }: { num: number }) {
-  return <div className="currentCalculation">{num}</div>;
 }
 
 function Dot({ colorClass }: { colorClass: string }) {
@@ -178,15 +175,6 @@ function TappableTuples({
   return <div className="headerTuples">{tappables}</div>;
 }
 
-function CalculationProductDisplay({ summands }: { summands: number[] }) {
-  return (
-    <div className="productDisplay">
-      <div className="productDi">
-        {summands.length || "?"} x {summands[0] || "?"}
-      </div>
-    </div>
-  );
-}
 interface MainAreaProps {
   trainingMode: boolean;
   initialTimer: number;
@@ -301,23 +289,20 @@ export function MainArea(props: MainAreaProps) {
     <>
       <IonGrid className="app">
         <IonRow className="upperRow">
-          <IonCol size="3">
-            <CurrentCalculation num={num} />
+          <IonCol size="4">
+            <Blackboard num={num} summands={summands} />
           </IonCol>
-          <IonCol size="6">
+          <IonCol size="8">
             <CalculationMainArea summands={summands} />
-          </IonCol>
-          <IonCol size="3">
-            <CalculationProductDisplay summands={summands} />
           </IonCol>
         </IonRow>
 
         <IonRow className="lowerRow">
-          <IonCol size="3">
+          <IonCol size="4">
             <Score diamonds={diamonds} delta={delta} comment={comment} />
             {timer > 0 && <span>Timer: {timer}</span>}
           </IonCol>
-          <IonCol size="9">
+          <IonCol size="8">
             <TappableTuples
               add={add}
               selectedValue={summands.length > 0 ? summands[0] : null}
