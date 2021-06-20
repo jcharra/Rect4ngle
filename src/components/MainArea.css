@@ -37,9 +37,29 @@
 
 .score {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   height: 100%;
+  font-size: 80px;
+  color: gold;
+  font-weight: 900;
+  text-shadow: 3px 3px gray;
+}
+
+.scoreContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreContainer .scoreNum {
+  display: flex;
+}
+
+.scoreContainer .scoreIcon {
+  display: flex;
+  padding-right: 20px;
 }
 
 .headerTuples {
@@ -47,34 +67,6 @@
   flex-direction: row;
   align-items: stretch;
   height: 350px;
-}
-
-.dot {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-}
-
-.activeDot {
-  background: radial-gradient(
-      circle farthest-corner at 33% 33%,
-      rgba(243, 184, 137, 0.85) 0%,
-      rgba(30, 30, 40, 0.85) 80%
-    ),
-    radial-gradient(
-      circle farthest-corner at 45% 45%,
-      rgba(0, 0, 0, 0) 50%,
-      #000000 80%
-    );
-}
-
-.disabledDot {
-  background-color: gray;
-}
-
-.outlinedDot {
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid gray;
 }
 
 .tupelCaption {
@@ -91,6 +83,7 @@
 
 .delta {
   font-size: 24px;
+  display: flex;
 }
 
 .bonus {
@@ -103,6 +96,7 @@
 
 .comment {
   font-size: 36px;
+  display: flex;
 }
 
 .good {
