@@ -17,163 +17,10 @@ import {
 } from "../utils/numberUtils";
 import Blackboard from "./Blackboard";
 import "./MainArea.css";
-
-function Tappable({
-  value,
-  onClick,
-  disabled,
-}: {
-  value: number;
-  onClick: Function;
-  disabled: boolean;
-}) {
-  return (
-    <div className="block" onClick={() => !disabled && onClick()}>
-      <VisualTupel
-        colorClass={disabled ? "disabledDot" : "activeDot"}
-        n={value}
-        offset={0}
-      />
-    </div>
-  );
-}
-
-function Dot({ colorClass }: { colorClass: string }) {
-  return <div className={`dot ${colorClass}`}></div>;
-}
-
-function VisualTupel({
-  n,
-  offset,
-  colorClass,
-  fillTo,
-}: {
-  n: number;
-  offset?: number;
-  colorClass: string;
-  fillTo?: number;
-}) {
-  const dots = Array.from(Array(n))
-    .map((_, idx) => <Dot colorClass={colorClass} key={idx} />)
-    .concat(
-      fillTo && fillTo > n
-        ? Array.from(Array(9 - n)).map((_, idx) => (
-            <Dot colorClass="outlinedDot" key={idx} />
-          ))
-        : []
-    );
-  return (
-    <div>
-      {dots}
-      {(!!offset || offset === 0) && (
-        <div className="tupelCaption">{offset + n}</div>
-      )}
-    </div>
-  );
-}
-
-function CalculationMainArea({ summands }: { summands: number[] }) {
-  let tupels: JSX.Element[] = [];
-  let sum = 0;
-  summands.forEach((n, idx) => {
-    tupels.push(
-      <VisualTupel
-        key={idx}
-        n={n}
-        offset={sum}
-        fillTo={9}
-        colorClass="activeDot"
-      />
-    );
-    sum += n;
-  });
-
-  for (let i = COLUMN_LIMIT; i > summands.length; i--) {
-    tupels.push(
-      <VisualTupel
-        key={"empty" + i}
-        n={0}
-        fillTo={9}
-        colorClass="outlinedDot"
-      />
-    );
-  }
-
-  return (
-    <div className="mainArea">
-      <div className="mainAreaGeoPanel">{tupels}</div>
-    </div>
-  );
-}
-
-function Score({
-  diamonds,
-  delta,
-  comment,
-}: {
-  diamonds: number;
-  delta: number | undefined;
-  comment: string;
-}) {
-  return (
-    <>
-      <div className="score">
-        <IonIcon size="4x" icon={diamondOutline}></IonIcon> &nbsp;{diamonds}
-      </div>
-      <div className="delta">
-        {delta && (
-          <CreateAnimation
-            duration={1000}
-            iterations={1}
-            fromTo={[
-              {
-                property: "transform",
-                fromValue: "translateY(0px)",
-                toValue: `translateY(${delta > 0 ? -100 : 100}px)`,
-              },
-              { property: "opacity", fromValue: "1", toValue: "0" },
-            ]}
-            play={true}
-          >
-            <div className={`${delta > 0 ? "bonus" : "malus"}`}>
-              {!!delta && delta > 0 ? "+" : ""}
-              {delta}
-            </div>
-          </CreateAnimation>
-        )}
-      </div>
-      <div className="comment">
-        {!!comment && (
-          <CreateAnimation
-            duration={1000}
-            iterations={1}
-            fromTo={[{ property: "opacity", fromValue: "1", toValue: "0" }]}
-            play={true}
-          >
-            <div className={`${comment ? "good" : "bad"}`}>{comment}</div>
-          </CreateAnimation>
-        )}
-      </div>
-    </>
-  );
-}
-
-function TappableTuples({
-  add,
-  selectedValue,
-  disabled,
-}: {
-  add: Function;
-  selectedValue: number | null;
-  disabled: boolean;
-}) {
-  const tappables = [2, 3, 4, 5, 6, 7, 8, 9].map((n) => {
-    const isDisabled = disabled || (!!selectedValue && n !== selectedValue);
-    return <Tappable value={n} onClick={() => add(n)} disabled={isDisabled} />;
-  });
-
-  return <div className="headerTuples">{tappables}</div>;
-}
+import Tappable from "./parts/Tappable";
+import { TappableTuples } from "./parts/TappableTuples";
+import { RectangleArea } from "./RectangleArea";
+import Scoreboard from "./Scoreboard";
 
 interface MainAreaProps {
   trainingMode: boolean;
@@ -293,13 +140,13 @@ export function MainArea(props: MainAreaProps) {
             <Blackboard num={num} summands={summands} />
           </IonCol>
           <IonCol size="8">
-            <CalculationMainArea summands={summands} />
+            <RectangleArea summands={summands} />
           </IonCol>
         </IonRow>
 
         <IonRow className="lowerRow">
           <IonCol size="4">
-            <Score diamonds={diamonds} delta={delta} comment={comment} />
+            <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
             {timer > 0 && <span>Timer: {timer}</span>}
           </IonCol>
           <IonCol size="8">

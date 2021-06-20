@@ -1,6 +1,9 @@
 .app {
   /*background-image: url(../sky.jpg);*/
   background-size: cover;
+  background-color: lightblue;
+  overflow-y: hidden;
+  height: 100%;
 }
 
 .upperRow {
