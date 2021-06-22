@@ -12,7 +12,11 @@ export function TappableTuples({
   const tappables = [2, 3, 4, 5, 6, 7, 8, 9].map((n) => {
     const isDisabled = disabled || (!!selectedValue && n !== selectedValue);
     return (
-      <div className="alignedTuple" onClick={() => add(n)}>
+      <div
+        key={"tap" + n}
+        className="alignedTuple"
+        onClick={() => !isDisabled && add(n)}
+      >
         <Tappable value={n} disabled={isDisabled} onClick={() => {}} />
       </div>
     );

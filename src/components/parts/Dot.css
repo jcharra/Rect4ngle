@@ -4,6 +4,14 @@
   border-radius: 15px;
 }
 
+@media all and (max-width: 768px) {
+  .dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+  }
+}
+
 .activeDot {
   background: radial-gradient(
       circle farthest-corner at 33% 33%,

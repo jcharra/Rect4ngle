@@ -16,7 +16,7 @@ export default function VisualTupel({
     .concat(
       fillTo && fillTo > n
         ? Array.from(Array(9 - n)).map((_, idx) => (
-            <Dot colorClass="outlinedDot" key={idx} />
+            <Dot colorClass="outlinedDot" key={"out" + idx} />
           ))
         : []
     );

@@ -18,8 +18,14 @@
   display: flex;
   justify-content: center;
   width: 80px;
-  height: 100px;
+  height: 100%;
   text-align: center;
+}
+
+@media all and (max-width: 768px) {
+  .block {
+    width: 60px;
+  }
 }
 
 .vertical {
@@ -41,7 +47,7 @@
   justify-content: space-around;
   align-items: center;
   height: 100%;
-  font-size: 80px;
+  font-size: 5em;
   color: gold;
   font-weight: 900;
   text-shadow: 3px 3px gray;
@@ -67,7 +73,7 @@
   flex-direction: row;
   align-items: stretch;
   justify-content: space-around;
-  height: 350px;
+  height: 75%;
 }
 
 .alignedTuple {
@@ -87,7 +93,7 @@
 }
 
 .delta {
-  font-size: 24px;
+  font-size: 0.7em;
   display: flex;
 }
 
@@ -100,7 +106,7 @@
 }
 
 .comment {
-  font-size: 36px;
+  font-size: 0.7em;
   display: flex;
 }
 

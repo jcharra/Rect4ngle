@@ -8,7 +8,7 @@ export function RectangleArea({ summands }: { summands: number[] }) {
   summands.forEach((n, idx) => {
     tupels.push(
       <VisualTupel
-        key={idx}
+        key={idx + "-" + n}
         n={n}
         offset={sum}
         fillTo={9}
