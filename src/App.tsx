@@ -67,6 +67,7 @@ const App: React.FC = () => {
 
   const onGameFinished = (n: number) => {
     alert("Your score: " + n);
+    setGameRunning(false);
   };
 
   return (

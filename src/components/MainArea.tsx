@@ -57,12 +57,12 @@ export function MainArea(props: MainAreaProps) {
   }, [startCountdown]);
 
   useEffect(() => {
-    if (initialTimer <= 0) {
-      return;
-    }
-
     if (intervalRef) {
       clearInterval(intervalRef);
+    }
+
+    if (initialTimer <= 0) {
+      return;
     }
 
     setDiamonds(0);
