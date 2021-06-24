@@ -22,7 +22,13 @@
   text-align: center;
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-height: 700px) {
+  .block {
+    width: 60px;
+  }
+}
+
+@media all and (max-width: 1000px) {
   .block {
     width: 60px;
   }

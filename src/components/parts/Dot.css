@@ -4,7 +4,15 @@
   border-radius: 15px;
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-height: 700px) {
+  .dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+  }
+}
+
+@media all and (max-width: 1000px) {
   .dot {
     width: 20px;
     height: 20px;
