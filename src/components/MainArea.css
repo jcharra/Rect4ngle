@@ -1,3 +1,7 @@
+ion-backdrop {
+  opacity: 0.4 !important;
+}
+
 .app {
   /*background-image: url(../sky.jpg);*/
   background-size: cover;
@@ -126,4 +130,15 @@
 
 .controlBar {
   margin-top: -30px;
+}
+
+.countdown {
+  font-size: 10em;
+  font-weight: 900;
+  color: red;
+  z-index: 9999;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

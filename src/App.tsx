@@ -5,9 +5,9 @@ import {
   IonContent,
   IonFooter,
   IonIcon,
-  IonLabel,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
 } from "@ionic/react";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -31,7 +31,6 @@ import {
 } from "ionicons/icons";
 import { useState } from "react";
 import { MainArea } from "./components/MainArea";
-import Timer from "./components/parts/Timer";
 /* Theme variables */
 import "./theme/variables.css";
 
@@ -39,6 +38,7 @@ const App: React.FC = () => {
   const [trainingMode, setTrainingMode] = useState(false);
   const [timer, setTimer] = useState(0);
   const [gameRunning, setGameRunning] = useState(false);
+  const [present] = useIonActionSheet();
 
   const openSettings = () => {
     alert("No settings yet");
@@ -53,18 +53,16 @@ const App: React.FC = () => {
     setTrainingMode(true);
   };
 
-  const startStopwatchGame = () => {
+  const startStopwatchGame = (secs: number) => {
     if (gameRunning) {
-      alert("Game already running!");
-      return;
-    }
-
-    if (trainingMode) {
+      console.log("Game already running!");
+      setTimer(0);
+    } else if (trainingMode) {
       setTrainingMode(false);
     }
 
     setGameRunning(true);
-    setTimer(30);
+    setTimer(secs);
   };
 
   const onGameFinished = (n: number) => {
@@ -87,7 +85,34 @@ const App: React.FC = () => {
             <IonButton onClick={() => startTraining()}>
               <IonIcon slot="icon-only" icon={gameControllerOutline} />
             </IonButton>
-            <IonButton onClick={() => startStopwatchGame()}>
+            <IonButton
+              onClick={() =>
+                present({
+                  buttons: [
+                    {
+                      text: "30 seconds",
+                      handler: () => {
+                        startStopwatchGame(30);
+                      },
+                    },
+                    {
+                      text: "60 seconds",
+                      handler: () => {
+                        startStopwatchGame(60);
+                      },
+                    },
+                    {
+                      text: "90 seconds",
+                      handler: () => {
+                        startStopwatchGame(90);
+                      },
+                    },
+                    { text: "Cancel", role: "cancel" },
+                  ],
+                  header: "Play against the clock",
+                })
+              }
+            >
               <IonIcon slot="icon-only" icon={stopwatchOutline} />
             </IonButton>
           </IonButtons>

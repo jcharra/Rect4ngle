@@ -1,4 +1,11 @@
-import { IonButton, IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
+import {
+  IonBackdrop,
+  IonButton,
+  IonCol,
+  IonGrid,
+  IonIcon,
+  IonRow,
+} from "@ionic/react";
 import { arrowUndo, trashOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import {
@@ -11,6 +18,7 @@ import {
 import Blackboard from "./Blackboard";
 import "./MainArea.css";
 import { TappableTuples } from "./parts/TappableTuples";
+import Timer from "./parts/Timer";
 import { RectangleArea } from "./RectangleArea";
 import Scoreboard from "./Scoreboard";
 
@@ -30,20 +38,39 @@ export function MainArea(props: MainAreaProps) {
   const [comment, setComment] = useState<string>("");
   const [timer, setTimer] = useState(0);
   const [intervalRef, setIntervalRef] = useState<any>(null);
+  const [startCountdown, setStartCountdown] = useState(0);
 
   useEffect(() => {
-    if (initialTimer !== 0) {
-      newNum();
-      setTimer(initialTimer);
-      const ref = setInterval(() => {
-        setTimer((t) => t - 1);
-      }, 1000);
-      setIntervalRef(ref);
+    if (startCountdown > 0) {
+      setNum(0);
+      setTimeout(() => setStartCountdown((val) => val - 1), 1000);
+    } else {
+      if (initialTimer !== 0) {
+        newNum();
+        setTimer(initialTimer);
+        const ref = setInterval(() => {
+          setTimer((t) => t - 1);
+        }, 1000);
+        setIntervalRef(ref);
+      }
     }
+  }, [startCountdown]);
+
+  useEffect(() => {
+    if (initialTimer <= 0) {
+      return;
+    }
+
+    if (intervalRef) {
+      clearInterval(intervalRef);
+    }
+
+    setDiamonds(0);
+    setStartCountdown(3);
   }, [initialTimer]);
 
   useEffect(() => {
-    if (!!intervalRef && timer === 0) {
+    if (!!intervalRef && timer <= 0) {
       clearInterval(intervalRef);
       setSummands([]);
       onGameFinished(diamonds);
@@ -52,6 +79,7 @@ export function MainArea(props: MainAreaProps) {
 
   useEffect(() => {
     if (trainingMode) {
+      setDiamonds(0);
       newNum();
 
       if (!!intervalRef) {
@@ -126,6 +154,12 @@ export function MainArea(props: MainAreaProps) {
 
   return (
     <>
+      {startCountdown > 0 && (
+        <>
+          <IonBackdrop tappable={false} />
+          <div className="countdown">{startCountdown}</div>
+        </>
+      )}
       <IonGrid className="app">
         <IonRow className="upperRow">
           <IonCol size="4">
@@ -139,7 +173,7 @@ export function MainArea(props: MainAreaProps) {
         <IonRow className="lowerRow">
           <IonCol size="4">
             <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
-            {timer > 0 && <span>Timer: {timer}</span>}
+            <Timer seconds={timer} />
           </IonCol>
           <IonCol size="8">
             <TappableTuples
