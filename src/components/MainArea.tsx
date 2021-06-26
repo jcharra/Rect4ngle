@@ -70,11 +70,17 @@ export function MainArea(props: MainAreaProps) {
   }, [initialTimer]);
 
   useEffect(() => {
-    if (!!intervalRef && timer <= 0) {
-      clearInterval(intervalRef);
-      setSummands([]);
-      onGameFinished(diamonds);
+    if (!!intervalRef) {
+      if (timer === 0) {
+        setSummands([]);
+        onGameFinished(diamonds);
+      }
+
+      if (timer === -1) {
+        setSummands([]);
+      }
     }
+    clearInterval(intervalRef);
   }, [intervalRef, timer]);
 
   useEffect(() => {
@@ -84,7 +90,7 @@ export function MainArea(props: MainAreaProps) {
 
       if (!!intervalRef) {
         clearInterval(intervalRef);
-        setTimer(0);
+        setTimer(-1);
       }
     }
   }, [trainingMode]);
@@ -118,7 +124,9 @@ export function MainArea(props: MainAreaProps) {
 
   const check = () => {
     const sum = summands.reduce((a, b) => a + b, 0);
-    if (sum === num) {
+    if (summands[0] === summands.length) {
+      addDelta(10, "Square!");
+    } else if (sum === num) {
       addDelta(summands[0], "Correct!");
     } else {
       addDelta(-5, "Wrong!");
@@ -146,7 +154,7 @@ export function MainArea(props: MainAreaProps) {
   };
 
   const skip = () => {
-    addDelta(-1);
+    addDelta(-2);
     newNum();
   };
 

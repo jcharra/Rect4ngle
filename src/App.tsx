@@ -48,7 +48,7 @@ const App: React.FC = () => {
     if (gameRunning) {
       alert("Stopping game");
       setGameRunning(false);
-      setTimer(0);
+      setTimer(-1);
     }
     setTrainingMode(true);
   };
@@ -56,7 +56,7 @@ const App: React.FC = () => {
   const startStopwatchGame = (secs: number) => {
     if (gameRunning) {
       console.log("Game already running!");
-      setTimer(0);
+      setTimer(-1);
     } else if (trainingMode) {
       setTrainingMode(false);
     }
