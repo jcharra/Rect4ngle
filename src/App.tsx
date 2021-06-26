@@ -67,6 +67,8 @@ const App: React.FC = () => {
 
   const onGameFinished = (n: number) => {
     alert("Your score: " + n);
+    // Applause in case of record:
+    // (document as any).getElementById("applause").play();
     setGameRunning(false);
   };
 
@@ -90,6 +92,12 @@ const App: React.FC = () => {
               onClick={() =>
                 present({
                   buttons: [
+                    {
+                      text: "1 second",
+                      handler: () => {
+                        startStopwatchGame(1);
+                      },
+                    },
                     {
                       text: "30 seconds",
                       handler: () => {

@@ -42,6 +42,7 @@ export function MainArea(props: MainAreaProps) {
 
   useEffect(() => {
     if (startCountdown > 0) {
+      (document as any).getElementById("beep").play();
       setNum(0);
       setTimeout(() => setStartCountdown((val) => val - 1), 1000);
     } else {
@@ -52,6 +53,7 @@ export function MainArea(props: MainAreaProps) {
           setTimer((t) => t - 1);
         }, 1000);
         setIntervalRef(ref);
+        (document as any).getElementById("success").play();
       }
     }
   }, [startCountdown]);
@@ -65,22 +67,24 @@ export function MainArea(props: MainAreaProps) {
       return;
     }
 
+    //(document as any).getElementById("suspense").loop = true;
+    //(document as any).getElementById("suspense").play();
+
     setDiamonds(0);
     setStartCountdown(3);
   }, [initialTimer]);
 
   useEffect(() => {
     if (!!intervalRef) {
-      if (timer === 0) {
+      if (timer === -1 || timer === 0) {
+        clearInterval(intervalRef);
         setSummands([]);
-        onGameFinished(diamonds);
       }
 
-      if (timer === -1) {
-        setSummands([]);
+      if (timer === 0) {
+        onGameFinished(diamonds);
       }
     }
-    clearInterval(intervalRef);
   }, [intervalRef, timer]);
 
   useEffect(() => {

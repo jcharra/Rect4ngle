@@ -1,5 +1,3 @@
-import { CreateAnimation } from "@ionic/react";
-import { infinite } from "ionicons/icons";
 import React from "react";
 import "./Timer.css";
 
