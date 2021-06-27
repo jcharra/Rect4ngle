@@ -8,6 +8,7 @@ import {
   IonTitle,
   IonToolbar,
   useIonActionSheet,
+  useIonModal,
 } from "@ionic/react";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -23,14 +24,20 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import {
+  bulbOutline,
   ellipsisHorizontal,
   ellipsisVertical,
   gameControllerOutline,
+  settingsOutline,
   statsChartOutline,
   stopwatchOutline,
 } from "ionicons/icons";
 import { useState } from "react";
+import Help from "./components/Help";
+import Highscores from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
+import Settings from "./components/Settings";
+import { saveScore } from "./service/scoreService";
 /* Theme variables */
 import "./theme/variables.css";
 
@@ -39,10 +46,9 @@ const App: React.FC = () => {
   const [timer, setTimer] = useState(0);
   const [gameRunning, setGameRunning] = useState(false);
   const [present] = useIonActionSheet();
-
-  const openSettings = () => {
-    alert("No settings yet");
-  };
+  const [presentHighscores, dismiss] = useIonModal(Highscores);
+  const [presentSettings, dismissSettings] = useIonModal(Settings);
+  const [presentHelp, dismissHelp] = useIonModal(Help);
 
   const startTraining = () => {
     if (gameRunning) {
@@ -69,6 +75,7 @@ const App: React.FC = () => {
     alert("Your score: " + n);
     // Applause in case of record:
     // (document as any).getElementById("applause").play();
+    saveScore("Johannes", n);
     setGameRunning(false);
   };
 
@@ -126,15 +133,14 @@ const App: React.FC = () => {
             </IonButton>
           </IonButtons>
           <IonButtons slot="primary" className="ion-padding-horizontal">
-            <IonButton>
+            <IonButton onClick={() => presentHelp()}>
+              <IonIcon slot="icon-only" icon={bulbOutline} />
+            </IonButton>
+            <IonButton onClick={() => presentHighscores()}>
               <IonIcon slot="icon-only" icon={statsChartOutline} />
             </IonButton>
-            <IonButton onClick={() => openSettings()}>
-              <IonIcon
-                slot="icon-only"
-                ios={ellipsisHorizontal}
-                md={ellipsisVertical}
-              />
+            <IonButton onClick={() => presentSettings()}>
+              <IonIcon slot="icon-only" icon={settingsOutline} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
