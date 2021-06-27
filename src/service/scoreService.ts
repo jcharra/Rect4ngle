@@ -1,17 +1,24 @@
 import { Storage } from "@capacitor/storage";
+import { GameType } from "../types/GameType";
 
 const SCORES = "scores";
 
 export interface Score {
   playerName: string;
   score: number;
+  gameType: GameType;
   date: Date;
 }
 
-export async function saveScore(playerName: string, score: number) {
+export async function saveScore(
+  playerName: string,
+  score: number,
+  gameType: GameType
+) {
   const newScore: Score = {
     playerName,
     score,
+    gameType,
     date: new Date(),
   };
 
@@ -34,6 +41,7 @@ export async function getScores(): Promise<Score[]> {
     scores.push({
       playerName: s.playerName,
       score: s.score,
+      gameType: s.gameType,
       date: new Date(s.date),
     });
   });

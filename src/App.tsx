@@ -37,9 +37,11 @@ import Help from "./components/Help";
 import Highscores from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
 import Settings from "./components/Settings";
+import { getPlayerConfig } from "./service/playerService";
 import { saveScore } from "./service/scoreService";
 /* Theme variables */
 import "./theme/variables.css";
+import { GameType } from "./types/GameType";
 
 const App: React.FC = () => {
   const [trainingMode, setTrainingMode] = useState(false);
@@ -59,23 +61,22 @@ const App: React.FC = () => {
     setTrainingMode(true);
   };
 
-  const startStopwatchGame = (secs: number) => {
+  const startStopwatchGame = (gameType: GameType) => {
     if (gameRunning) {
-      console.log("Game already running!");
       setTimer(-1);
     } else if (trainingMode) {
       setTrainingMode(false);
     }
 
     setGameRunning(true);
-    setTimer(secs);
+    setTimer(gameType);
   };
 
-  const onGameFinished = (n: number) => {
+  const onGameFinished = async (n: number) => {
     alert("Your score: " + n);
-    // Applause in case of record:
-    // (document as any).getElementById("applause").play();
-    saveScore("Johannes", n);
+    const config = await getPlayerConfig();
+    saveScore(config.names[config.activePlayer], n, timer);
+    setTimer(-1);
     setGameRunning(false);
   };
 
@@ -108,19 +109,19 @@ const App: React.FC = () => {
                     {
                       text: "30 seconds",
                       handler: () => {
-                        startStopwatchGame(30);
+                        startStopwatchGame(GameType.THIRTY_SECS);
                       },
                     },
                     {
                       text: "60 seconds",
                       handler: () => {
-                        startStopwatchGame(60);
+                        startStopwatchGame(GameType.SIXTY_SECS);
                       },
                     },
                     {
                       text: "90 seconds",
                       handler: () => {
-                        startStopwatchGame(90);
+                        startStopwatchGame(GameType.NINETY_SECS);
                       },
                     },
                     { text: "Cancel", role: "cancel" },

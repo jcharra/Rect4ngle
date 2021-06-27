@@ -2,6 +2,7 @@ import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { format, isBefore } from "date-fns";
 import { useAsync } from "react-async-hook";
 import { getScores, Score } from "../service/scoreService";
+import "./Highscores.css";
 
 export default function Highscores() {
   const { loading, error, result } = useAsync(getScores, []);
@@ -15,15 +16,9 @@ export default function Highscores() {
     return <div>ERROR!</div>;
   }
 
-  if (!result || !result.length) {
-    return (
-      <IonRow>
-        <IonCol>No Scores yet</IonCol>
-      </IonRow>
-    );
-  }
+  const scores = result || [];
 
-  result.sort((a, b) => {
+  scores.sort((a, b) => {
     if (a.score > b.score) {
       return -1;
     } else if (a.score < b.score) {
@@ -33,17 +28,29 @@ export default function Highscores() {
     return isBefore(a.date, b.date) ? -1 : 1;
   });
 
-  const rows = result.map((score: Score) => (
+  const rows = scores.map((score: Score) => (
     <IonRow key={score.date.toISOString()}>
       <IonCol size="4">{score.playerName}</IonCol>
       <IonCol size="2">{score.score}</IonCol>
+      <IonCol size="2">{score.gameType}s</IonCol>
       <IonCol size="4">{format(score.date, "dd.MM.yy")}</IonCol>
     </IonRow>
   ));
 
   return (
     <IonGrid class="ion-text-center" style={{ width: "100%" }}>
-      {rows}
+      <IonRow className="highscoreHeader">
+        <IonCol size="12">
+          <strong>Hall of Fame</strong>
+        </IonCol>
+      </IonRow>
+      {rows.length ? (
+        rows
+      ) : (
+        <IonRow>
+          <IonCol>No scores yet</IonCol>
+        </IonRow>
+      )}
     </IonGrid>
   );
 }
