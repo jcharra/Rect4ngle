@@ -6,21 +6,56 @@ import {
   IonSelect,
   IonSelectOption,
 } from "@ionic/react";
+import { useEffect, useState } from "react";
 import { useAsync } from "react-async-hook";
-import { getPlayerConfig, savePlayer } from "../service/playerService";
-
-const savePlayerName = async (idx: number, s: string) => {
-  // TODO: prevent idx 0 from being emptied
-  savePlayer(idx, s);
-};
+import {
+  getPlayerConfig,
+  PlayerConfig,
+  savePlayerConfig,
+} from "../service/playerService";
 
 export default function Settings() {
-  const { loading, error, result: config } = useAsync(getPlayerConfig, []);
+  const { loading, error, result } = useAsync(getPlayerConfig, []);
+  const [config, setConfig] = useState<PlayerConfig | null>(null);
+
+  useEffect(() => {
+    setConfig(result as PlayerConfig);
+  }, [result]);
 
   if (loading || error || !config) {
-    console.log("Loading:", loading, "error", error, "config", config);
     return null;
   }
+
+  const updateConfig = (cfg: PlayerConfig) => {
+    try {
+      savePlayerConfig(cfg);
+      setConfig(cfg);
+    } catch (ex) {
+      console.log("Nope");
+    }
+  };
+
+  return <SettingContent config={config} updateConfig={updateConfig} />;
+}
+
+function SettingContent({
+  config,
+  updateConfig,
+}: {
+  config: PlayerConfig;
+  updateConfig: (cfg: PlayerConfig) => void;
+}) {
+  const savePlayerName = (idx: number, name: string) => {
+    const updatedConfig: PlayerConfig = { ...config };
+    updatedConfig.names[idx] = name;
+    updateConfig(updatedConfig);
+  };
+
+  const setActivePlayer = (idx: number) => {
+    const updatedConfig: PlayerConfig = { ...config };
+    updatedConfig.activePlayer = idx;
+    updateConfig(updatedConfig);
+  };
 
   return (
     <IonList lines="full">
@@ -34,11 +69,18 @@ export default function Settings() {
         <IonSelect
           slot="end"
           interface="popover"
-          value={config.names[config.activePlayer]}
+          value={config.activePlayer}
+          onIonChange={(e) => {
+            if (e.detail.value !== config.activePlayer) {
+              setActivePlayer(e.detail.value);
+            }
+          }}
         >
-          {config.names.map((p: string) => {
+          {config.names.map((p: string, idx: number) => {
             return !!p ? (
-              <IonSelectOption value={p}>{p}</IonSelectOption>
+              <IonSelectOption key={"select" + idx} value={idx}>
+                {p}
+              </IonSelectOption>
             ) : null;
           })}
         </IonSelect>

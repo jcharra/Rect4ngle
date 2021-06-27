@@ -2,20 +2,15 @@ import { Storage } from "@capacitor/storage";
 
 const PLAYER_CONFIG = "playerConfig";
 
-interface PlayerConfig {
+export interface PlayerConfig {
   activePlayer: number;
   names: string[];
 }
 
-export async function savePlayer(index: number, name: string) {
-  const config: PlayerConfig = await getPlayerConfig();
-
-  const names = [...config.names];
-  names[index] = name;
-
+export async function savePlayerConfig(config: PlayerConfig) {
   await Storage.set({
     key: PLAYER_CONFIG,
-    value: JSON.stringify({ ...config, names }),
+    value: JSON.stringify(config),
   });
 }
 
