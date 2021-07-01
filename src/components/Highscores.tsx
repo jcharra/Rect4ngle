@@ -56,9 +56,9 @@ export default function Highscores({
 
   return (
     <IonGrid class="ion-text-center" style={{ width: "100%" }}>
-      {latestScore && latestScore !== -1 && (
+      {latestScore && latestScore !== -1 ? (
         <IonRow className="latestScore">Your Score: {latestScore}</IonRow>
-      )}
+      ) : null}
 
       <IonRow className="highscoreHeader">
         <IonCol size="12">
