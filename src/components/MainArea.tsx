@@ -46,7 +46,7 @@ export function MainArea(props: MainAreaProps) {
       setNum(0);
       setTimeout(() => setStartCountdown((val) => val - 1), 1000);
     } else {
-      if (initialTimer !== 0) {
+      if (initialTimer > 0) {
         newNum();
         setTimer(initialTimer);
         const ref = setInterval(() => {

@@ -1,5 +1,6 @@
 export enum GameType {
-  THIRTY_SECS = 30,
+  TRAINING = -1,
+  THIRTY_SECS = 3,
   SIXTY_SECS = 60,
   NINETY_SECS = 90,
 }

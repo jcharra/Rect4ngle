@@ -25,8 +25,6 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import {
   bulbOutline,
-  ellipsisHorizontal,
-  ellipsisVertical,
   gameControllerOutline,
   settingsOutline,
   statsChartOutline,
@@ -44,48 +42,34 @@ import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 
 const App: React.FC = () => {
-  const [trainingMode, setTrainingMode] = useState(false);
-  const [timer, setTimer] = useState(0);
-  const [gameRunning, setGameRunning] = useState(false);
+  const [latestScore, setLatestScore] = useState(-1);
+  const [gameType, setGameType] = useState<GameType | undefined>();
+
   const [present] = useIonActionSheet();
-  const [presentHighscores, dismiss] = useIonModal(Highscores);
+  const [presentHighscores, dismiss] = useIonModal(Highscores, { latestScore });
   const [presentSettings, dismissSettings] = useIonModal(Settings);
   const [presentHelp, dismissHelp] = useIonModal(Help);
 
-  const startTraining = () => {
-    if (gameRunning) {
-      alert("Stopping game");
-      setGameRunning(false);
-      setTimer(-1);
-    }
-    setTrainingMode(true);
+  const startGame = (gameType: GameType) => {
+    setLatestScore(-1);
+    setGameType(gameType);
   };
 
-  const startStopwatchGame = (gameType: GameType) => {
-    if (gameRunning) {
-      setTimer(-1);
-    } else if (trainingMode) {
-      setTrainingMode(false);
-    }
-
-    setGameRunning(true);
-    setTimer(gameType);
-  };
-
-  const onGameFinished = async (n: number) => {
-    alert("Your score: " + n);
+  const onGameFinished = async (score: number) => {
     const config = await getPlayerConfig();
-    saveScore(config.names[config.activePlayer], n, timer);
-    setTimer(-1);
-    setGameRunning(false);
+    await saveScore(config.names[config.activePlayer], score, gameType!);
+    setLatestScore(score);
+
+    presentHighscores();
+    setGameType(undefined);
   };
 
   return (
     <IonApp>
       <IonContent>
         <MainArea
-          trainingMode={trainingMode}
-          initialTimer={timer}
+          trainingMode={gameType === GameType.TRAINING}
+          initialTimer={gameType || -1}
           onGameFinished={onGameFinished}
         />
       </IonContent>
@@ -93,7 +77,7 @@ const App: React.FC = () => {
         <IonToolbar color="dark" mode="ios">
           <IonTitle>Rect4ngle</IonTitle>
           <IonButtons slot="start" className="ion-padding-horizontal">
-            <IonButton onClick={() => startTraining()}>
+            <IonButton onClick={() => startGame(GameType.TRAINING)}>
               <IonIcon slot="icon-only" icon={gameControllerOutline} />
             </IonButton>
             <IonButton
@@ -101,27 +85,21 @@ const App: React.FC = () => {
                 present({
                   buttons: [
                     {
-                      text: "1 second",
-                      handler: () => {
-                        startStopwatchGame(1);
-                      },
-                    },
-                    {
                       text: "30 seconds",
                       handler: () => {
-                        startStopwatchGame(GameType.THIRTY_SECS);
+                        startGame(GameType.THIRTY_SECS);
                       },
                     },
                     {
                       text: "60 seconds",
                       handler: () => {
-                        startStopwatchGame(GameType.SIXTY_SECS);
+                        startGame(GameType.SIXTY_SECS);
                       },
                     },
                     {
                       text: "90 seconds",
                       handler: () => {
-                        startStopwatchGame(GameType.NINETY_SECS);
+                        startGame(GameType.NINETY_SECS);
                       },
                     },
                     { text: "Cancel", role: "cancel" },

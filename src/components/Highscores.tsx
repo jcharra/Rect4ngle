@@ -1,11 +1,21 @@
 import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { format, isBefore } from "date-fns";
 import { useAsync } from "react-async-hook";
+import { getPlayerConfig } from "../service/playerService";
 import { getScores, Score } from "../service/scoreService";
+import { GameType } from "../types/GameType";
 import "./Highscores.css";
 
-export default function Highscores() {
+export default function Highscores({
+  latestScore,
+  filterGameType,
+}: {
+  latestScore?: number;
+  filterGameType?: GameType;
+  filterName?: string;
+}) {
   const { loading, error, result } = useAsync(getScores, []);
+  const { result: playerConfig } = useAsync(getPlayerConfig, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -29,7 +39,14 @@ export default function Highscores() {
   });
 
   const rows = scores.map((score: Score) => (
-    <IonRow key={score.date.toISOString()}>
+    <IonRow
+      key={score.date.toISOString()}
+      className={
+        score.playerName === playerConfig?.names[playerConfig?.activePlayer]
+          ? "currentPlayer"
+          : ""
+      }
+    >
       <IonCol size="4">{score.playerName}</IonCol>
       <IonCol size="2">{score.score}</IonCol>
       <IonCol size="2">{score.gameType}s</IonCol>
@@ -39,6 +56,10 @@ export default function Highscores() {
 
   return (
     <IonGrid class="ion-text-center" style={{ width: "100%" }}>
+      {latestScore && latestScore !== -1 && (
+        <IonRow className="latestScore">Your Score: {latestScore}</IonRow>
+      )}
+
       <IonRow className="highscoreHeader">
         <IonCol size="12">
           <strong>Hall of Fame</strong>
