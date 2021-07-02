@@ -59,6 +59,10 @@ export function MainArea(props: MainAreaProps) {
   }, [startCountdown]);
 
   useEffect(() => {
+    if (startCountdown > 0) {
+      return;
+    }
+
     if (intervalRef) {
       clearInterval(intervalRef);
     }
