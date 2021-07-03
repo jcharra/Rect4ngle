@@ -87,21 +87,21 @@ const App: React.FC = () => {
                 present({
                   buttons: [
                     {
-                      text: "30 seconds",
+                      text: "1 minute",
                       handler: () => {
-                        startGame(GameType.THIRTY_SECS);
+                        startGame(GameType.ONE_MINUTE);
                       },
                     },
                     {
-                      text: "60 seconds",
+                      text: "2 minutes",
                       handler: () => {
-                        startGame(GameType.SIXTY_SECS);
+                        startGame(GameType.TWO_MINUTES);
                       },
                     },
                     {
-                      text: "90 seconds",
+                      text: "3 minutes",
                       handler: () => {
-                        startGame(GameType.NINETY_SECS);
+                        startGame(GameType.THREE_MINUTES);
                       },
                     },
                     { text: "Cancel", role: "cancel" },

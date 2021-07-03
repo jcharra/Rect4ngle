@@ -1,25 +1,32 @@
-import { IonCol, IonContent, IonGrid, IonImg, IonRow } from "@ionic/react";
-import { starSharp } from "ionicons/icons";
+import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import "./Help.css";
 
 export default function Help() {
   return (
-    <IonGrid class="ion-text-center" style={{ width: "100%" }}>
-      <IonRow className="heading">
-        <IonCol>Welcome to Rect4ngle</IonCol>
+    <IonGrid style={{ width: "100%" }}>
+      <IonRow class="helpHeader ion-text-center">
+        <IonCol>Rect4ngle rules</IonCol>
       </IonRow>
       <IonRow>
         <IonCol>
           In Rect4ngle, your goal is to build rectangles with a given number of
-          circles. A rectangle is built from{" "}
-          <strong>at least two pieces</strong> of equal height.
+          dots. A rectangle is built from <strong>at least two pieces</strong>{" "}
+          of equal length. <br />
+          <br />
+          On the bottom left you find two icons to start playing. One is for the{" "}
+          <strong>training mode</strong>, where there is no time limit and you
+          can just practice your rectangle skills. The other one is for a{" "}
+          <strong>game against the clock</strong>. Try to gain as many diamonds
+          as possible, maybe you'll achieve a new high score!
         </IonCol>
       </IonRow>
       <IonRow>
         <IonCol>
+          <h5>Gaining diamonds</h5>
           If you think that you've built a matching rectangle, you can click on
           the <strong>CHECK</strong> button to check your result. If you got it
           right, you receive as many diamonds as your rectangle is high. If your
-          rectangle does not match the number, you will lose 5 diamonds.
+          rectangle does not match the number, you lose 5 diamonds.
         </IonCol>
       </IonRow>
       <IonRow>
@@ -30,6 +37,7 @@ export default function Help() {
       </IonRow>
       <IonRow>
         <IonCol>
+          <h5>Prime numbers</h5>
           Sometimes there's a number that cannot be built as a rectangle. These
           are called <strong>PRIME NUMBERS</strong>. You have to click the
           yellow <strong>PRIME</strong> button to classify them as primes. This
@@ -42,15 +50,6 @@ export default function Help() {
         <IonCol>
           If you're not sure what to do with a number, you can always{" "}
           <strong>SKIP</strong> it. This will cost you 2 diamonds.
-        </IonCol>
-      </IonRow>
-      <IonRow>
-        <IonCol>
-          On the bottom left you find two icons to start playing. One is for the{" "}
-          <strong>training mode</strong>, where there is no time limit and you
-          can just practice your rectangle skills. The other one is for a game
-          against the clock. Try to gain as many diamonds as possible, maybe
-          you'll achieve a new high score!
         </IonCol>
       </IonRow>
     </IonGrid>

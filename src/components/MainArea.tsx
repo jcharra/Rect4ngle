@@ -6,7 +6,7 @@ import {
   IonIcon,
   IonRow,
 } from "@ionic/react";
-import { arrowUndo, trashOutline } from "ionicons/icons";
+import { arrowUndo, backspaceOutline, trashOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import {
   COLUMN_LIMIT,
@@ -209,14 +209,18 @@ export function MainArea(props: MainAreaProps) {
                   Check
                 </IonButton>
                 <IonButton onClick={() => skip()}>Skip</IonButton>
+                <IonButton onClick={() => backspace()}>
+                  <IonIcon icon={backspaceOutline} />
+                </IonButton>
                 <IonButton onClick={() => retry()}>
                   <IonIcon icon={trashOutline} />
                 </IonButton>
-                <IonButton onClick={() => backspace()}>
-                  <IonIcon icon={arrowUndo} />
-                </IonButton>
-                <IonButton color="warning" onClick={() => checkPrime()}>
-                  That's a prime
+                <IonButton
+                  color="warning"
+                  onClick={() => checkPrime()}
+                  size="large"
+                >
+                  Prime
                 </IonButton>
               </div>
             )}
