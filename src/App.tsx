@@ -30,13 +30,15 @@ import {
   statsChartOutline,
   stopwatchOutline,
 } from "ionicons/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAsync } from "react-async-hook";
 import Help from "./components/Help";
 import Highscores from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
 import Settings from "./components/Settings";
 import { getPlayerConfig } from "./service/playerService";
 import { saveScore } from "./service/scoreService";
+import { hasBeenSeen } from "./service/tutorialService";
 /* Theme variables */
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
@@ -46,9 +48,9 @@ const App: React.FC = () => {
   const [gameType, setGameType] = useState<GameType | undefined>();
 
   const [present] = useIonActionSheet();
-  const [presentHighscores, dismiss] = useIonModal(Highscores, { latestScore });
-  const [presentSettings, dismissSettings] = useIonModal(Settings);
-  const [presentHelp, dismissHelp] = useIonModal(Help);
+  const [presentHighscores] = useIonModal(Highscores, { latestScore });
+  const [presentSettings] = useIonModal(Settings);
+  const [presentHelp] = useIonModal(Help);
 
   const startGame = (gameType: GameType) => {
     setLatestScore(-1);
