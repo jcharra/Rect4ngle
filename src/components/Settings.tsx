@@ -1,8 +1,10 @@
 import {
+  IonButton,
   IonInput,
   IonItem,
   IonLabel,
   IonList,
+  IonRow,
   IonSelect,
   IonSelectOption,
 } from "@ionic/react";
@@ -14,7 +16,7 @@ import {
   savePlayerConfig,
 } from "../service/playerService";
 
-export default function Settings() {
+export default function Settings({ onDismiss }: { onDismiss: () => void }) {
   const { loading, error, result } = useAsync(getPlayerConfig, []);
   const [config, setConfig] = useState<PlayerConfig | null>(null);
 
@@ -35,15 +37,23 @@ export default function Settings() {
     }
   };
 
-  return <SettingContent config={config} updateConfig={updateConfig} />;
+  return (
+    <SettingContent
+      config={config}
+      updateConfig={updateConfig}
+      onDismiss={onDismiss}
+    />
+  );
 }
 
 function SettingContent({
   config,
   updateConfig,
+  onDismiss,
 }: {
   config: PlayerConfig;
   updateConfig: (cfg: PlayerConfig) => void;
+  onDismiss: () => void;
 }) {
   const savePlayerName = (idx: number, name: string) => {
     const updatedConfig: PlayerConfig = { ...config };
@@ -105,6 +115,11 @@ function SettingContent({
           <IonSelectOption value="deutsch">deutsch</IonSelectOption>
           <IonSelectOption value="englisch">englisch</IonSelectOption>
         </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonButton expand="block" onClick={() => onDismiss()}>
+          Close
+        </IonButton>
       </IonItem>
     </IonList>
   );

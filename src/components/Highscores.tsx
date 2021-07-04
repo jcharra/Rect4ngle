@@ -1,18 +1,16 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { format, isBefore } from "date-fns";
 import { useAsync } from "react-async-hook";
 import { getPlayerConfig } from "../service/playerService";
 import { getScores, Score } from "../service/scoreService";
-import { GameType } from "../types/GameType";
 import "./Highscores.css";
 
 export default function Highscores({
   latestScore,
-  filterGameType,
+  onDismiss,
 }: {
   latestScore?: number;
-  filterGameType?: GameType;
-  filterName?: string;
+  onDismiss: () => void;
 }) {
   const { loading, error, result } = useAsync(getScores, []);
   const { result: playerConfig } = useAsync(getPlayerConfig, []);
@@ -55,7 +53,10 @@ export default function Highscores({
   ));
 
   return (
-    <IonGrid class="ion-text-center" style={{ width: "100%" }}>
+    <IonGrid
+      class="ion-text-center highscoreContainer"
+      style={{ width: "100%" }}
+    >
       {latestScore && latestScore !== -1 ? (
         <IonRow className="latestScore">Your Score: {latestScore}</IonRow>
       ) : null}
@@ -72,6 +73,13 @@ export default function Highscores({
           <IonCol>No scores yet</IonCol>
         </IonRow>
       )}
+      <IonRow>
+        <IonCol>
+          <IonButton expand="block" onClick={() => onDismiss()}>
+            Close
+          </IonButton>
+        </IonCol>
+      </IonRow>
     </IonGrid>
   );
 }

@@ -1,3 +1,7 @@
+.highscoreContainer {
+  overflow-y: scroll;
+}
+
 .highscoreHeader {
   height: 60px;
   background: lightgreen;

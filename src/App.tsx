@@ -47,10 +47,23 @@ const App: React.FC = () => {
   const [latestScore, setLatestScore] = useState(-1);
   const [gameType, setGameType] = useState<GameType | undefined>();
 
-  const [present] = useIonActionSheet();
-  const [presentHighscores] = useIonModal(Highscores, { latestScore });
-  const [presentSettings] = useIonModal(Settings);
-  const [presentHelp] = useIonModal(Help);
+  const [presentGameOptions] = useIonActionSheet();
+
+  const onDismissHighscores = () => dismissHighscores();
+  const [presentHighscores, dismissHighscores] = useIonModal(Highscores, {
+    latestScore,
+    onDismiss: onDismissHighscores,
+  });
+
+  const onDismissSettings = () => dismissSettings();
+  const [presentSettings, dismissSettings] = useIonModal(Settings, {
+    onDismiss: onDismissSettings,
+  });
+
+  const onDismissHelp = () => dismissHelp();
+  const [presentHelp, dismissHelp] = useIonModal(Help, {
+    onDismiss: onDismissHelp,
+  });
 
   const startGame = (gameType: GameType) => {
     setLatestScore(-1);
@@ -84,7 +97,7 @@ const App: React.FC = () => {
             </IonButton>
             <IonButton
               onClick={() =>
-                present({
+                presentGameOptions({
                   buttons: [
                     {
                       text: "1 minute",

@@ -1,9 +1,9 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import "./Help.css";
 
-export default function Help() {
+export default function Help({ onDismiss }: { onDismiss: () => void }) {
   return (
-    <IonGrid style={{ width: "100%" }}>
+    <IonGrid style={{ width: "100%" }} class="helpContainer">
       <IonRow class="helpHeader ion-text-center">
         <IonCol>Rect4ngle rules</IonCol>
       </IonRow>
@@ -50,6 +50,13 @@ export default function Help() {
         <IonCol>
           If you're not sure what to do with a number, you can always{" "}
           <strong>SKIP</strong> it. This will cost you 2 diamonds.
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol>
+          <IonButton expand="block" onClick={() => onDismiss()}>
+            Close
+          </IonButton>
         </IonCol>
       </IonRow>
     </IonGrid>
