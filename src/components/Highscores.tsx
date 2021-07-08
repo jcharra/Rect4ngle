@@ -1,6 +1,7 @@
 import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { format, isBefore } from "date-fns";
 import { useAsync } from "react-async-hook";
+import { useTranslation } from "react-i18next";
 import { getPlayerConfig } from "../service/playerService";
 import { getScores, Score } from "../service/scoreService";
 import "./Highscores.css";
@@ -14,6 +15,8 @@ export default function Highscores({
 }) {
   const { loading, error, result } = useAsync(getScores, []);
   const { result: playerConfig } = useAsync(getPlayerConfig, []);
+
+  const { t } = useTranslation();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -58,25 +61,27 @@ export default function Highscores({
       style={{ width: "100%" }}
     >
       {latestScore && latestScore !== -1 ? (
-        <IonRow className="latestScore">Your Score: {latestScore}</IonRow>
+        <IonRow className="latestScore">
+          {t("your_score")}: {latestScore}
+        </IonRow>
       ) : null}
 
       <IonRow className="highscoreHeader">
         <IonCol size="12">
-          <strong>Hall of Fame</strong>
+          <strong>{t("hall_of_fame")}</strong>
         </IonCol>
       </IonRow>
       {rows.length ? (
         rows
       ) : (
         <IonRow>
-          <IonCol>No scores yet</IonCol>
+          <IonCol>{t("no_scores_yet")}</IonCol>
         </IonRow>
       )}
       <IonRow>
         <IonCol>
           <IonButton expand="block" onClick={() => onDismiss()}>
-            Close
+            {t("close")}
           </IonButton>
         </IonCol>
       </IonRow>

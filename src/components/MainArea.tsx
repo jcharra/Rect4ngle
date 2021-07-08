@@ -6,8 +6,9 @@ import {
   IonIcon,
   IonRow,
 } from "@ionic/react";
-import { arrowUndo, backspaceOutline, trashOutline } from "ionicons/icons";
+import { backspaceOutline, trashOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   COLUMN_LIMIT,
   generateRandomNumber,
@@ -31,6 +32,7 @@ interface MainAreaProps {
 export function MainArea(props: MainAreaProps) {
   const { trainingMode, initialTimer, onGameFinished } = props;
 
+  const { t } = useTranslation();
   const [summands, setSummands] = useState<number[]>([]);
   const [num, setNum] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
@@ -133,20 +135,20 @@ export function MainArea(props: MainAreaProps) {
   const check = () => {
     const sum = summands.reduce((a, b) => a + b, 0);
     if (summands[0] === summands.length) {
-      addDelta(10, "Square!");
+      addDelta(10, t("square"));
     } else if (sum === num) {
-      addDelta(summands[0], "Correct!");
+      addDelta(summands[0], t("correct"));
     } else {
-      addDelta(-5, "Wrong!");
+      addDelta(-5, t("wrong"));
     }
     newNum();
   };
 
   const checkPrime = () => {
     if (PRIMES.indexOf(num) > -1) {
-      addDelta(PRIME_BONUS, "PRIME!");
+      addDelta(PRIME_BONUS, t("prime_correct"));
     } else {
-      addDelta(PRIME_MALUS, "Nope");
+      addDelta(PRIME_MALUS, t("nope"));
     }
     newNum();
   };
@@ -206,9 +208,9 @@ export function MainArea(props: MainAreaProps) {
                   color="success"
                   onClick={() => check()}
                 >
-                  Check
+                  {t("check")}
                 </IonButton>
-                <IonButton onClick={() => skip()}>Skip</IonButton>
+                <IonButton onClick={() => skip()}>{t("skip")}</IonButton>
                 <IonButton onClick={() => backspace()}>
                   <IonIcon icon={backspaceOutline} />
                 </IonButton>
@@ -220,7 +222,7 @@ export function MainArea(props: MainAreaProps) {
                   onClick={() => checkPrime()}
                   size="large"
                 >
-                  Prime
+                  {t("prime")}
                 </IonButton>
               </div>
             )}

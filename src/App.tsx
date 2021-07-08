@@ -30,20 +30,22 @@ import {
   statsChartOutline,
   stopwatchOutline,
 } from "ionicons/icons";
-import { useEffect, useState } from "react";
-import { useAsync } from "react-async-hook";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
 import Settings from "./components/Settings";
+import "./i18n";
 import { getPlayerConfig } from "./service/playerService";
 import { saveScore } from "./service/scoreService";
-import { hasBeenSeen } from "./service/tutorialService";
 /* Theme variables */
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 
 const App: React.FC = () => {
+  const { t } = useTranslation();
+
   const [latestScore, setLatestScore] = useState(-1);
   const [gameType, setGameType] = useState<GameType | undefined>();
 
@@ -100,26 +102,26 @@ const App: React.FC = () => {
                 presentGameOptions({
                   buttons: [
                     {
-                      text: "1 minute",
+                      text: t("one_minute"),
                       handler: () => {
                         startGame(GameType.ONE_MINUTE);
                       },
                     },
                     {
-                      text: "2 minutes",
+                      text: t("two_minutes"),
                       handler: () => {
                         startGame(GameType.TWO_MINUTES);
                       },
                     },
                     {
-                      text: "3 minutes",
+                      text: t("three_minutes"),
                       handler: () => {
                         startGame(GameType.THREE_MINUTES);
                       },
                     },
-                    { text: "Cancel", role: "cancel" },
+                    { text: t("cancel"), role: "cancel" },
                   ],
-                  header: "Play against the clock",
+                  header: t("against_the_clock"),
                 })
               }
             >
