@@ -32,7 +32,8 @@ i18n.use(initReactI18next).init({
         rectangle_rules: "Game rules",
         help_1:
           "In Rect4ngle, your goal is to build rectangles with a given number of " +
-          "dots. A rectangle is built from <strong>at least two pieces</strong> of equal length. <br /><br />" +
+          "balls. The target number is written on the blackboard. A rectangle is built from " +
+          "<strong>at least two pieces</strong> and all pieces must have the same length. <br /><br />" +
           "On the bottom left you find two icons to start playing. One is for the " +
           "<strong>training mode</strong>, where there is no time limit and you " +
           "can just practice your rectangle skills. The other one is for a " +
