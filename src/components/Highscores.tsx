@@ -3,7 +3,12 @@ import { format } from "date-fns";
 import { useAsync } from "react-async-hook";
 import { useTranslation } from "react-i18next";
 import { getPlayerConfig, PlayerConfig } from "../service/playerService";
-import { getScores, ScoreDict, ScoreRecord } from "../service/scoreService";
+import {
+  getScores,
+  NUMBER_OF_SCORES_TO_KEEP,
+  ScoreDict,
+  ScoreRecord,
+} from "../service/scoreService";
 import { GameType } from "../types/GameType";
 import "./Highscores.css";
 
@@ -14,30 +19,28 @@ function GameTypeRows({
   scores: ScoreRecord[];
   playerConfig: PlayerConfig;
 }) {
-  const { t } = useTranslation();
-
-  if (!scores || scores.length === 0) {
-    return (
-      <IonRow>
-        <IonCol>{t("no_scores_yet")}</IonCol>
-      </IonRow>
-    );
+  let scoreIterable: (ScoreRecord | null)[] = [...scores];
+  for (let i = scoreIterable.length; i < NUMBER_OF_SCORES_TO_KEEP; i++) {
+    scoreIterable.push(null);
   }
 
   return (
     <>
-      {scores.map((score) => (
+      {scoreIterable.map((score, index) => (
         <IonRow
-          key={score.date.toISOString()}
+          key={"score-" + index}
           className={
+            score &&
             score.playerName === playerConfig?.names[playerConfig?.activePlayer]
               ? "currentPlayer"
               : ""
           }
         >
-          <IonCol size="4">{score.playerName}</IonCol>
-          <IonCol size="2">{score.score}</IonCol>
-          <IonCol size="4">{format(score.date, "dd.MM.yy")}</IonCol>
+          <IonCol size="6">{score ? score.playerName : "---"}</IonCol>
+          <IonCol size="3">{score ? score.score : 0}</IonCol>
+          <IonCol size="3">
+            {score ? format(score.date, "dd.MM.yy") : "---"}
+          </IonCol>
         </IonRow>
       ))}
     </>
@@ -83,22 +86,22 @@ export default function Highscores({
           <strong>{t("hall_of_fame")}</strong>
         </IonCol>
       </IonRow>
-      <IonRow>
-        <IonCol>One minute</IonCol>
+      <IonRow className="gameTypeHeader">
+        <IonCol>{t("one_minute_header")}</IonCol>
       </IonRow>
       <GameTypeRows
         playerConfig={playerConfig!}
         scores={scores[GameType.ONE_MINUTE]}
       />
-      <IonRow>
-        <IonCol>Two minutes</IonCol>
+      <IonRow className="gameTypeHeader">
+        <IonCol>{t("two_minutes_header")}</IonCol>
       </IonRow>
       <GameTypeRows
         playerConfig={playerConfig!}
         scores={scores[GameType.TWO_MINUTES]}
       />
-      <IonRow>
-        <IonCol>Three minutes</IonCol>
+      <IonRow className="gameTypeHeader">
+        <IonCol>{t("three_minutes_header")}</IonCol>
       </IonRow>
       <GameTypeRows
         playerConfig={playerConfig!}

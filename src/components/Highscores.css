@@ -25,3 +25,12 @@
   color: gold;
   font-weight: bold;
 }
+
+.gameTypeHeader {
+  height: 40px;
+  background: orange;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+}

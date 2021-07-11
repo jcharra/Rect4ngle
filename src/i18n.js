@@ -30,6 +30,9 @@ i18n.use(initReactI18next).init({
         hall_of_fame: "Hall of Fame",
         no_scores_yet: "No entries yet",
         rectangle_rules: "Game rules",
+        one_minute_header: "One minute",
+        two_minutes_header: "Two minutes",
+        three_minutes_header: "Three minutes",
         help_1:
           "In Rect4ngle, your goal is to build rectangles with a given number of " +
           "balls. The target number is written on the blackboard. A rectangle is built from " +
@@ -83,6 +86,9 @@ i18n.use(initReactI18next).init({
         hall_of_fame: "Bestenliste",
         no_scores_yet: "Noch keine Einträge",
         rectangle_rules: "Spielregeln",
+        one_minute_header: "Eine Minute",
+        two_minutes_header: "Zwei Minuten",
+        three_minutes_header: "Drei Minuten",
         help_1:
           "Bei Rect4ngle musst Du Rechtecke bauen, mit der richtigen Anzahl von Bällen. Die Anzahl Bälle " +
           "die Du brauchst steht auf der schwarzen Tafel. Ein Rechteck besteht immer aus " +

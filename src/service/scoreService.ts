@@ -2,7 +2,7 @@ import { Storage } from "@capacitor/storage";
 import { GameType } from "../types/GameType";
 
 const SCORES = "scores";
-const NUMBER_OF_SCORES_TO_KEEP = 10;
+export const NUMBER_OF_SCORES_TO_KEEP = 10;
 
 export type ScoreDict = {
   [g in GameType]: ScoreRecord[];
@@ -33,11 +33,11 @@ export async function saveScore(
 
   scoresForGameType.sort((s1, s2) => {
     if (s1.score > s2.score) {
-      return 1;
-    } else if (s1.score < s2.score) {
       return -1;
+    } else if (s1.score < s2.score) {
+      return 1;
     } else {
-      return s1.date > s2.date ? 1 : -1;
+      return s1.date > s2.date ? -1 : 1;
     }
   });
 
