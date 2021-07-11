@@ -1,10 +1,48 @@
 import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
-import { format, isBefore } from "date-fns";
+import { format } from "date-fns";
 import { useAsync } from "react-async-hook";
 import { useTranslation } from "react-i18next";
-import { getPlayerConfig } from "../service/playerService";
-import { getScores, Score } from "../service/scoreService";
+import { getPlayerConfig, PlayerConfig } from "../service/playerService";
+import { getScores, ScoreDict, ScoreRecord } from "../service/scoreService";
+import { GameType } from "../types/GameType";
 import "./Highscores.css";
+
+function GameTypeRows({
+  scores,
+  playerConfig,
+}: {
+  scores: ScoreRecord[];
+  playerConfig: PlayerConfig;
+}) {
+  const { t } = useTranslation();
+
+  if (!scores || scores.length === 0) {
+    return (
+      <IonRow>
+        <IonCol>{t("no_scores_yet")}</IonCol>
+      </IonRow>
+    );
+  }
+
+  return (
+    <>
+      {scores.map((score) => (
+        <IonRow
+          key={score.date.toISOString()}
+          className={
+            score.playerName === playerConfig?.names[playerConfig?.activePlayer]
+              ? "currentPlayer"
+              : ""
+          }
+        >
+          <IonCol size="4">{score.playerName}</IonCol>
+          <IonCol size="2">{score.score}</IonCol>
+          <IonCol size="4">{format(score.date, "dd.MM.yy")}</IonCol>
+        </IonRow>
+      ))}
+    </>
+  );
+}
 
 export default function Highscores({
   latestScore,
@@ -27,33 +65,7 @@ export default function Highscores({
     return <div>ERROR!</div>;
   }
 
-  const scores = result || [];
-
-  scores.sort((a, b) => {
-    if (a.score > b.score) {
-      return -1;
-    } else if (a.score < b.score) {
-      return 1;
-    }
-
-    return isBefore(a.date, b.date) ? -1 : 1;
-  });
-
-  const rows = scores.map((score: Score) => (
-    <IonRow
-      key={score.date.toISOString()}
-      className={
-        score.playerName === playerConfig?.names[playerConfig?.activePlayer]
-          ? "currentPlayer"
-          : ""
-      }
-    >
-      <IonCol size="4">{score.playerName}</IonCol>
-      <IonCol size="2">{score.score}</IonCol>
-      <IonCol size="2">{score.gameType}s</IonCol>
-      <IonCol size="4">{format(score.date, "dd.MM.yy")}</IonCol>
-    </IonRow>
-  ));
+  const scores = result as ScoreDict;
 
   return (
     <IonGrid
@@ -71,13 +83,27 @@ export default function Highscores({
           <strong>{t("hall_of_fame")}</strong>
         </IonCol>
       </IonRow>
-      {rows.length ? (
-        rows
-      ) : (
-        <IonRow>
-          <IonCol>{t("no_scores_yet")}</IonCol>
-        </IonRow>
-      )}
+      <IonRow>
+        <IonCol>One minute</IonCol>
+      </IonRow>
+      <GameTypeRows
+        playerConfig={playerConfig!}
+        scores={scores[GameType.ONE_MINUTE]}
+      />
+      <IonRow>
+        <IonCol>Two minutes</IonCol>
+      </IonRow>
+      <GameTypeRows
+        playerConfig={playerConfig!}
+        scores={scores[GameType.TWO_MINUTES]}
+      />
+      <IonRow>
+        <IonCol>Three minutes</IonCol>
+      </IonRow>
+      <GameTypeRows
+        playerConfig={playerConfig!}
+        scores={scores[GameType.THREE_MINUTES]}
+      />
       <IonRow>
         <IonCol>
           <IonButton expand="block" onClick={() => onDismiss()}>

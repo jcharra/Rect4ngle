@@ -81,12 +81,21 @@ const App: React.FC = () => {
     setGameType(undefined);
   };
 
+  const getSecondsForGameType = (gt: GameType) => {
+    return {
+      TRAINING: -1,
+      ONE_MINUTE: 60,
+      TWO_MINUTES: 120,
+      THREE_MINUTES: 180,
+    }[gt];
+  };
+
   return (
     <IonApp>
       <IonContent>
         <MainArea
           trainingMode={gameType === GameType.TRAINING}
-          initialTimer={gameType || -1}
+          initialTimer={gameType ? getSecondsForGameType(gameType) : -1}
           onGameFinished={onGameFinished}
         />
       </IonContent>
