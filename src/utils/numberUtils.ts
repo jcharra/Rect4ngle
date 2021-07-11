@@ -9,9 +9,9 @@ const isPrime = (n: number) => {
   return true;
 };
 
-export const PRIMES = Array.from(Array(100))
+export const PRIMES: number[] = Array.from(Array(100))
   .map((_, idx) => idx)
-  .filter((i) => i > 10 && isPrime(i));
+  .filter((i) => i >= 2 && isPrime(i));
 
 export const PRIME_BONUS = 20;
 export const PRIME_MALUS = -10;
@@ -20,7 +20,7 @@ function getRandomInt(max: number) {
   return Math.ceil(Math.random() * (max - 1)) + 1;
 }
 
-export function generateRandomNumber() {
+export function generateRandomNumber(): number {
   if (Math.random() > 0.1) {
     const [fac1, fac2] = [getRandomInt(9), getRandomInt(10)];
     return fac1 * fac2;
