@@ -25,7 +25,6 @@ export default function ScalableRectangleArea({ summands }: { summands: number[]
       const gridSize = Math.min(widthBy25, heightBy11);
       setGridSize(gridSize);
       setNumberOfCols(Math.ceil(width / gridSize));
-      //console.log("Grid size", gridSize, "num cols", Math.ceil(width / gridSize));
     }
   }, [ref.current]);
 
@@ -34,8 +33,14 @@ export default function ScalableRectangleArea({ summands }: { summands: number[]
       <div className="fixedHeightContainer" style={{ height: innerHeight }}>
         {numberOfCols > 0
           ? Array.from(Array(numberOfCols), (_, i) => i).map((idx) => (
-              <div style={{ display: "inline-block" }}>
-                <Column key={idx} gridSize={gridSize} numBoxes={Math.ceil(innerHeight / gridSize)} />
+              <div key={idx} style={{ display: "inline-block" }}>
+                <Column
+                  gridSize={gridSize}
+                  numBoxes={Math.ceil(innerHeight / gridSize)}
+                  value={summands[idx - 1]}
+                  columnIdx={idx}
+                  isLast={idx === summands.length}
+                />
               </div>
             ))
           : null}

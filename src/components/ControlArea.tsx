@@ -1,8 +1,8 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import { backspaceOutline, trashOutline } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
-import { TappableTuples } from "./parts/TappableTuples";
 import "./ControlArea.css";
+import AddButtonRow from "./parts/AddButtonRow";
 
 interface ControlAreaProps {
   functions: {
@@ -24,16 +24,14 @@ export default function ControlArea(props: ControlAreaProps) {
 
   return (
     <div className="controlContainer">
-      {false && (
-        <TappableTuples
-          add={add}
-          selectedValue={summands.length > 0 ? summands[0] : null}
-          disabled={controlsDisabled}
-        />
-      )}
+      <AddButtonRow
+        add={add}
+        selectedValue={summands.length > 0 ? summands[0] : undefined}
+        disabled={controlsDisabled}
+      />
 
       {!controlsDisabled && (
-        <div className="ion-text-center">
+        <div className="actionsContainer">
           <IonButton size="large" disabled={summands.length < 2} color="success" onClick={() => check()}>
             {t("check")}
           </IonButton>

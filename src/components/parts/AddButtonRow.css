@@ -1,0 +1,9 @@
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.addButton {
+  display: flex;
+}

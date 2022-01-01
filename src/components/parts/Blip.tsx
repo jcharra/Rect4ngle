@@ -1,4 +1,14 @@
-export default function Blip({ size }: { size: number }) {
+export default function Blip({
+  size,
+  filled,
+  content,
+  incomplete,
+}: {
+  size: number;
+  filled: boolean;
+  content?: number;
+  incomplete: boolean;
+}) {
   return (
     <div
       style={{
@@ -8,7 +18,11 @@ export default function Blip({ size }: { size: number }) {
         borderColor: "white",
         borderStyle: "solid",
         display: "inline-block",
+        background: filled ? (incomplete ? "gray" : "green") : "transparent",
+        fontSize: size - 6,
       }}
-    ></div>
+    >
+      <div style={{ color: "white", display: "flex", justifyContent: "center", alignContent: "center" }}>{content}</div>
+    </div>
   );
 }

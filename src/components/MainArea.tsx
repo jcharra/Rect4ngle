@@ -1,5 +1,4 @@
-import { IonBackdrop, IonButton, IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
-import { backspaceOutline, trashOutline } from "ionicons/icons";
+import { IonBackdrop, IonCol, IonGrid, IonRow } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { COLUMN_LIMIT, generateRandomNumber, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
@@ -7,9 +6,7 @@ import Blackboard from "./Blackboard";
 import ControlArea from "./ControlArea";
 import "./MainArea.css";
 import ScalableRectangleArea from "./parts/ScalableRectangleArea";
-import { TappableTuples } from "./parts/TappableTuples";
 import Timer from "./parts/Timer";
-import { RectangleArea } from "./RectangleArea";
 import Scoreboard from "./Scoreboard";
 
 interface MainAreaProps {
