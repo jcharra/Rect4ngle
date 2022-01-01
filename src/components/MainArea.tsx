@@ -1,23 +1,12 @@
-import {
-  IonBackdrop,
-  IonButton,
-  IonCol,
-  IonGrid,
-  IonIcon,
-  IonRow,
-} from "@ionic/react";
+import { IonBackdrop, IonButton, IonCol, IonGrid, IonIcon, IonRow } from "@ionic/react";
 import { backspaceOutline, trashOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  COLUMN_LIMIT,
-  generateRandomNumber,
-  PRIMES,
-  PRIME_BONUS,
-  PRIME_MALUS,
-} from "../utils/numberUtils";
+import { COLUMN_LIMIT, generateRandomNumber, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
 import Blackboard from "./Blackboard";
+import ControlArea from "./ControlArea";
 import "./MainArea.css";
+import ScalableRectangleArea from "./parts/ScalableRectangleArea";
 import { TappableTuples } from "./parts/TappableTuples";
 import Timer from "./parts/Timer";
 import { RectangleArea } from "./RectangleArea";
@@ -127,9 +116,7 @@ export function MainArea(props: MainAreaProps) {
   };
 
   const backspace = () => {
-    setSummands((oldVal: number[]) =>
-      oldVal.length > 0 ? oldVal.slice(0, oldVal.length - 1) : []
-    );
+    setSummands((oldVal: number[]) => (oldVal.length > 0 ? oldVal.slice(0, oldVal.length - 1) : []));
   };
 
   const check = () => {
@@ -169,6 +156,7 @@ export function MainArea(props: MainAreaProps) {
   };
 
   const controlsDisabled = timer === 0 && !trainingMode;
+  const functions = { add, check, skip, backspace, checkPrime, retry };
 
   return (
     <>
@@ -184,7 +172,7 @@ export function MainArea(props: MainAreaProps) {
             <Blackboard num={num} summands={summands} />
           </IonCol>
           <IonCol size="8">
-            <RectangleArea summands={summands} />
+            <ScalableRectangleArea summands={summands} />
           </IonCol>
         </IonRow>
 
@@ -194,38 +182,7 @@ export function MainArea(props: MainAreaProps) {
             <Timer seconds={timer} />
           </IonCol>
           <IonCol size="8">
-            <TappableTuples
-              add={add}
-              selectedValue={summands.length > 0 ? summands[0] : null}
-              disabled={controlsDisabled}
-            />
-
-            {!controlsDisabled && (
-              <div className="ion-text-center">
-                <IonButton
-                  size="large"
-                  disabled={summands.length < 2}
-                  color="success"
-                  onClick={() => check()}
-                >
-                  {t("check")}
-                </IonButton>
-                <IonButton onClick={() => skip()}>{t("skip")}</IonButton>
-                <IonButton onClick={() => backspace()}>
-                  <IonIcon icon={backspaceOutline} />
-                </IonButton>
-                <IonButton onClick={() => retry()}>
-                  <IonIcon icon={trashOutline} />
-                </IonButton>
-                <IonButton
-                  color="warning"
-                  onClick={() => checkPrime()}
-                  size="large"
-                >
-                  {t("prime")}
-                </IonButton>
-              </div>
-            )}
+            <ControlArea functions={functions} summands={summands} disabled={controlsDisabled} />
           </IonCol>
         </IonRow>
       </IonGrid>

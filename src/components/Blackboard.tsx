@@ -1,13 +1,7 @@
 import React from "react";
 import "./Blackboard.css";
 
-export default function Blackboard({
-  num,
-  summands,
-}: {
-  num: number;
-  summands: number[];
-}) {
+export default function Blackboard({ num, summands }: { num: number; summands: number[] }) {
   return (
     <div className="currentCalculation">
       {num}

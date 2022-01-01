@@ -1,6 +1,6 @@
 import { CreateAnimation, IonIcon } from "@ionic/react";
 import { diamondOutline } from "ionicons/icons";
-
+import "./Scoreboard.css";
 export default function Scoreboard({
   diamonds,
   delta,

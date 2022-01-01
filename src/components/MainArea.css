@@ -3,9 +3,10 @@ ion-backdrop {
 }
 
 .app {
-  /*background-image: url(../sky.jpg);*/
+  background-image: url("space.jpg");
+  /*background: rgb(34, 36, 40);*/
+  /*background: linear-gradient(0deg, rgba(34, 36, 40, 1) 0%, rgba(92, 199, 100, 1) 37%);*/
   background-size: cover;
-  background-color: lightblue;
   overflow-y: hidden;
   height: 100%;
 }
@@ -15,67 +16,20 @@ ion-backdrop {
 }
 
 .lowerRow {
-  height: 50vh;
+  height: calc(40vh - var(--min-height));
 }
 
 .block {
   display: flex;
   justify-content: center;
-  width: 80px;
+  width: 25%;
   height: 100%;
   text-align: center;
-}
-
-@media all and (max-height: 700px) {
-  .block {
-    width: 60px;
-  }
-}
-
-@media all and (max-width: 1000px) {
-  .block {
-    width: 60px;
-  }
-}
-
-.vertical {
-  padding: 0 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100%;
 }
 
 @font-face {
   font-family: "chawp";
   src: local("chawp"), url(../fonts/chawp.ttf) format("truetype");
-}
-
-.score {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
-  font-size: 5em;
-  color: gold;
-  font-weight: 900;
-  text-shadow: 3px 3px gray;
-}
-
-.scoreContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.scoreContainer .scoreNum {
-  display: flex;
-}
-
-.scoreContainer .scoreIcon {
-  display: flex;
-  padding-right: 20px;
 }
 
 .headerTuples {
@@ -91,7 +45,7 @@ ion-backdrop {
 }
 
 .tupelCaption {
-  font-size: 16px;
+  font-size: 0.8em;
   color: green;
   text-align: center;
 }

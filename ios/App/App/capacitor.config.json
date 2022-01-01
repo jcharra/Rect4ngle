@@ -1,0 +1,6 @@
+{
+	"appId": "de.charra.rectangle",
+	"appName": "Rect4ngle",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
