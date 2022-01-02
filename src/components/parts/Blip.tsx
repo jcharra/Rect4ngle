@@ -14,7 +14,7 @@ export default function Blip({
       style={{
         width: size,
         height: size,
-        borderWidth: "0 1px 1px 0",
+        borderWidth: "1px 0 0 1px",
         borderColor: "white",
         borderStyle: "solid",
         display: "inline-block",

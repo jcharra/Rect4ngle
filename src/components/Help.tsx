@@ -28,7 +28,7 @@ export default function Help({ onDismiss }: { onDismiss: () => void }) {
       <IonRow>
         <IonCol>
           <IonButton expand="block" onClick={() => onDismiss()}>
-            Close
+            {t("close")}
           </IonButton>
         </IonCol>
       </IonRow>
