@@ -1,6 +1,7 @@
 import { IonBackdrop, IonCol, IonGrid, IonRow } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSettings } from "../hooks/settingsHook";
 import { COLUMN_LIMIT, generateRandomNumber, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
 import Blackboard from "./Blackboard";
 import ControlArea from "./ControlArea";
@@ -12,7 +13,7 @@ import Scoreboard from "./Scoreboard";
 interface MainAreaProps {
   trainingMode: boolean;
   initialTimer: number;
-  onGameFinished: (n: number) => void;
+  onGameFinished: (name: string, n: number) => void;
 }
 
 export function MainArea(props: MainAreaProps) {
@@ -27,6 +28,9 @@ export function MainArea(props: MainAreaProps) {
   const [timer, setTimer] = useState(0);
   const [intervalRef, setIntervalRef] = useState<any>(null);
   const [startCountdown, setStartCountdown] = useState(0);
+  const { activePlayerName } = useSettings();
+
+  console.log("Active:", activePlayerName);
 
   useEffect(() => {
     if (startCountdown > 0) {
@@ -74,7 +78,7 @@ export function MainArea(props: MainAreaProps) {
       }
 
       if (timer === 0) {
-        onGameFinished(diamonds);
+        onGameFinished(activePlayerName!, diamonds);
       }
     }
   }, [intervalRef, timer]);

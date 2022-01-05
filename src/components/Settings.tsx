@@ -1,79 +1,17 @@
-import {
-  IonButton,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonSelect,
-  IonSelectOption,
-} from "@ionic/react";
-import { useEffect, useState } from "react";
-import { useAsync } from "react-async-hook";
+import { IonButton, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
 import { useTranslation } from "react-i18next";
-import {
-  getPlayerConfig,
-  PlayerConfig,
-  savePlayerConfig,
-} from "../service/playerService";
+import { Settings } from "../hooks/settingsHook";
 
 const LANGUAGES: { code: string; name: string }[] = [
   { code: "de", name: "Deutsch" },
   { code: "en", name: "English" },
 ];
 
-export default function Settings({ onDismiss }: { onDismiss: () => void }) {
-  const { loading, error, result } = useAsync(getPlayerConfig, []);
-  const [config, setConfig] = useState<PlayerConfig | null>(null);
-
-  useEffect(() => {
-    setConfig(result as PlayerConfig);
-  }, [result]);
-
-  if (loading || error || !config) {
-    return null;
-  }
-
-  const updateConfig = (cfg: PlayerConfig) => {
-    try {
-      savePlayerConfig(cfg);
-      setConfig(cfg);
-    } catch (ex) {
-      console.log("Nope");
-    }
-  };
-
-  return (
-    <SettingContent
-      config={config}
-      updateConfig={updateConfig}
-      onDismiss={onDismiss}
-    />
-  );
-}
-
-function SettingContent({
-  config,
-  updateConfig,
-  onDismiss,
-}: {
-  config: PlayerConfig;
-  updateConfig: (cfg: PlayerConfig) => void;
-  onDismiss: () => void;
-}) {
+export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () => void; settings: Settings }) {
   const { t, i18n } = useTranslation();
 
-  const savePlayerName = (idx: number, name: string) => {
-    const updatedConfig: PlayerConfig = { ...config };
-    updatedConfig.names[idx] = name;
-    updateConfig(updatedConfig);
-  };
-
-  const setActivePlayer = (idx: number) => {
-    const updatedConfig: PlayerConfig = { ...config };
-    updatedConfig.activePlayer = idx;
-    updateConfig(updatedConfig);
-  };
-
+  const { activePlayerIndex, playerNames, selectPlayer, changePlayerName } = settings;
+  console.log("Rerender with", playerNames);
   return (
     <IonList lines="full">
       <IonItem>
@@ -86,14 +24,12 @@ function SettingContent({
         <IonSelect
           slot="end"
           interface="popover"
-          value={config.activePlayer}
+          value={activePlayerIndex}
           onIonChange={(e) => {
-            if (e.detail.value !== config.activePlayer) {
-              setActivePlayer(e.detail.value);
-            }
+            selectPlayer(e.detail.value);
           }}
         >
-          {config.names.map((p: string, idx: number) => {
+          {playerNames.map((p: string, idx: number) => {
             return !!p ? (
               <IonSelectOption key={"select" + idx} value={idx}>
                 {p}
@@ -111,9 +47,9 @@ function SettingContent({
             <IonInput
               slot="end"
               type="text"
-              value={config.names[i]}
+              value={playerNames[i]}
               placeholder={t("player_name_placeholder")}
-              onBlur={(e) => savePlayerName(i, e.target.value as string)}
+              onBlur={(e) => changePlayerName(e.target.value as string, i)}
             ></IonInput>
           </IonItem>
         );

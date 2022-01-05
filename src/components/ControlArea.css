@@ -14,3 +14,16 @@
   justify-content: center;
   align-items: center;
 }
+
+.playerNameContainer {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 2em;
+}
+
+.playerNameContainer .playerName {
+  color: yellow;
+  font-weight: 800;
+}

@@ -1,6 +1,5 @@
 .helpHeader {
   height: 60px;
-  background: darkblue;
   color: yellow;
   margin: 10px 0;
   display: flex;
@@ -9,14 +8,9 @@
   font-weight: 700;
 }
 
-.intermediateHeader {
-  display: flex;
-  align-items: center;
-  font-size: 1.5em;
-}
-
 .helpContainer {
   overflow-y: scroll;
   background: #444;
   color: white;
+  font-family: "orbitron";
 }

@@ -4,8 +4,6 @@ ion-backdrop {
 
 .app {
   background-image: url("space.jpg");
-  /*background: rgb(34, 36, 40);*/
-  /*background: linear-gradient(0deg, rgba(34, 36, 40, 1) 0%, rgba(92, 199, 100, 1) 37%);*/
   background-size: cover;
   overflow-y: hidden;
   height: 100%;
@@ -30,6 +28,11 @@ ion-backdrop {
 @font-face {
   font-family: "chawp";
   src: local("chawp"), url(../fonts/chawp.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "orbitron";
+  src: local("orbitron"), url(../fonts/orbitron.ttf) format("truetype");
 }
 
 .headerTuples {

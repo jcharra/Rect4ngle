@@ -14,13 +14,16 @@ export async function savePlayerConfig(config: PlayerConfig) {
   });
 }
 
+export const DEFAULT_PLAYER_CONFIG = {
+  activePlayer: 0,
+  names: ["Player 1"],
+};
+
 export async function getPlayerConfig(): Promise<PlayerConfig> {
+  console.log("Fetch from store");
   const existing = await Storage.get({ key: PLAYER_CONFIG });
   if (!existing || !existing.value) {
-    return {
-      activePlayer: 0,
-      names: ["Spieler1"],
-    };
+    return DEFAULT_PLAYER_CONFIG;
   }
 
   return JSON.parse(existing.value);

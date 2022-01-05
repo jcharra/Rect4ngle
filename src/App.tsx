@@ -35,9 +35,9 @@ import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
-import Settings from "./components/Settings";
+import SettingsWindow from "./components/Settings";
+import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
-import { getPlayerConfig } from "./service/playerService";
 import { saveScore } from "./service/scoreService";
 /* Theme variables */
 import "./theme/variables.css";
@@ -50,6 +50,7 @@ const App: React.FC = () => {
   const [gameType, setGameType] = useState<GameType | undefined>();
 
   const [presentGameOptions] = useIonActionSheet();
+  const settings = useSettings();
 
   const onDismissHighscores = () => dismissHighscores();
   const [presentHighscores, dismissHighscores] = useIonModal(Highscores, {
@@ -58,8 +59,9 @@ const App: React.FC = () => {
   });
 
   const onDismissSettings = () => dismissSettings();
-  const [presentSettings, dismissSettings] = useIonModal(Settings, {
+  const [presentSettings, dismissSettings] = useIonModal(SettingsWindow, {
     onDismiss: onDismissSettings,
+    settings,
   });
 
   const onDismissHelp = () => dismissHelp();
@@ -72,9 +74,8 @@ const App: React.FC = () => {
     setGameType(gameType);
   };
 
-  const onGameFinished = async (score: number) => {
-    const config = await getPlayerConfig();
-    await saveScore(config.names[config.activePlayer], score, gameType!);
+  const onGameFinished = async (playerName: string, score: number) => {
+    await saveScore(playerName, score, gameType!);
     setLatestScore(score);
 
     presentHighscores();

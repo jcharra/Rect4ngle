@@ -1,6 +1,8 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import { backspaceOutline, trashOutline } from "ionicons/icons";
+import { useAsync } from "react-async-hook";
 import { useTranslation } from "react-i18next";
+import { useSettings } from "../hooks/settingsHook";
 import "./ControlArea.css";
 import AddButtonRow from "./parts/AddButtonRow";
 
@@ -21,6 +23,11 @@ export default function ControlArea(props: ControlAreaProps) {
   const { functions, summands, disabled: controlsDisabled } = props;
   const { add, check, skip, backspace, checkPrime, retry } = functions;
   const { t } = useTranslation();
+  const { activePlayerName } = useSettings();
+
+  if (!activePlayerName) {
+    return null;
+  }
 
   return (
     <div className="controlContainer">
@@ -47,6 +54,11 @@ export default function ControlArea(props: ControlAreaProps) {
           </IonButton>
         </div>
       )}
+
+      <div className="playerNameContainer">
+        <span className="playerName">{activePlayerName}</span>
+        &nbsp; playing
+      </div>
     </div>
   );
 }
