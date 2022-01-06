@@ -1,6 +1,7 @@
 import { IonButton, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
 import { useTranslation } from "react-i18next";
 import { Settings } from "../hooks/settingsHook";
+import "./Settings.css";
 
 const LANGUAGES: { code: string; name: string }[] = [
   { code: "de", name: "Deutsch" },
@@ -22,6 +23,7 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
       <IonItem>
         <IonLabel slot="start">{t("active_player")}</IonLabel>
         <IonSelect
+          className="select-full-width"
           slot="end"
           interface="popover"
           value={activePlayerIndex}
@@ -48,6 +50,7 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
               slot="end"
               type="text"
               value={playerNames[i]}
+              maxlength={25}
               placeholder={t("player_name_placeholder")}
               onBlur={(e) => changePlayerName(e.target.value as string, i)}
             ></IonInput>

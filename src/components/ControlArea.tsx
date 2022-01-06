@@ -1,6 +1,5 @@
 import { IonButton, IonIcon } from "@ionic/react";
 import { backspaceOutline, trashOutline } from "ionicons/icons";
-import { useAsync } from "react-async-hook";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
 import "./ControlArea.css";
@@ -57,7 +56,7 @@ export default function ControlArea(props: ControlAreaProps) {
 
       <div className="playerNameContainer">
         <span className="playerName">{activePlayerName}</span>
-        &nbsp; playing
+        &nbsp; {t("playing")}
       </div>
     </div>
   );
