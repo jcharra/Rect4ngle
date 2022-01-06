@@ -30,8 +30,6 @@ export function MainArea(props: MainAreaProps) {
   const [startCountdown, setStartCountdown] = useState(0);
   const { activePlayerName } = useSettings();
 
-  console.log("Active:", activePlayerName);
-
   useEffect(() => {
     if (startCountdown > 0) {
       (document as any).getElementById("beep").play();

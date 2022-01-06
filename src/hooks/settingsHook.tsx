@@ -27,7 +27,6 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
 
   async function loadConfigFromStorage() {
     const { activePlayer, names } = await getPlayerConfig();
-    console.log("Loaded", names);
     setActivePlayerIndex(activePlayer);
     setPlayerNames(names);
   }
@@ -37,7 +36,6 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
   }, []);
 
   function changePlayerName(name: string, index: number) {
-    console.log("Change to", name);
     if (!playerNames) {
       return;
     }
