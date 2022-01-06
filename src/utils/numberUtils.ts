@@ -1,4 +1,4 @@
-export const COLUMN_LIMIT = 20;
+export const COLUMN_LIMIT = 50;
 
 const isPrime = (n: number) => {
   for (let i = 2; i <= Math.sqrt(n); i++) {
@@ -28,4 +28,8 @@ export function generateRandomNumber(): number {
     const idx = Math.floor(Math.random() * PRIMES.length);
     return PRIMES[idx];
   }
+}
+
+export function getSum(numbers: number[]) {
+  return numbers.reduce((a, b) => a + b, 0);
 }

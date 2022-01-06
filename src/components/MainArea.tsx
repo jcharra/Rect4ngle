@@ -2,7 +2,7 @@ import { IonBackdrop, IonCol, IonGrid, IonRow } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
-import { COLUMN_LIMIT, generateRandomNumber, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
+import { COLUMN_LIMIT, generateRandomNumber, getSum, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
 import Blackboard from "./Blackboard";
 import ControlArea from "./ControlArea";
 import "./MainArea.css";
@@ -94,7 +94,7 @@ export function MainArea(props: MainAreaProps) {
   }, [trainingMode]);
 
   const add = (n: number) => {
-    if (summands.length < COLUMN_LIMIT) {
+    if (summands.length < COLUMN_LIMIT && getSum(summands) <= num) {
       setSummands((oldVal: number[]) => {
         return [...oldVal, n];
       });
@@ -171,7 +171,7 @@ export function MainArea(props: MainAreaProps) {
             <Blackboard num={num} summands={summands} />
           </IonCol>
           <IonCol size="8">
-            <ScalableRectangleArea summands={summands} />
+            <ScalableRectangleArea num={num} summands={summands} />
           </IonCol>
         </IonRow>
 

@@ -1,14 +1,14 @@
-export default function Blip({
-  size,
-  filled,
-  content,
-  incomplete,
-}: {
-  size: number;
-  filled: boolean;
-  content?: number;
-  incomplete: boolean;
-}) {
+import { useContext } from "react";
+import { RectStatusContext } from "./ScalableRectangleArea";
+
+const colorForStatus = {
+  INCOMPLETE: "gray",
+  VALID: "green",
+  TOO_HIGH: "orange",
+};
+
+export default function Blip({ size, filled, content }: { size: number; filled: boolean; content?: number }) {
+  const rectStatus = useContext(RectStatusContext);
   return (
     <div
       style={{
@@ -18,7 +18,7 @@ export default function Blip({
         borderColor: "white",
         borderStyle: "solid",
         display: "inline-block",
-        background: filled ? (incomplete ? "gray" : "green") : "transparent",
+        background: filled ? colorForStatus[rectStatus] : "transparent",
         fontSize: size - 6,
       }}
     >

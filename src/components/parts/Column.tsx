@@ -22,7 +22,6 @@ export default function Column({
           size={gridSize}
           filled={idx !== 0 && value >= idx}
           content={idx === value && isLast ? columnIdx * value : undefined}
-          incomplete={isLast && columnIdx === 1}
         />
       ))}
     </div>
