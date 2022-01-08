@@ -22,7 +22,7 @@ function getRandomInt(max: number) {
 
 export function generateRandomNumber(): number {
   if (Math.random() > 0.1) {
-    const [fac1, fac2] = [getRandomInt(9), getRandomInt(10)];
+    const [fac1, fac2] = [getRandomInt(9), getRandomInt(12)];
     return fac1 * fac2;
   } else {
     const idx = Math.floor(Math.random() * PRIMES.length);
