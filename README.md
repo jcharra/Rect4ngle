@@ -9,6 +9,8 @@ and, as a side effect, of prime numbers.
 
 ## Running Rect4angle
 
+You need to have node/npm installed. As of Jan 2022 it's proven to work with node version 14 and npm version 6.
+
 It should suffice to execute
 
 ```
