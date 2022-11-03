@@ -1,4 +1,4 @@
-import { Storage } from "@capacitor/storage";
+import { Preferences } from "@capacitor/preferences";
 
 const PLAYER_CONFIG = "playerConfig";
 
@@ -8,7 +8,7 @@ export interface PlayerConfig {
 }
 
 export async function savePlayerConfig(config: PlayerConfig) {
-  await Storage.set({
+  await Preferences.set({
     key: PLAYER_CONFIG,
     value: JSON.stringify(config),
   });
@@ -21,7 +21,7 @@ export const DEFAULT_PLAYER_CONFIG = {
 
 export async function getPlayerConfig(): Promise<PlayerConfig> {
   console.log("Fetch from store");
-  const existing = await Storage.get({ key: PLAYER_CONFIG });
+  const existing = await Preferences.get({ key: PLAYER_CONFIG });
   if (!existing || !existing.value) {
     return DEFAULT_PLAYER_CONFIG;
   }

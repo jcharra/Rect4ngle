@@ -25,14 +25,14 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
 
-  async function loadConfigFromStorage() {
+  async function loadConfigFromPreferences() {
     const { activePlayer, names } = await getPlayerConfig();
     setActivePlayerIndex(activePlayer);
     setPlayerNames(names);
   }
 
   useEffect(() => {
-    loadConfigFromStorage();
+    loadConfigFromPreferences();
   }, []);
 
   function changePlayerName(name: string, index: number) {

@@ -1,4 +1,4 @@
-import { Storage } from "@capacitor/storage";
+import { Preferences } from "@capacitor/preferences";
 import { GameType } from "../types/GameType";
 
 const SCORES = "scores";
@@ -14,11 +14,7 @@ export interface ScoreRecord {
   date: Date;
 }
 
-export async function saveScore(
-  playerName: string,
-  score: number,
-  gameType: GameType
-) {
+export async function saveScore(playerName: string, score: number, gameType: GameType) {
   const newScore: ScoreRecord = {
     playerName,
     score,
@@ -45,14 +41,14 @@ export async function saveScore(
 
   existing[gameType] = scoresForGameType;
 
-  await Storage.set({
+  await Preferences.set({
     key: SCORES,
     value: JSON.stringify(existing),
   });
 }
 
 export async function getScores(): Promise<ScoreDict> {
-  const existing = await Storage.get({ key: SCORES });
+  const existing = await Preferences.get({ key: SCORES });
   if (!existing || !existing.value) {
     return _emptyScoreDict();
   }
@@ -60,11 +56,7 @@ export async function getScores(): Promise<ScoreDict> {
   const data = JSON.parse(existing.value) as ScoreDict;
   let formattedData = _emptyScoreDict();
 
-  for (const gameType of [
-    GameType.ONE_MINUTE,
-    GameType.TWO_MINUTES,
-    GameType.THREE_MINUTES,
-  ]) {
+  for (const gameType of [GameType.ONE_MINUTE, GameType.TWO_MINUTES, GameType.THREE_MINUTES]) {
     const scores = data[gameType as GameType];
     for (const score of scores) {
       formattedData[gameType as GameType].push({

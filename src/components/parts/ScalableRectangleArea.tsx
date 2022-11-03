@@ -17,7 +17,7 @@ const useRefDimensions = (ref: React.RefObject<HTMLDivElement>) => {
       const boundingRect = current.getBoundingClientRect();
       const { width, height } = boundingRect;
       const [widthRounded, heightRounded] = [Math.round(width), Math.round(height)];
-      if (!width || !height || widthRounded !== dimensions.width || heightRounded !== dimensions.height) {
+      if (width && height && (widthRounded !== dimensions.width || heightRounded !== dimensions.height)) {
         setDimensions({ width: widthRounded, height: heightRounded });
       }
     }

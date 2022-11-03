@@ -42,6 +42,11 @@ import { saveScore } from "./service/scoreService";
 /* Theme variables */
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
+import { setupIonicReact } from "@ionic/react";
+
+setupIonicReact({
+  mode: "md",
+});
 
 const App: React.FC = () => {
   const { t } = useTranslation();
