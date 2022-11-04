@@ -1,5 +1,5 @@
 import { IonButton, IonIcon } from "@ionic/react";
-import { backspaceOutline, trashOutline } from "ionicons/icons";
+import { backspaceOutline, checkmarkCircleOutline, trashOutline } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
 import "./ControlArea.css";
@@ -39,7 +39,7 @@ export default function ControlArea(props: ControlAreaProps) {
       {!controlsDisabled && (
         <div className="actionsContainer">
           <IonButton size="large" disabled={summands.length < 2} color="success" onClick={() => check()}>
-            {t("check")}
+            <IonIcon icon={checkmarkCircleOutline} />
           </IonButton>
           <IonButton onClick={() => skip()}>{t("skip")}</IonButton>
           <IonButton onClick={() => backspace()}>

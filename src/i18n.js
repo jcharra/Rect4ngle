@@ -80,7 +80,7 @@ i18n.use(initReactI18next).init({
         skip: "Weiter",
         wrong: "Schade",
         correct: "Korrekt!",
-        prime: "Primzahl",
+        prime: "Prim",
         prime_correct: "PRIMZAHL!!",
         nope: "Autsch!",
         your_score: "Dein Score",
