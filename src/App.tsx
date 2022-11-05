@@ -5,10 +5,10 @@ import {
   IonContent,
   IonFooter,
   IonIcon,
+  IonModal,
   IonTitle,
   IonToolbar,
   useIonActionSheet,
-  useIonModal,
 } from "@ionic/react";
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -30,7 +30,7 @@ import {
   statsChartOutline,
   stopwatchOutline,
 } from "ionicons/icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores from "./components/Highscores";
@@ -40,9 +40,9 @@ import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
 import { saveScore } from "./service/scoreService";
 /* Theme variables */
+import { setupIonicReact } from "@ionic/react";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
-import { setupIonicReact } from "@ionic/react";
 
 setupIonicReact({
   mode: "md",
@@ -57,22 +57,14 @@ const App: React.FC = () => {
   const [presentGameOptions] = useIonActionSheet();
   const settings = useSettings();
 
-  const onDismissHighscores = () => dismissHighscores();
-  const [presentHighscores, dismissHighscores] = useIonModal(Highscores, {
-    latestScore,
-    onDismiss: onDismissHighscores,
-  });
+  const highscoresModal = useRef<HTMLIonModalElement>(null);
+  const [highscoresOpen, setHighscoresOpen] = useState(false);
 
-  const onDismissSettings = () => dismissSettings();
-  const [presentSettings, dismissSettings] = useIonModal(SettingsWindow, {
-    onDismiss: onDismissSettings,
-    settings,
-  });
+  const settingsModal = useRef<HTMLIonModalElement>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const onDismissHelp = () => dismissHelp();
-  const [presentHelp, dismissHelp] = useIonModal(Help, {
-    onDismiss: onDismissHelp,
-  });
+  const helpModal = useRef<HTMLIonModalElement>(null);
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const startGame = (gameType: GameType) => {
     setLatestScore(-1);
@@ -83,7 +75,7 @@ const App: React.FC = () => {
     await saveScore(playerName, score, gameType!);
     setLatestScore(score);
 
-    presentHighscores();
+    setHighscoresOpen(true);
     setGameType(undefined);
   };
 
@@ -146,15 +138,26 @@ const App: React.FC = () => {
             </IonButton>
           </IonButtons>
           <IonButtons slot="primary" className="ion-padding-horizontal">
-            <IonButton onClick={() => presentHelp()}>
+            <IonButton onClick={() => setHelpOpen(true)}>
               <IonIcon slot="icon-only" icon={bulbOutline} />
             </IonButton>
-            <IonButton onClick={() => presentHighscores()}>
+            <IonModal ref={helpModal} onWillDismiss={() => setHelpOpen(false)} isOpen={helpOpen}>
+              <Help onDismiss={() => setHelpOpen(false)} />
+            </IonModal>
+
+            <IonButton onClick={() => setHighscoresOpen(true)}>
               <IonIcon slot="icon-only" icon={statsChartOutline} />
             </IonButton>
-            <IonButton onClick={() => presentSettings()}>
+            <IonModal ref={highscoresModal} onWillDismiss={() => setHighscoresOpen(false)} isOpen={highscoresOpen}>
+              <Highscores latestScore={latestScore} onDismiss={() => setHighscoresOpen(false)} />
+            </IonModal>
+
+            <IonButton onClick={() => setSettingsOpen(true)}>
               <IonIcon slot="icon-only" icon={settingsOutline} />
             </IonButton>
+            <IonModal ref={settingsModal} onWillDismiss={() => setSettingsOpen(false)} isOpen={settingsOpen}>
+              <SettingsWindow onDismiss={() => setSettingsOpen(false)} settings={settings} />
+            </IonModal>
           </IonButtons>
         </IonToolbar>
       </IonFooter>

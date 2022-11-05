@@ -21,7 +21,7 @@ const useRefDimensions = (ref: React.RefObject<HTMLDivElement>) => {
         setDimensions({ width: widthRounded, height: heightRounded });
       }
     }
-  }, [ref]);
+  }, [ref, dimensions.height, dimensions.width]);
   return dimensions;
 };
 

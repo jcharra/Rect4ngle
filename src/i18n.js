@@ -36,7 +36,7 @@ i18n.use(initReactI18next).init({
         playing: "playing",
         help_1:
           "In Rect4ngle, your goal is to build rectangles with a given number of " +
-          "balls. The target number is written on the blackboard. A rectangle is built from " +
+          "cells. The target number of cells is written on the blackboard. A rectangle is built from " +
           "<strong>at least two pieces</strong> and all pieces must have the same length. <br /><br />" +
           "On the bottom left you find two icons to start playing. One is for the " +
           "<strong>training mode</strong>, where there is no time limit and you " +
@@ -92,8 +92,8 @@ i18n.use(initReactI18next).init({
         three_minutes_header: "Drei Minuten",
         playing: "spielt",
         help_1:
-          "Bei Rect4ngle musst Du Rechtecke bauen, mit der richtigen Anzahl von Bällen. Die Anzahl Bälle " +
-          "die Du brauchst steht auf der schwarzen Tafel. Ein Rechteck besteht immer aus " +
+          "Bei Rect4ngle musst Du Rechtecke bauen, die eine vorgegebene Anzahl von Kästchen enthalten. Die Anzahl Kästchen " +
+          "die Du brauchst steht links auf der schwarzen Tafel. Ein Rechteck besteht immer aus " +
           "<strong>mindestens zwei Teilen</strong>, und alle Teile müssen gleich lang sein.<br /><br />" +
           "In der Ecke unten links findest Du zwei Möglichkeiten, ein Spiel zu starten: " +
           "Im <strong>Trainingsmodus</strong> kannst Du ohne Zeitbegrenzung üben. " +

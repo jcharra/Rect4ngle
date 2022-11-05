@@ -1,5 +1,5 @@
 import { IonButton, IonIcon } from "@ionic/react";
-import { backspaceOutline, checkmarkCircleOutline, trashOutline } from "ionicons/icons";
+import { backspaceOutline, checkmarkCircleOutline, flagOutline, trashOutline } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
 import "./ControlArea.css";
@@ -36,23 +36,28 @@ export default function ControlArea(props: ControlAreaProps) {
         disabled={controlsDisabled}
       />
 
-      {!controlsDisabled && (
-        <div className="actionsContainer">
-          <IonButton size="large" disabled={summands.length < 2} color="success" onClick={() => check()}>
-            <IonIcon icon={checkmarkCircleOutline} />
-          </IonButton>
-          <IonButton onClick={() => skip()}>{t("skip")}</IonButton>
-          <IonButton onClick={() => backspace()}>
-            <IonIcon icon={backspaceOutline} />
-          </IonButton>
-          <IonButton onClick={() => retry()}>
-            <IonIcon icon={trashOutline} />
-          </IonButton>
-          <IonButton color="warning" onClick={() => checkPrime()} size="large">
-            {t("prime")}
-          </IonButton>
-        </div>
-      )}
+      <div className="actionsContainer">
+        <IonButton
+          size="large"
+          disabled={controlsDisabled || summands.length < 2}
+          color="success"
+          onClick={() => check()}
+        >
+          <IonIcon icon={checkmarkCircleOutline} />
+        </IonButton>
+        <IonButton onClick={() => skip()} disabled={controlsDisabled}>
+          <IonIcon icon={flagOutline} />
+        </IonButton>
+        <IonButton onClick={() => backspace()} disabled={controlsDisabled || summands.length === 0}>
+          <IonIcon icon={backspaceOutline} />
+        </IonButton>
+        <IonButton onClick={() => retry()} disabled={controlsDisabled || summands.length === 0}>
+          <IonIcon icon={trashOutline} />
+        </IonButton>
+        <IonButton color="warning" onClick={() => checkPrime()} size="large" disabled={controlsDisabled}>
+          {t("prime")}
+        </IonButton>
+      </div>
     </div>
   );
 }
