@@ -53,11 +53,6 @@ export default function ControlArea(props: ControlAreaProps) {
           </IonButton>
         </div>
       )}
-
-      <div className="playerNameContainer">
-        <span className="playerName">{activePlayerName}</span>
-        &nbsp; {t("playing")}
-      </div>
     </div>
   );
 }

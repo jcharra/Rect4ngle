@@ -3,11 +3,10 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 100%;
   width: 100%;
   border-radius: 15px;
   background: rgba(0.8, 0, 0, 0.7);
-  font-size: 5em;
+  font-size: 2.5em;
   color: gold;
   font-weight: 900;
   text-shadow: 3px 3px gray;

@@ -5,16 +5,7 @@ ion-backdrop {
 .app {
   background-image: url("space.jpg");
   background-size: cover;
-  overflow-y: hidden;
-  height: 100vh;
-}
-
-.upperRow {
-  height: 40vh;
-}
-
-.lowerRow {
-  height: 20vh;
+  height: 100%;
 }
 
 .block {

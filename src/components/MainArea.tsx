@@ -46,7 +46,7 @@ export function MainArea(props: MainAreaProps) {
         (document as any).getElementById("success").play();
       }
     }
-  }, [startCountdown]);
+  }, [startCountdown, initialTimer]);
 
   useEffect(() => {
     if (startCountdown > 0) {

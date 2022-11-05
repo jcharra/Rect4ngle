@@ -1,11 +1,11 @@
 .controlContainer {
   width: 100%;
-  height: 100%;
   background: rgba(0, 0.1, 0, 0.7);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding: 0.5em;
 }
 
 .actionsContainer {
@@ -13,17 +13,4 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.playerNameContainer {
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding-right: 2em;
-}
-
-.playerNameContainer .playerName {
-  color: yellow;
-  font-weight: 800;
 }

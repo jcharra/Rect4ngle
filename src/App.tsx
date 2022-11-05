@@ -107,7 +107,9 @@ const App: React.FC = () => {
       </IonContent>
       <IonFooter>
         <IonToolbar color="dark" mode="ios">
-          <IonTitle>Rect4ngle</IonTitle>
+          <IonTitle>
+            {t("player")}: <span className="playerName">{settings.activePlayerName}</span>
+          </IonTitle>
           <IonButtons slot="start" className="ion-padding-horizontal">
             <IonButton onClick={() => startGame(GameType.TRAINING)}>
               <IonIcon slot="icon-only" icon={gameControllerOutline} />
