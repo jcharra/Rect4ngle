@@ -28,6 +28,7 @@ import {
   gameControllerOutline,
   settingsOutline,
   statsChartOutline,
+  stopCircleOutline,
   stopwatchOutline,
 } from "ionicons/icons";
 import { useRef, useState } from "react";
@@ -71,6 +72,11 @@ const App: React.FC = () => {
     setGameType(gameType);
   };
 
+  const stopGame = () => {
+    setLatestScore(-1);
+    setGameType(undefined);
+  };
+
   const onGameFinished = async (playerName: string, score: number) => {
     await saveScore(playerName, score, gameType!);
     setLatestScore(score);
@@ -92,7 +98,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonContent>
         <MainArea
-          trainingMode={gameType === GameType.TRAINING}
+          gameType={gameType}
           initialTimer={gameType ? getSecondsForGameType(gameType) : -1}
           onGameFinished={onGameFinished}
         />
@@ -103,62 +109,72 @@ const App: React.FC = () => {
             {t("player")}: <span className="playerName">{settings.activePlayerName}</span>
           </IonTitle>
           <IonButtons slot="start" className="ion-padding-horizontal">
-            <IonButton onClick={() => startGame(GameType.TRAINING)}>
-              <IonIcon slot="icon-only" icon={gameControllerOutline} />
-            </IonButton>
-            <IonButton
-              onClick={() =>
-                presentGameOptions({
-                  buttons: [
-                    {
-                      text: t("one_minute"),
-                      handler: () => {
-                        startGame(GameType.ONE_MINUTE);
-                      },
-                    },
-                    {
-                      text: t("two_minutes"),
-                      handler: () => {
-                        startGame(GameType.TWO_MINUTES);
-                      },
-                    },
-                    {
-                      text: t("three_minutes"),
-                      handler: () => {
-                        startGame(GameType.THREE_MINUTES);
-                      },
-                    },
-                    { text: t("cancel"), role: "cancel" },
-                  ],
-                  header: t("against_the_clock"),
-                })
-              }
-            >
-              <IonIcon slot="icon-only" icon={stopwatchOutline} />
-            </IonButton>
+            {!!gameType ? (
+              <IonButton onClick={() => stopGame()}>
+                <IonIcon slot="icon-only" icon={stopCircleOutline} />
+              </IonButton>
+            ) : (
+              <>
+                <IonButton onClick={() => startGame(GameType.TRAINING)}>
+                  <IonIcon slot="icon-only" icon={gameControllerOutline} />
+                </IonButton>
+                <IonButton
+                  onClick={() =>
+                    presentGameOptions({
+                      buttons: [
+                        {
+                          text: t("one_minute"),
+                          handler: () => {
+                            startGame(GameType.ONE_MINUTE);
+                          },
+                        },
+                        {
+                          text: t("two_minutes"),
+                          handler: () => {
+                            startGame(GameType.TWO_MINUTES);
+                          },
+                        },
+                        {
+                          text: t("three_minutes"),
+                          handler: () => {
+                            startGame(GameType.THREE_MINUTES);
+                          },
+                        },
+                        { text: t("cancel"), role: "cancel" },
+                      ],
+                      header: t("against_the_clock"),
+                    })
+                  }
+                >
+                  <IonIcon slot="icon-only" icon={stopwatchOutline} />
+                </IonButton>
+              </>
+            )}
           </IonButtons>
-          <IonButtons slot="primary" className="ion-padding-horizontal">
-            <IonButton onClick={() => setHelpOpen(true)}>
-              <IonIcon slot="icon-only" icon={bulbOutline} />
-            </IonButton>
-            <IonModal ref={helpModal} onWillDismiss={() => setHelpOpen(false)} isOpen={helpOpen}>
-              <Help onDismiss={() => setHelpOpen(false)} />
-            </IonModal>
+          {!gameType && (
+            <IonButtons slot="primary" className="ion-padding-horizontal">
+              <IonButton onClick={() => setHelpOpen(true)}>
+                <IonIcon slot="icon-only" icon={bulbOutline} />
+              </IonButton>
+              <IonModal ref={helpModal} onWillDismiss={() => setHelpOpen(false)} isOpen={helpOpen}>
+                <Help onDismiss={() => setHelpOpen(false)} />
+              </IonModal>
 
-            <IonButton onClick={() => setHighscoresOpen(true)}>
-              <IonIcon slot="icon-only" icon={statsChartOutline} />
-            </IonButton>
-            <IonModal ref={highscoresModal} onWillDismiss={() => setHighscoresOpen(false)} isOpen={highscoresOpen}>
-              <Highscores latestScore={latestScore} onDismiss={() => setHighscoresOpen(false)} />
-            </IonModal>
+              <IonButton onClick={() => setHighscoresOpen(true)}>
+                <IonIcon slot="icon-only" icon={statsChartOutline} />
+              </IonButton>
+              <IonModal ref={highscoresModal} onWillDismiss={() => setHighscoresOpen(false)} isOpen={highscoresOpen}>
+                <Highscores latestScore={latestScore} onDismiss={() => setHighscoresOpen(false)} />
+              </IonModal>
 
-            <IonButton onClick={() => setSettingsOpen(true)}>
-              <IonIcon slot="icon-only" icon={settingsOutline} />
-            </IonButton>
-            <IonModal ref={settingsModal} onWillDismiss={() => setSettingsOpen(false)} isOpen={settingsOpen}>
-              <SettingsWindow onDismiss={() => setSettingsOpen(false)} settings={settings} />
-            </IonModal>
-          </IonButtons>
+              <IonButton onClick={() => setSettingsOpen(true)}>
+                <IonIcon slot="icon-only" icon={settingsOutline} />
+              </IonButton>
+              <IonModal ref={settingsModal} onWillDismiss={() => setSettingsOpen(false)} isOpen={settingsOpen}>
+                <SettingsWindow onDismiss={() => setSettingsOpen(false)} settings={settings} />
+              </IonModal>
+            </IonButtons>
+          )}
         </IonToolbar>
       </IonFooter>
     </IonApp>

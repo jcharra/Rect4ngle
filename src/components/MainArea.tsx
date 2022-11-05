@@ -2,6 +2,7 @@ import { IonBackdrop, IonCol, IonGrid, IonRow } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
+import { GameType } from "../types/GameType";
 import { COLUMN_LIMIT, generateRandomNumber, getSum, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
 import Blackboard from "./Blackboard";
 import ControlArea from "./ControlArea";
@@ -11,13 +12,13 @@ import Timer from "./parts/Timer";
 import Scoreboard from "./Scoreboard";
 
 interface MainAreaProps {
-  trainingMode: boolean;
+  gameType?: GameType;
   initialTimer: number;
   onGameFinished: (name: string, n: number) => void;
 }
 
 export function MainArea(props: MainAreaProps) {
-  const { trainingMode, initialTimer, onGameFinished } = props;
+  const { gameType, initialTimer, onGameFinished } = props;
 
   const { t } = useTranslation();
   const [summands, setSummands] = useState<number[]>([]);
@@ -27,15 +28,20 @@ export function MainArea(props: MainAreaProps) {
   const [comment, setComment] = useState<string>("");
   const [timer, setTimer] = useState(0);
   const [intervalRef, setIntervalRef] = useState<any>(null);
-  const [startCountdown, setStartCountdown] = useState(0);
+  const [startCountdown, setStartCountdown] = useState(-1);
   const { activePlayerName } = useSettings();
 
   useEffect(() => {
+    if (intervalRef) {
+      clearInterval(intervalRef);
+      setIntervalRef(null);
+    }
+
     if (startCountdown > 0) {
       (document as any).getElementById("beep").play();
       setNum(0);
       setTimeout(() => setStartCountdown((val) => val - 1), 1000);
-    } else {
+    } else if (startCountdown === 0) {
       if (initialTimer > 0) {
         newNum();
         setTimer(initialTimer);
@@ -44,32 +50,13 @@ export function MainArea(props: MainAreaProps) {
         }, 1000);
         setIntervalRef(ref);
         (document as any).getElementById("success").play();
+        setDiamonds(0);
       }
     }
   }, [startCountdown, initialTimer]);
 
   useEffect(() => {
-    if (startCountdown > 0) {
-      return;
-    }
-
     if (intervalRef) {
-      clearInterval(intervalRef);
-    }
-
-    if (initialTimer <= 0) {
-      return;
-    }
-
-    //(document as any).getElementById("suspense").loop = true;
-    //(document as any).getElementById("suspense").play();
-
-    setDiamonds(0);
-    setStartCountdown(3);
-  }, [initialTimer]);
-
-  useEffect(() => {
-    if (!!intervalRef) {
       if (timer === -1 || timer === 0) {
         clearInterval(intervalRef);
         setSummands([]);
@@ -82,16 +69,24 @@ export function MainArea(props: MainAreaProps) {
   }, [intervalRef, timer]);
 
   useEffect(() => {
-    if (trainingMode) {
-      setDiamonds(0);
+    setDiamonds(0);
+
+    if (!!intervalRef) {
+      clearInterval(intervalRef);
+      setTimer(-1);
+    }
+
+    if (gameType) {
       newNum();
 
-      if (!!intervalRef) {
-        clearInterval(intervalRef);
-        setTimer(-1);
+      if (gameType !== GameType.TRAINING) {
+        setStartCountdown(3);
       }
+    } else {
+      setStartCountdown(-1);
+      setNum(0);
     }
-  }, [trainingMode]);
+  }, [gameType]);
 
   const add = (n: number) => {
     if (summands.length < COLUMN_LIMIT && getSum(summands) <= num) {
@@ -154,7 +149,7 @@ export function MainArea(props: MainAreaProps) {
     newNum();
   };
 
-  const controlsDisabled = timer === 0 && !trainingMode;
+  const controlsDisabled = timer === 0 && gameType !== GameType.TRAINING;
   const functions = { add, check, skip, backspace, checkPrime, retry };
 
   return (
