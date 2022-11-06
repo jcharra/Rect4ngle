@@ -1,5 +1,5 @@
 import { IonBackdrop, IonCol, IonGrid, IonRow } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
 import { GameType } from "../types/GameType";
@@ -11,22 +11,26 @@ import ScalableRectangleArea from "./parts/ScalableRectangleArea";
 import Timer from "./parts/Timer";
 import Scoreboard from "./Scoreboard";
 
+interface TimerData {
+  timer: number;
+  setTimer: Dispatch<SetStateAction<number>>;
+}
+
 interface MainAreaProps {
   gameType?: GameType;
-  initialTimer: number;
+  timerData: TimerData;
   onGameFinished: (name: string, n: number) => void;
 }
 
 export function MainArea(props: MainAreaProps) {
-  const { gameType, initialTimer, onGameFinished } = props;
-
+  const { gameType, timerData, onGameFinished } = props;
+  const { timer, setTimer } = timerData;
   const { t } = useTranslation();
   const [summands, setSummands] = useState<number[]>([]);
   const [num, setNum] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
   const [delta, setDelta] = useState<number | undefined>();
   const [comment, setComment] = useState<string>("");
-  const [timer, setTimer] = useState(0);
   const [intervalRef, setIntervalRef] = useState<any>(null);
   const [startCountdown, setStartCountdown] = useState(-1);
   const { activePlayerName } = useSettings();
@@ -40,20 +44,22 @@ export function MainArea(props: MainAreaProps) {
     if (startCountdown > 0) {
       (document as any).getElementById("beep").play();
       setNum(0);
+      setDiamonds(0);
       setTimeout(() => setStartCountdown((val) => val - 1), 1000);
     } else if (startCountdown === 0) {
-      if (initialTimer > 0) {
+      if (num === 0) {
+        (document as any).getElementById("success").play();
         newNum();
-        setTimer(initialTimer);
+      }
+
+      if (timer > 0) {
         const ref = setInterval(() => {
           setTimer((t) => t - 1);
         }, 1000);
         setIntervalRef(ref);
-        (document as any).getElementById("success").play();
-        setDiamonds(0);
       }
     }
-  }, [startCountdown, initialTimer]);
+  }, [startCountdown, timer, setTimer]);
 
   useEffect(() => {
     if (intervalRef) {
@@ -86,7 +92,7 @@ export function MainArea(props: MainAreaProps) {
       setStartCountdown(-1);
       setNum(0);
     }
-  }, [gameType]);
+  }, [gameType, setTimer]);
 
   const add = (n: number) => {
     if (summands.length < COLUMN_LIMIT && getSum(summands) <= num) {
@@ -149,7 +155,6 @@ export function MainArea(props: MainAreaProps) {
     newNum();
   };
 
-  const controlsDisabled = timer === 0 && gameType !== GameType.TRAINING;
   const functions = { add, check, skip, backspace, checkPrime, retry };
 
   return (
@@ -173,10 +178,9 @@ export function MainArea(props: MainAreaProps) {
         <IonRow className="lowerRow">
           <IonCol size="4">
             <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
-            <Timer seconds={timer} />
           </IonCol>
           <IonCol size="8">
-            <ControlArea functions={functions} summands={summands} disabled={controlsDisabled} />
+            <ControlArea functions={functions} summands={summands} disabled={!gameType} />
           </IonCol>
         </IonRow>
       </IonGrid>

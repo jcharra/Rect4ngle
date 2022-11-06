@@ -31,7 +31,7 @@ import {
   stopCircleOutline,
   stopwatchOutline,
 } from "ionicons/icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores from "./components/Highscores";
@@ -42,6 +42,7 @@ import "./i18n";
 import { saveScore } from "./service/scoreService";
 /* Theme variables */
 import { setupIonicReact } from "@ionic/react";
+import Timer from "./components/parts/Timer";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 
@@ -66,6 +67,8 @@ const App: React.FC = () => {
 
   const helpModal = useRef<HTMLIonModalElement>(null);
   const [helpOpen, setHelpOpen] = useState(false);
+
+  const [timer, setTimer] = useState(0);
 
   const startGame = (gameType: GameType) => {
     setLatestScore(-1);
@@ -94,14 +97,19 @@ const App: React.FC = () => {
     }[gt];
   };
 
+  const timerData = {
+    timer: timer,
+    setTimer: setTimer,
+  };
+
+  useEffect(() => {
+    setTimer(gameType ? getSecondsForGameType(gameType) : -1);
+  }, [gameType]);
+
   return (
     <IonApp>
       <IonContent>
-        <MainArea
-          gameType={gameType}
-          initialTimer={gameType ? getSecondsForGameType(gameType) : -1}
-          onGameFinished={onGameFinished}
-        />
+        <MainArea gameType={gameType} timerData={timerData} onGameFinished={onGameFinished} />
       </IonContent>
       <IonFooter>
         <IonToolbar color="dark" mode="ios">
@@ -110,9 +118,12 @@ const App: React.FC = () => {
           </IonTitle>
           <IonButtons slot="start" className="ion-padding-horizontal">
             {!!gameType ? (
-              <IonButton onClick={() => stopGame()}>
-                <IonIcon slot="icon-only" icon={stopCircleOutline} />
-              </IonButton>
+              <>
+                <IonButton onClick={() => stopGame()}>
+                  <IonIcon slot="icon-only" icon={stopCircleOutline} />
+                </IonButton>
+                {timer >= 0 && <Timer seconds={timer} />}
+              </>
             ) : (
               <>
                 <IonButton onClick={() => startGame(GameType.TRAINING)}>
