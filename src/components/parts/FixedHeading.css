@@ -1,0 +1,9 @@
+.fixedRight {
+  position: fixed;
+  right: 10px;
+  top: 8px;
+}
+
+.fixedRight:hover {
+  cursor: pointer;
+}

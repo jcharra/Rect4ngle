@@ -27,6 +27,7 @@ i18n.use(initReactI18next).init({
         prime_correct: "PRIME!!",
         nope: "Nope",
         your_score: "Your score",
+        empty_score: "<empty>",
         hall_of_fame: "Hall of Fame",
         no_scores_yet: "No entries yet",
         rectangle_rules: "Game rules",
