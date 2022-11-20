@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonCol, IonGrid, IonRow } from "@ionic/react";
 import { format } from "date-fns";
 import { useAsync } from "react-async-hook";
 import { useTranslation } from "react-i18next";
@@ -6,6 +6,7 @@ import { useSettings } from "../hooks/settingsHook";
 import { getScores, NUMBER_OF_SCORES_TO_KEEP, ScoreDict, ScoreRecord } from "../service/scoreService";
 import { GameType } from "../types/GameType";
 import "./Highscores.css";
+import FixedHeading from "./parts/FixedHeading";
 
 function GameTypeRows({ scores }: { scores: ScoreRecord[] }) {
   const { activePlayerName } = useSettings();
@@ -47,37 +48,28 @@ export default function Highscores({ latestScore, onDismiss }: { latestScore?: n
   const scores = result as ScoreDict;
 
   return (
-    <IonGrid class="ion-text-center highscoreContainer" style={{ width: "100%" }}>
-      {latestScore && latestScore !== -1 ? (
-        <IonRow className="latestScore">
-          {t("your_score")}: {latestScore}
-        </IonRow>
-      ) : null}
+    <>
+      <FixedHeading text={t("hall_of_fame")} onDismiss={onDismiss} />
+      <IonGrid class="ion-text-center highscoreContainer" style={{ width: "100%" }}>
+        {latestScore && latestScore !== -1 ? (
+          <IonRow className="latestScore">
+            {t("your_score")}: {latestScore}
+          </IonRow>
+        ) : null}
 
-      <IonRow className="highscoreHeader">
-        <IonCol size="12">
-          <strong>{t("hall_of_fame")}</strong>
-        </IonCol>
-      </IonRow>
-      <IonRow className="gameTypeHeader">
-        <IonCol>{t("one_minute_header")}</IonCol>
-      </IonRow>
-      <GameTypeRows scores={scores[GameType.ONE_MINUTE]} />
-      <IonRow className="gameTypeHeader">
-        <IonCol>{t("two_minutes_header")}</IonCol>
-      </IonRow>
-      <GameTypeRows scores={scores[GameType.TWO_MINUTES]} />
-      <IonRow className="gameTypeHeader">
-        <IonCol>{t("three_minutes_header")}</IonCol>
-      </IonRow>
-      <GameTypeRows scores={scores[GameType.THREE_MINUTES]} />
-      <IonRow>
-        <IonCol>
-          <IonButton expand="block" onClick={() => onDismiss()}>
-            {t("close")}
-          </IonButton>
-        </IonCol>
-      </IonRow>
-    </IonGrid>
+        <IonRow className="gameTypeHeader">
+          <IonCol>{t("one_minute_header")}</IonCol>
+        </IonRow>
+        <GameTypeRows scores={scores[GameType.ONE_MINUTE]} />
+        <IonRow className="gameTypeHeader">
+          <IonCol>{t("two_minutes_header")}</IonCol>
+        </IonRow>
+        <GameTypeRows scores={scores[GameType.TWO_MINUTES]} />
+        <IonRow className="gameTypeHeader">
+          <IonCol>{t("three_minutes_header")}</IonCol>
+        </IonRow>
+        <GameTypeRows scores={scores[GameType.THREE_MINUTES]} />
+      </IonGrid>
+    </>
   );
 }

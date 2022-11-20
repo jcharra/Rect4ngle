@@ -1,6 +1,7 @@
 import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
 import { useTranslation } from "react-i18next";
 import { Settings } from "../hooks/settingsHook";
+import FixedHeading from "./parts/FixedHeading";
 import "./Settings.css";
 
 const LANGUAGES: { code: string; name: string }[] = [
@@ -16,11 +17,7 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
   return (
     <IonContent>
       <IonList lines="full">
-        <IonItem>
-          <IonLabel class="ion-text-center">
-            <strong>{t("settings")}</strong>
-          </IonLabel>
-        </IonItem>
+        <FixedHeading text={t("settings")} onDismiss={onDismiss} />
         <IonItem>
           <IonLabel slot="start">{t("active_player")}</IonLabel>
           <IonSelect
