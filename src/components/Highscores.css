@@ -3,12 +3,14 @@
   background: #444;
   color: white;
   font-family: "orbitron";
+  padding: 0;
+  margin: 0;
 }
 
 .highscoreHeader {
   height: 60px;
   color: yellow;
-  margin: 10px 0;
+  margin: 10px 0 0 0;
   display: flex;
   align-items: center;
   font-size: 2em;
@@ -32,7 +34,7 @@
 .gameTypeHeader {
   height: 40px;
   background: orange;
-  margin: 10px 0;
+  margin: 0;
   display: flex;
   align-items: center;
   font-size: 1.2em;
@@ -47,7 +49,6 @@ ion-chip.gold {
   --background: gold;
   --color: yellow;
   font-weight: 700;
-  width: 33px;
   text-align: center;
   font-size: large;
 }

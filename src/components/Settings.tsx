@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
+import { IonContent, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption } from "@ionic/react";
 import { useTranslation } from "react-i18next";
 import { Settings } from "../hooks/settingsHook";
 import FixedHeading from "./parts/FixedHeading";
@@ -69,11 +69,6 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
               </IonSelectOption>
             ))}
           </IonSelect>
-        </IonItem>
-        <IonItem>
-          <IonButton expand="block" onClick={() => onDismiss()}>
-            {t("close")}
-          </IonButton>
         </IonItem>
       </IonList>
     </IonContent>

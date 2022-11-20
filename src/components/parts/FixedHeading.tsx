@@ -6,9 +6,13 @@ export default function FixedHeading({ text, onDismiss }: { text: string; onDism
     <IonItem>
       <IonLabel class="ion-text-center">
         <strong>{text}</strong>
-      </IonLabel>
-      <IonLabel slot="end">
-        <IonIcon slot="icon-only" size="large" icon={closeCircleOutline} onClick={() => onDismiss()} />
+        <IonIcon
+          className="ion-float-right"
+          slot="icon-only"
+          size="large"
+          icon={closeCircleOutline}
+          onClick={() => onDismiss()}
+        />
       </IonLabel>
     </IonItem>
   );
