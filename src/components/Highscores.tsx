@@ -1,15 +1,29 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonChip, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { format } from "date-fns";
+import { differenceInSeconds } from "date-fns/esm";
 import { useAsync } from "react-async-hook";
 import { useTranslation } from "react-i18next";
-import { useSettings } from "../hooks/settingsHook";
 import { getScores, NUMBER_OF_SCORES_TO_KEEP, ScoreDict, ScoreRecord } from "../service/scoreService";
 import { GameType } from "../types/GameType";
 import "./Highscores.css";
 import FixedHeading from "./parts/FixedHeading";
 
+function isRecent(score: ScoreRecord) {
+  return differenceInSeconds(new Date(), score.date) < 3;
+}
+
+function colorForRank(rank: number) {
+  return (
+    {
+      0: "gold",
+      1: "silver",
+      2: "bronze",
+    }[rank] || "default"
+  );
+}
+
 function GameTypeRows({ scores }: { scores: ScoreRecord[] }) {
-  const { activePlayerName } = useSettings();
+  const { t } = useTranslation();
   let scoreIterable: (ScoreRecord | null)[] = [...scores];
   for (let i = scoreIterable.length; i < NUMBER_OF_SCORES_TO_KEEP; i++) {
     scoreIterable.push(null);
@@ -20,11 +34,16 @@ function GameTypeRows({ scores }: { scores: ScoreRecord[] }) {
       {scoreIterable.map((score, index) => (
         <IonRow
           key={"score-" + index}
-          className={score && score.playerName === activePlayerName ? "currentPlayer" : ""}
+          className={score && isRecent(score) ? "recentScore ion-align-items-center" : "ion-align-items-center"}
         >
-          <IonCol size="6">{score ? score.playerName : "---"}</IonCol>
-          <IonCol size="3">{score ? score.score : 0}</IonCol>
-          <IonCol size="3">{score ? format(score.date, "dd.MM.yy") : "---"}</IonCol>
+          <IonCol size="1" className="ion-self-align-center">
+            <IonChip class={colorForRank(index)}>{index + 1}</IonChip>
+          </IonCol>
+          <IonCol size="5" className="left-aligned">
+            {score ? score.playerName : t("empty_score")}
+          </IonCol>
+          <IonCol size="3">{score ? score.score : ""}</IonCol>
+          <IonCol size="3">{score ? format(score.date, "dd.MM.yy") : ""}</IonCol>
         </IonRow>
       ))}
     </>
