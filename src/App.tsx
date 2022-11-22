@@ -45,10 +45,22 @@ import { setupIonicReact } from "@ionic/react";
 import Timer from "./components/parts/Timer";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
+import { AdMob } from "@capacitor-community/admob";
+import { INTERSTITIAL_FREQUENCY, showInterstitial } from "./service/admob";
+import { getGameStats, saveGameStats } from "./service/gameStatsService";
 
 setupIonicReact({
   mode: "md",
 });
+
+export async function initialize(): Promise<void> {
+  await AdMob.trackingAuthorizationStatus();
+  AdMob.initialize({
+    requestTrackingAuthorization: false,
+    testingDevices: ["2077ef9a63d2b398840261c8221a0c9b"],
+    initializeForTesting: true,
+  });
+}
 
 const App: React.FC = () => {
   const { t } = useTranslation();
@@ -84,6 +96,12 @@ const App: React.FC = () => {
     await saveScore(playerName, score, gameType!);
     setLatestScore(score);
 
+    const stats = await getGameStats();
+    if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
+      await showInterstitial();
+    }
+    await saveGameStats(stats + 1);
+
     setHighscoresOpen(true);
     setGameType(undefined);
   };
@@ -101,6 +119,11 @@ const App: React.FC = () => {
     timer: timer,
     setTimer: setTimer,
   };
+
+  useEffect(() => {
+    // init AdMob
+    initialize();
+  }, []);
 
   useEffect(() => {
     setTimer(gameType ? getSecondsForGameType(gameType) : -1);

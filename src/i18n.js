@@ -56,7 +56,7 @@ i18n.use(initReactI18next).init({
           "<h5>Prime numbers</h5>" +
           "Sometimes there's a number that cannot be built as a rectangle. These " +
           "are called <strong>PRIME NUMBERS</strong>. You have to click the " +
-          "yellow <strong>PRIME</strong> button to classify them as primes. This " +
+          "<strong>PRIME</strong> button to classify them as primes. This " +
           "is very tricky, so finding a prime will give you 20 diamonds. But " +
           "watch out: Calling a number a prime that is actually not a prime will " +
           "lose 10 diamonds. <br/><br/> If you're not sure what to do with a number, " +
@@ -113,7 +113,7 @@ i18n.use(initReactI18next).init({
           "<h5>Primzahlen</h5>" +
           "Manchmal erscheint eine Zahl auf der Tafel, die man gar nicht als Rechteck bauen kann. " +
           "Diese Zahlen nennt man <strong>PRIMZAHLEN</strong>. Wenn so eine Zahl erscheint " +
-          "musst Du den gelben <strong>PRIMZAHL</strong>-Knopf drücken, um sie zu entlarven. <br/><br/>Das  " +
+          "musst Du den <strong>PRIMZAHL</strong>-Knopf drücken, um sie zu entlarven. <br/><br/>Das  " +
           "ist recht schwierig, gibt dafür aber auch einen großen Gewinn: <strong>20 Diamanten!</strong> Aber sei " +
           "vorsichtig: Wenn Du den Primzahl-Knopf drückst und es wäre doch ein Rechteck möglich gewesen " +
           "verlierst Du 10 Diamanten. <br/><br/> Wenn Du bei einer Zahl mal nicht weiter weißt, " +
