@@ -17,12 +17,12 @@ export default function Help({ onDismiss }: { onDismiss: () => void }) {
         </IonRow>
         <IonRow>
           <IonCol>
-            <Trans i18nKey="help_2" t={t} components={{ h5: <h5 /> }}></Trans>
+            <Trans i18nKey="help_2" t={t}></Trans>
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol>
-            <Trans i18nKey="help_3" t={t} components={{ h5: <h5 /> }}></Trans>
+            <Trans i18nKey="help_3" t={t}></Trans>
           </IonCol>
         </IonRow>
       </IonGrid>

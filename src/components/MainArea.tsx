@@ -8,7 +8,6 @@ import Blackboard from "./Blackboard";
 import ControlArea from "./ControlArea";
 import "./MainArea.css";
 import ScalableRectangleArea from "./parts/ScalableRectangleArea";
-import Timer from "./parts/Timer";
 import Scoreboard from "./Scoreboard";
 
 interface TimerData {
@@ -59,6 +58,7 @@ export function MainArea(props: MainAreaProps) {
         setIntervalRef(ref);
       }
     }
+    // eslint-disable-next-line
   }, [startCountdown, timer, setTimer]);
 
   useEffect(() => {
@@ -72,6 +72,7 @@ export function MainArea(props: MainAreaProps) {
         onGameFinished(activePlayerName!, diamonds);
       }
     }
+    // eslint-disable-next-line
   }, [intervalRef, timer]);
 
   useEffect(() => {
@@ -92,6 +93,7 @@ export function MainArea(props: MainAreaProps) {
       setStartCountdown(-1);
       setNum(0);
     }
+    // eslint-disable-next-line
   }, [gameType, setTimer]);
 
   const add = (n: number) => {
