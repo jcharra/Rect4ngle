@@ -33,7 +33,7 @@ export default function ControlArea(props: ControlAreaProps) {
       <AddButtonRow
         add={add}
         selectedValue={summands.length > 0 ? summands[0] : undefined}
-        disabled={controlsDisabled}
+        disabled={controlsDisabled || summands.length === 12}
       />
 
       <div className="actionsContainer">

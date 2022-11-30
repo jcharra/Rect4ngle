@@ -1,0 +1,14 @@
+.gray {
+  background-color: gray;
+  transition: 0.3s;
+}
+
+.green {
+  background-color: green;
+  transition: 0.3s;
+}
+
+.orange {
+  background-color: orange;
+  transition: 0.3s;
+}

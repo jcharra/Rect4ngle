@@ -33,32 +33,29 @@ export default function ScalableRectangleArea({ num, summands }: { num: number; 
 
   const { width, height } = dimensions;
 
-  const widthBy25 = width / 25.0;
-  const heightBy11 = height / 11.0;
+  const widthBy12 = width / 12.0;
+  const heightBy9 = height / 9.0;
 
-  const gridSize = Math.min(widthBy25, heightBy11);
-  const numberOfCols = Math.ceil(width / gridSize);
+  const gridSize = Math.min(widthBy12, heightBy9);
 
   const status =
     getSum(summands) > num ? RectStatus.TOO_HIGH : summands.length < 2 ? RectStatus.INCOMPLETE : RectStatus.VALID;
 
   return (
     <div className="tupleContainer" ref={ref}>
-      <div className="fixedHeightContainer" style={{ height }}>
+      <div className="fixedHeightContainer">
         <RectStatusContext.Provider value={status}>
-          {numberOfCols > 0
-            ? Array.from(Array(numberOfCols), (_, i) => i).map((idx) => (
-                <div key={idx} style={{ display: "inline-block" }}>
-                  <Column
-                    gridSize={gridSize}
-                    numBoxes={Math.ceil(height / gridSize)}
-                    value={summands[idx - 1]}
-                    columnIdx={idx}
-                    isLast={idx === summands.length}
-                  />
-                </div>
-              ))
-            : null}
+          {Array.from(Array(12), (_, i) => i).map((idx) => (
+            <div key={idx} style={{ display: "inline-block" }}>
+              <Column
+                gridSize={gridSize}
+                numBoxes={9}
+                value={summands[idx]}
+                columnIdx={idx}
+                isLast={idx === summands.length - 1}
+              />
+            </div>
+          ))}
         </RectStatusContext.Provider>
       </div>
     </div>

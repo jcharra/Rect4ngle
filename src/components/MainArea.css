@@ -8,6 +8,14 @@ ion-backdrop {
   height: 100%;
 }
 
+.upperRow {
+  height: max(175px, 40vh);
+}
+
+.lowerRow {
+  height: max(95px, 40vh);
+}
+
 .block {
   display: flex;
   justify-content: center;

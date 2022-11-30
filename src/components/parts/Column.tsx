@@ -20,8 +20,10 @@ export default function Column({
         <Blip
           key={idx}
           size={gridSize}
-          filled={idx !== 0 && value >= idx}
-          content={idx === value && isLast ? columnIdx * value : undefined}
+          filled={value > idx}
+          content={idx === value - 1 && isLast ? (columnIdx + 1) * value : undefined}
+          isBottomEnd={idx == 8}
+          isRightEnd={columnIdx == 11}
         />
       ))}
     </div>
