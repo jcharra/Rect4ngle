@@ -22,8 +22,8 @@ export default function Column({
           size={gridSize}
           filled={value > idx}
           content={idx === value - 1 && isLast ? (columnIdx + 1) * value : undefined}
-          isBottomEnd={idx == 8}
-          isRightEnd={columnIdx == 11}
+          isBottomEnd={idx === 8}
+          isRightEnd={columnIdx === 11}
         />
       ))}
     </div>
