@@ -12,17 +12,20 @@ export default function Help({ onDismiss }: { onDismiss: () => void }) {
       <IonGrid style={{ width: "100%" }} class="helpContainer">
         <IonRow>
           <IonCol>
-            <Trans i18nKey="help_1" t={t}></Trans>
+            {/* eslint-disable-next-line */}
+            <Trans i18nKey="help_1" t={t} components={{ h5: <h5 /> }}></Trans>
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol>
-            <Trans i18nKey="help_2" t={t}></Trans>
+            {/* eslint-disable-next-line */}
+            <Trans i18nKey="help_2" t={t} components={{ h5: <h5 /> }}></Trans>
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol>
-            <Trans i18nKey="help_3" t={t}></Trans>
+            {/* eslint-disable-next-line */}
+            <Trans i18nKey="help_3" t={t} components={{ h5: <h5 /> }}></Trans>
           </IonCol>
         </IonRow>
       </IonGrid>

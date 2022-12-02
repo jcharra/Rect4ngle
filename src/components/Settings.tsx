@@ -13,7 +13,6 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
   const { t, i18n } = useTranslation();
 
   const { activePlayerIndex, playerNames, selectPlayer, changePlayerName } = settings;
-  console.log("Rerender with", playerNames);
   return (
     <IonContent>
       <IonList lines="full">
