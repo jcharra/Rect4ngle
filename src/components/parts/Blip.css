@@ -1,14 +1,32 @@
+.blip {
+  aspect-ratio: 1/1;
+  width: 40px;
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+  transition: 0.2s;
+}
+
 .gray {
   background-color: gray;
-  transition: 0.2s;
 }
 
 .green {
   background-color: green;
-  transition: 0.2s;
 }
 
 .orange {
   background-color: orange;
-  transition: 0.2s;
+}
+
+@media (orientation: portrait) {
+  .blip {
+    width: min(7vw, 5vh);
+  }
+}
+
+@media (orientation: landscape) {
+  .blip {
+    width: min(4vw, 5vh);
+  }
 }

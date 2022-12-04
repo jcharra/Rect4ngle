@@ -159,15 +159,7 @@ export function MainArea(props: MainAreaProps) {
 
   const functions = { add, check, skip, backspace, checkPrime, retry };
 
-  return (
-    <>
-      {startCountdown > 0 && (
-        <>
-          <IonBackdrop tappable={false} />
-          <div className="countdown">{startCountdown}</div>
-        </>
-      )}
-      <IonGrid className="app">
+  /*
         <IonRow className="upperRow">
           <IonCol size="4">
             <Blackboard num={num} summands={summands} />
@@ -176,7 +168,6 @@ export function MainArea(props: MainAreaProps) {
             <ScalableRectangleArea num={num} summands={summands} />
           </IonCol>
         </IonRow>
-
         <IonRow className="lowerRow">
           <IonCol size="4">
             <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
@@ -185,7 +176,32 @@ export function MainArea(props: MainAreaProps) {
             <ControlArea functions={functions} summands={summands} disabled={!gameType} />
           </IonCol>
         </IonRow>
-      </IonGrid>
+        */
+
+  return (
+    <>
+      {startCountdown > 0 && (
+        <>
+          <IonBackdrop tappable={false} />
+          <div className="countdown">{startCountdown}</div>
+        </>
+      )}
+      <div className="app">
+        <div className="flexContainer">
+          <div className="blackboardBox">
+            <Blackboard num={num} summands={summands} />
+          </div>
+          <div className="scoreBox">
+            <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
+          </div>
+          <div className="rectangleBox">
+            <ScalableRectangleArea num={num} summands={summands} />
+          </div>
+          <div className="controlArea">
+            <ControlArea functions={functions} summands={summands} disabled={!gameType} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

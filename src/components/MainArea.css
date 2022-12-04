@@ -8,12 +8,45 @@ ion-backdrop {
   height: 100%;
 }
 
-.upperRow {
-  height: max(175px, 40vh);
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.lowerRow {
-  height: max(95px, 40vh);
+.blackboardBox {
+  flex-basis: 45%;
+  margin: 5px;
+}
+
+.scoreBox {
+  flex-basis: 45%;
+  margin: 5px;
+}
+
+@media (orientation: portrait) {
+  .rectangleBox {
+    width: 100%;
+    margin: 5px;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 500px) {
+  .app {
+    padding-top: 50px;
+  }
+}
+
+@media (orientation: landscape) {
+  .rectangleBox {
+    width: 50%;
+    margin: 5px;
+  }
+
+  .controlArea {
+    width: 40vw;
+  }
 }
 
 .block {

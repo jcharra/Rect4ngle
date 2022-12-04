@@ -11,17 +11,31 @@ export default function AddButtonRow(props: AddButtonRowProps) {
   const { add, selectedValue, disabled } = props;
 
   return (
-    <div className="buttonContainer">
-      {Array.from(Array(8), (_, i) => i + 2).map((num) => (
-        <IonButton
-          className="addButton"
-          key={num}
-          onClick={() => add(num)}
-          disabled={disabled || (!!selectedValue && num !== selectedValue)}
-        >
-          +{num}
-        </IonButton>
-      ))}
-    </div>
+    <>
+      <div className="buttonContainer">
+        {Array.from(Array(4), (_, i) => i + 2).map((num) => (
+          <IonButton
+            className="addButton"
+            key={num}
+            onClick={() => add(num)}
+            disabled={disabled || (!!selectedValue && num !== selectedValue)}
+          >
+            +{num}
+          </IonButton>
+        ))}
+      </div>
+      <div className="buttonContainer">
+        {Array.from(Array(4), (_, i) => i + 6).map((num) => (
+          <IonButton
+            className="addButton"
+            key={num}
+            onClick={() => add(num)}
+            disabled={disabled || (!!selectedValue && num !== selectedValue)}
+          >
+            +{num}
+          </IonButton>
+        ))}
+      </div>
+    </>
   );
 }

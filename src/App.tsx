@@ -136,17 +136,16 @@ const App: React.FC = () => {
       </IonContent>
       <IonFooter>
         <IonToolbar color="dark" mode="ios">
-          <IonTitle>
-            {t("player")}: <span className="playerName">{settings.activePlayerName}</span>
-          </IonTitle>
+          {!!gameType && (
+            <IonTitle>
+              {t("player")}: <span className="playerName">{settings.activePlayerName}</span>
+            </IonTitle>
+          )}
           <IonButtons slot="start" className="ion-padding-horizontal">
             {!!gameType ? (
-              <>
-                <IonButton onClick={() => stopGame()}>
-                  <IonIcon slot="icon-only" icon={stopCircleOutline} />
-                </IonButton>
-                {timer >= 0 && <Timer seconds={timer} />}
-              </>
+              <IonButton onClick={() => stopGame()}>
+                <IonIcon slot="icon-only" icon={stopCircleOutline} />
+              </IonButton>
             ) : (
               <>
                 <IonButton onClick={() => startGame(GameType.TRAINING)}>
@@ -185,7 +184,7 @@ const App: React.FC = () => {
               </>
             )}
           </IonButtons>
-          {!gameType && (
+          {!gameType ? (
             <IonButtons slot="primary" className="ion-padding-horizontal">
               <IonButton onClick={() => setHelpOpen(true)}>
                 <IonIcon slot="icon-only" icon={bulbOutline} />
@@ -207,6 +206,10 @@ const App: React.FC = () => {
               <IonModal ref={settingsModal} onWillDismiss={() => setSettingsOpen(false)} isOpen={settingsOpen}>
                 <SettingsWindow onDismiss={() => setSettingsOpen(false)} settings={settings} />
               </IonModal>
+            </IonButtons>
+          ) : (
+            <IonButtons slot="primary" className="ion-padding-horizontal">
+              {timer >= 0 && <Timer seconds={timer} />}
             </IonButtons>
           )}
         </IonToolbar>

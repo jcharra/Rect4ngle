@@ -9,13 +9,11 @@ const colorForStatus = {
 };
 
 export default function Blip({
-  size,
   filled,
   content,
   isBottomEnd,
   isRightEnd,
 }: {
-  size: number;
   filled: boolean;
   content?: number;
   isBottomEnd: boolean;
@@ -25,17 +23,11 @@ export default function Blip({
   return (
     <div
       style={{
-        width: size,
-        height: size,
         borderWidth: `1px ${isRightEnd ? "1px" : 0} ${isBottomEnd ? "1px" : 0} 1px`,
         borderColor: "white",
         borderStyle: "solid",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: size / 2,
       }}
-      className={filled ? colorForStatus[rectStatus] : "transparent"}
+      className={`blip ${filled ? colorForStatus[rectStatus] : "transparent"}`}
     >
       <div style={{ color: "white", display: "flex", justifyContent: "center", alignContent: "center" }}>{content}</div>
     </div>

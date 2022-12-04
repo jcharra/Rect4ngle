@@ -7,4 +7,11 @@
 .addButton {
   display: flex;
   font-size: 0.8em;
+  flex-basis: 25%;
+}
+
+@media (orientation: portrait) {
+  .addButton {
+    flex-basis: 25%;
+  }
 }

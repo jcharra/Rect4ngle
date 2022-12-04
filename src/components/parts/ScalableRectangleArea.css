@@ -8,4 +8,6 @@
 
 .fixedHeightContainer {
   background: darkblue;
+  display: flex;
+  flex-direction: row;
 }
