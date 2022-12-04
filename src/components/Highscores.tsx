@@ -36,13 +36,13 @@ function GameTypeRows({ scores }: { scores: ScoreRecord[] }) {
           key={"score-" + index}
           className={score && isRecent(score) ? "recentScore ion-align-items-center" : "ion-align-items-center"}
         >
-          <IonCol size="1" className="ion-self-align-center">
+          <IonCol size="2" className="ion-self-align-center">
             <IonChip class={colorForRank(index)}>{index + 1}</IonChip>
           </IonCol>
           <IonCol size="5" className="left-aligned">
             {score ? score.playerName : t("empty_score")}
           </IonCol>
-          <IonCol size="3">{score ? score.score : ""}</IonCol>
+          <IonCol size="2">{score ? score.score : ""}</IonCol>
           <IonCol size="3">{score ? format(score.date, "dd.MM.yy") : ""}</IonCol>
         </IonRow>
       ))}
@@ -50,7 +50,12 @@ function GameTypeRows({ scores }: { scores: ScoreRecord[] }) {
   );
 }
 
-export default function Highscores({ latestScore, onDismiss }: { latestScore?: number; onDismiss: () => void }) {
+export interface GameScore {
+  gameType: GameType;
+  score: number;
+}
+
+export default function Highscores({ latestScore, onDismiss }: { latestScore?: GameScore; onDismiss: () => void }) {
   const { loading, error, result } = useAsync(getScores, []);
 
   const { t } = useTranslation();
@@ -70,24 +75,38 @@ export default function Highscores({ latestScore, onDismiss }: { latestScore?: n
     <>
       <FixedHeading text={t("hall_of_fame")} onDismiss={onDismiss} />
       <IonGrid class="ion-text-center highscoreContainer" style={{ width: "100%" }}>
-        {latestScore && latestScore !== -1 ? (
+        {latestScore ? (
           <IonRow className="latestScore">
-            {t("your_score")}: {latestScore}
+            {t("your_score")}: {latestScore.score}
           </IonRow>
         ) : null}
 
-        <IonRow className="gameTypeHeader">
-          <IonCol>{t("one_minute_header")}</IonCol>
-        </IonRow>
-        <GameTypeRows scores={scores[GameType.ONE_MINUTE]} />
-        <IonRow className="gameTypeHeader">
-          <IonCol>{t("two_minutes_header")}</IonCol>
-        </IonRow>
-        <GameTypeRows scores={scores[GameType.TWO_MINUTES]} />
-        <IonRow className="gameTypeHeader">
-          <IonCol>{t("three_minutes_header")}</IonCol>
-        </IonRow>
-        <GameTypeRows scores={scores[GameType.THREE_MINUTES]} />
+        {(!latestScore || latestScore.gameType === GameType.ONE_MINUTE) && (
+          <>
+            <IonRow className="gameTypeHeader">
+              <IonCol>{t("one_minute_header")}</IonCol>
+            </IonRow>
+            <GameTypeRows scores={scores[GameType.ONE_MINUTE]} />
+          </>
+        )}
+
+        {(!latestScore || latestScore.gameType === GameType.TWO_MINUTES) && (
+          <>
+            <IonRow className="gameTypeHeader">
+              <IonCol>{t("two_minutes_header")}</IonCol>
+            </IonRow>
+            <GameTypeRows scores={scores[GameType.TWO_MINUTES]} />
+          </>
+        )}
+
+        {(!latestScore || latestScore.gameType === GameType.THREE_MINUTES) && (
+          <>
+            <IonRow className="gameTypeHeader">
+              <IonCol>{t("three_minutes_header")}</IonCol>
+            </IonRow>
+            <GameTypeRows scores={scores[GameType.THREE_MINUTES]} />
+          </>
+        )}
       </IonGrid>
     </>
   );

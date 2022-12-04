@@ -34,7 +34,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
-import Highscores from "./components/Highscores";
+import Highscores, { GameScore } from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
 import SettingsWindow from "./components/Settings";
 import { useSettings } from "./hooks/settingsHook";
@@ -65,7 +65,7 @@ export async function initialize(): Promise<void> {
 const App: React.FC = () => {
   const { t } = useTranslation();
 
-  const [latestScore, setLatestScore] = useState(-1);
+  const [latestScore, setLatestScore] = useState<GameScore | undefined>();
   const [gameType, setGameType] = useState<GameType | undefined>();
 
   const [presentGameOptions] = useIonActionSheet();
@@ -83,18 +83,18 @@ const App: React.FC = () => {
   const [timer, setTimer] = useState(0);
 
   const startGame = (gameType: GameType) => {
-    setLatestScore(-1);
+    setLatestScore(undefined);
     setGameType(gameType);
   };
 
   const stopGame = () => {
-    setLatestScore(-1);
+    setLatestScore(undefined);
     setGameType(undefined);
   };
 
   const onGameFinished = async (playerName: string, score: number) => {
     await saveScore(playerName, score, gameType!);
-    setLatestScore(score);
+    setLatestScore({ score, gameType: gameType! });
 
     const stats = await getGameStats();
     if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
@@ -102,16 +102,16 @@ const App: React.FC = () => {
     }
     await saveGameStats(stats + 1);
 
-    setHighscoresOpen(true);
     setGameType(undefined);
+    setHighscoresOpen(true);
   };
 
   const getSecondsForGameType = (gt: GameType) => {
     return {
       TRAINING: -1,
-      ONE_MINUTE: 60,
-      TWO_MINUTES: 120,
-      THREE_MINUTES: 180,
+      ONE_MINUTE: 1,
+      TWO_MINUTES: 2,
+      THREE_MINUTES: 3,
     }[gt];
   };
 
@@ -196,8 +196,21 @@ const App: React.FC = () => {
               <IonButton onClick={() => setHighscoresOpen(true)}>
                 <IonIcon slot="icon-only" icon={statsChartOutline} />
               </IonButton>
-              <IonModal ref={highscoresModal} onWillDismiss={() => setHighscoresOpen(false)} isOpen={highscoresOpen}>
-                <Highscores latestScore={latestScore} onDismiss={() => setHighscoresOpen(false)} />
+              <IonModal
+                ref={highscoresModal}
+                onWillDismiss={() => {
+                  setHighscoresOpen(false);
+                  setLatestScore(undefined);
+                }}
+                isOpen={highscoresOpen}
+              >
+                <Highscores
+                  latestScore={latestScore}
+                  onDismiss={() => {
+                    setHighscoresOpen(false);
+                    setLatestScore(undefined);
+                  }}
+                />
               </IonModal>
 
               <IonButton onClick={() => setSettingsOpen(true)}>
