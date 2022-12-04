@@ -1,4 +1,4 @@
-import { IonChip, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonButtons, IonChip, IonCol, IonGrid, IonHeader, IonRow, IonTitle, IonToolbar } from "@ionic/react";
 import { format } from "date-fns";
 import { differenceInSeconds } from "date-fns/esm";
 import { useAsync } from "react-async-hook";
@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { getScores, NUMBER_OF_SCORES_TO_KEEP, ScoreDict, ScoreRecord } from "../service/scoreService";
 import { GameType } from "../types/GameType";
 import "./Highscores.css";
-import FixedHeading from "./parts/FixedHeading";
 
 function isRecent(score: ScoreRecord) {
   return differenceInSeconds(new Date(), score.date) < 3;
@@ -73,7 +72,14 @@ export default function Highscores({ latestScore, onDismiss }: { latestScore?: G
 
   return (
     <>
-      <FixedHeading text={t("hall_of_fame")} onDismiss={onDismiss} />
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>{t("hall_of_fame")}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={onDismiss}>{t("close")}</IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonGrid class="ion-text-center highscoreContainer" style={{ width: "100%" }}>
         {latestScore ? (
           <IonRow className="latestScore">

@@ -1,14 +1,20 @@
-import { IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonButtons, IonCol, IonGrid, IonHeader, IonRow, IonTitle, IonToolbar } from "@ionic/react";
 import { Trans, useTranslation } from "react-i18next";
 import "./Help.css";
-import FixedHeading from "./parts/FixedHeading";
 
 export default function Help({ onDismiss }: { onDismiss: () => void }) {
   const { t } = useTranslation();
 
   return (
     <>
-      <FixedHeading text={t("rectangle_rules")} onDismiss={onDismiss} />
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>{t("rectangle_rules")}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={onDismiss}>{t("close")}</IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonGrid style={{ width: "100%" }} class="helpContainer">
         <IonRow>
           <IonCol>
