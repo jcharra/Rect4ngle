@@ -21,7 +21,7 @@ function getRandomInt(max: number) {
 }
 
 export function generateRandomNumber(): number {
-  if (Math.random() > 0.1) {
+  if (Math.random() > 0.15) {
     const [fac1, fac2] = [getRandomInt(9), getRandomInt(12)];
     return fac1 * fac2;
   } else {
