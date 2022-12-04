@@ -1,4 +1,4 @@
-import { IonBackdrop, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonBackdrop } from "@ionic/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
@@ -158,25 +158,6 @@ export function MainArea(props: MainAreaProps) {
   };
 
   const functions = { add, check, skip, backspace, checkPrime, retry };
-
-  /*
-        <IonRow className="upperRow">
-          <IonCol size="4">
-            <Blackboard num={num} summands={summands} />
-          </IonCol>
-          <IonCol size="8">
-            <ScalableRectangleArea num={num} summands={summands} />
-          </IonCol>
-        </IonRow>
-        <IonRow className="lowerRow">
-          <IonCol size="4">
-            <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
-          </IonCol>
-          <IonCol size="8">
-            <ControlArea functions={functions} summands={summands} disabled={!gameType} />
-          </IonCol>
-        </IonRow>
-        */
 
   return (
     <>

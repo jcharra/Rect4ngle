@@ -1,4 +1,4 @@
-import React, { createContext, createRef, useEffect, useState } from "react";
+import { createContext, createRef } from "react";
 import { getSum } from "../../utils/numberUtils";
 import Column from "./Column";
 import "./ScalableRectangleArea.css";
