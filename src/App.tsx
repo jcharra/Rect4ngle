@@ -109,9 +109,9 @@ const App: React.FC = () => {
   const getSecondsForGameType = (gt: GameType) => {
     return {
       TRAINING: -1,
-      ONE_MINUTE: 1,
-      TWO_MINUTES: 2,
-      THREE_MINUTES: 3,
+      ONE_MINUTE: 60,
+      TWO_MINUTES: 120,
+      THREE_MINUTES: 180,
     }[gt];
   };
 
