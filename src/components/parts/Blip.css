@@ -22,11 +22,13 @@
 @media (orientation: portrait) {
   .blip {
     width: min(7vw, 5vh);
+    height: min(7vw, 5vh);
   }
 }
 
 @media (orientation: landscape) {
   .blip {
-    width: min(4vw, 5vh);
+    width: max(28px, 3.5vw);
+    height: max(28px, 3.5vw);
   }
 }
