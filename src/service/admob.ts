@@ -6,7 +6,7 @@ export async function showInterstitial(): Promise<void> {
   });
 
   const options: AdOptions = {
-    adId: "ca-app-pub-4673310281337186~4471463631",
+    adId: "ca-app-pub-4673310281337186/3704057319",
     margin: 0,
     //isTesting: true,
     npa: true,

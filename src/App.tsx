@@ -48,6 +48,7 @@ import { GameType } from "./types/GameType";
 import { AdMob } from "@capacitor-community/admob";
 import { INTERSTITIAL_FREQUENCY, showInterstitial } from "./service/admob";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
+import { TESTING_DEVICES_IDS } from "./testingDevicesIds";
 
 setupIonicReact({
   mode: "md",
@@ -55,9 +56,9 @@ setupIonicReact({
 
 export async function initialize(): Promise<void> {
   await AdMob.trackingAuthorizationStatus();
-  AdMob.initialize({
+  await AdMob.initialize({
     requestTrackingAuthorization: false,
-    testingDevices: ["2077ef9a63d2b398840261c8221a0c9b"],
+    testingDevices: TESTING_DEVICES_IDS,
     initializeForTesting: true,
   });
 }
@@ -98,7 +99,7 @@ const App: React.FC = () => {
 
     const stats = await getGameStats();
     if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
-      await showInterstitial();
+      await showInterstitial().catch(console.error);
     }
     await saveGameStats(stats + 1);
 
