@@ -22,6 +22,7 @@ jobs:
       - name: Build
         run: |
           npm install
+          echo "export const TESTING_DEVICES_IDS = []" > src/testingDevicesIds.ts
           npm run build --prod
           cp build/index.html build/404.html
           cp public/support.html build/
