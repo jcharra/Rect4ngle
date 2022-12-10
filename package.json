@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@capacitor-community/admob": "^4.0.0-1",
+    "@capacitor/android": "^4.6.1",
     "@capacitor/core": "^4.5.0",
     "@capacitor/ios": "^4.5.0",
     "@capacitor/preferences": "^4.0.2",
