@@ -45,14 +45,14 @@ export default function ControlArea(props: ControlAreaProps) {
         >
           <IonIcon icon={checkmarkCircleOutline} />
         </IonButton>
-        <IonButton onClick={() => skip()} disabled={controlsDisabled} color="warning">
-          <IonIcon icon={arrowForwardCircleOutline} />
-        </IonButton>
         <IonButton onClick={() => backspace()} disabled={controlsDisabled || summands.length === 0}>
           <IonIcon icon={backspaceOutline} />
         </IonButton>
         <IonButton onClick={() => retry()} disabled={controlsDisabled || summands.length === 0}>
           <IonIcon icon={trashOutline} />
+        </IonButton>
+        <IonButton onClick={() => skip()} disabled={controlsDisabled} color="warning">
+          <IonIcon icon={arrowForwardCircleOutline} />
         </IonButton>
         <IonButton color="success" onClick={() => checkPrime()} size="large" disabled={controlsDisabled}>
           {t("prime")}
