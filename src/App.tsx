@@ -187,7 +187,7 @@ const App: React.FC = () => {
           </IonButtons>
           {!gameType ? (
             <IonButtons slot="primary" className="ion-padding-horizontal">
-              <IonButton onClick={() => setHelpOpen(true)}>
+              <IonButton onClick={() => setHelpOpen(true)} id="helpIcon">
                 <IonIcon slot="icon-only" icon={bulbOutline} />
               </IonButton>
               <IonModal ref={helpModal} onWillDismiss={() => setHelpOpen(false)} isOpen={helpOpen}>

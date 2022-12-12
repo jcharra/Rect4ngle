@@ -131,3 +131,22 @@ ion-backdrop {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+#helpIcon {
+  animation: pulse 2s;
+  animation-iteration-count: 3;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: rotate(10deg) scale(1.4);
+    color: yellow;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
