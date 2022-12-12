@@ -83,7 +83,10 @@ const App: React.FC = () => {
 
   const [timer, setTimer] = useState(0);
 
+  const [noGamesPlayed, setNoGamesPlayed] = useState(true);
+
   const startGame = (gameType: GameType) => {
+    setNoGamesPlayed(false);
     setLatestScore(undefined);
     setGameType(gameType);
   };
@@ -187,7 +190,7 @@ const App: React.FC = () => {
           </IonButtons>
           {!gameType ? (
             <IonButtons slot="primary" className="ion-padding-horizontal">
-              <IonButton onClick={() => setHelpOpen(true)} id="helpIcon">
+              <IonButton onClick={() => setHelpOpen(true)} id={noGamesPlayed ? "helpIcon" : ""}>
                 <IonIcon slot="icon-only" icon={bulbOutline} />
               </IonButton>
               <IonModal ref={helpModal} onWillDismiss={() => setHelpOpen(false)} isOpen={helpOpen}>

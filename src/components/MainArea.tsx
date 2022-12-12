@@ -41,10 +41,13 @@ export function MainArea(props: MainAreaProps) {
     }
 
     if (startCountdown > 0) {
-      (document as any).getElementById("beep").play();
+      (document as any).getElementById(`beep${startCountdown}`).play();
+
       setNum(0);
       setDiamonds(0);
-      setTimeout(() => setStartCountdown((val) => val - 1), 1000);
+      setTimeout(() => {
+        setStartCountdown((val) => val - 1);
+      }, 1000);
     } else if (startCountdown === 0) {
       if (num === 0) {
         (document as any).getElementById("success").play();
