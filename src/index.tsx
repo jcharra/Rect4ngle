@@ -4,12 +4,15 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { SettingsContextProvider } from "./hooks/settingsHook";
+import { HintContextProvider } from "./hooks/hintHook";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <SettingsContextProvider>
-      <App />
+      <HintContextProvider>
+        <App />
+      </HintContextProvider>
     </SettingsContextProvider>
   </React.StrictMode>
 );

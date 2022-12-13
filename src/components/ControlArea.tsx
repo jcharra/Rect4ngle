@@ -2,8 +2,10 @@ import { IonButton, IonIcon } from "@ionic/react";
 import { arrowForwardCircleOutline, backspaceOutline, checkmarkCircleOutline, trashOutline } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
 import { useSettings } from "../hooks/settingsHook";
+import { GameType } from "../types/GameType";
 import "./ControlArea.css";
 import AddButtonRow from "./parts/AddButtonRow";
+import TrainingHint from "./parts/TrainingHint";
 
 interface ControlAreaProps {
   functions: {
@@ -15,11 +17,11 @@ interface ControlAreaProps {
     retry: () => void;
   };
   summands: number[];
-  disabled: boolean;
+  gameType?: GameType;
 }
 
 export default function ControlArea(props: ControlAreaProps) {
-  const { functions, summands, disabled: controlsDisabled } = props;
+  const { functions, summands, gameType } = props;
   const { add, check, skip, backspace, checkPrime, retry } = functions;
   const { t } = useTranslation();
   const { activePlayerName } = useSettings();
@@ -27,6 +29,8 @@ export default function ControlArea(props: ControlAreaProps) {
   if (!activePlayerName) {
     return null;
   }
+
+  const controlsDisabled = !gameType;
 
   return (
     <div className="controlContainer">
@@ -58,6 +62,8 @@ export default function ControlArea(props: ControlAreaProps) {
           {t("prime")}
         </IonButton>
       </div>
+
+      {gameType === GameType.TRAINING && <TrainingHint />}
     </div>
   );
 }

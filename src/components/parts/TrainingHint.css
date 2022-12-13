@@ -1,0 +1,14 @@
+.hint {
+  height: 5vh;
+  color: red;
+  font-size: 16pt;
+  text-align: center;
+  padding-top: 10px;
+  font-weight: 700;
+}
+
+@media (orientation: portrait) and (max-width: 400px) {
+  .hint {
+    display: none;
+  }
+}

@@ -7,7 +7,7 @@ export default function Blackboard({ num, summands }: { num: number; summands: n
       {num}
       <br />
       <span className={`calculationFactored ${summands.length === 0 ? "invisible" : ""}`}>
-        {!!summands.length ? `= ${summands.length} x ${summands[0]}` : "x"}
+        {!!summands.length ? `= ${summands[0]} x ${summands.length}` : "x"}
       </span>
     </div>
   );

@@ -15,4 +15,4 @@ export async function showInterstitial(): Promise<void> {
   await AdMob.showInterstitial();
 }
 
-export const INTERSTITIAL_FREQUENCY = 5;
+export const INTERSTITIAL_FREQUENCY = 3;

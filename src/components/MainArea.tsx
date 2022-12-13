@@ -1,6 +1,7 @@
 import { IonBackdrop } from "@ionic/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHint } from "../hooks/hintHook";
 import { useSettings } from "../hooks/settingsHook";
 import { GameType } from "../types/GameType";
 import { COLUMN_LIMIT, generateRandomNumber, getSum, PRIMES, PRIME_BONUS, PRIME_MALUS } from "../utils/numberUtils";
@@ -33,6 +34,7 @@ export function MainArea(props: MainAreaProps) {
   const [intervalRef, setIntervalRef] = useState<any>(null);
   const [startCountdown, setStartCountdown] = useState(-1);
   const { activePlayerName } = useSettings();
+  const { scheduleHint } = useHint();
 
   useEffect(() => {
     if (intervalRef) {
@@ -95,6 +97,7 @@ export function MainArea(props: MainAreaProps) {
     } else {
       setStartCountdown(-1);
       setNum(0);
+      setSummands([]);
     }
     // eslint-disable-next-line
   }, [gameType, setTimer]);
@@ -124,14 +127,32 @@ export function MainArea(props: MainAreaProps) {
     setSummands((oldVal: number[]) => (oldVal.length > 0 ? oldVal.slice(0, oldVal.length - 1) : []));
   };
 
+  const suggestSolution = (n: number) => {
+    if (PRIMES.indexOf(n) >= 0) {
+      return t("was_prime", { n });
+    } else {
+      for (let i = 9; i > 1; i--) {
+        if (n % i === 0) {
+          return t("factorization", { n, i, i2: n / i });
+        }
+      }
+    }
+    return "";
+  };
+
   const check = () => {
     const sum = summands.reduce((a, b) => a + b, 0);
-    if (summands[0] === summands.length) {
-      addDelta(10, t("square"));
-    } else if (sum === num) {
-      addDelta(summands[0], t("correct"));
+
+    if (sum === num) {
+      if (summands[0] === summands.length) {
+        addDelta(10, t("square"));
+      } else {
+        addDelta(summands[0], t("correct"));
+      }
+      scheduleHint("", 0);
     } else {
       addDelta(-5, t("wrong"));
+      scheduleHint(suggestSolution(num), 0);
     }
     newNum();
   };
@@ -139,8 +160,10 @@ export function MainArea(props: MainAreaProps) {
   const checkPrime = () => {
     if (PRIMES.indexOf(num) > -1) {
       addDelta(PRIME_BONUS, t("prime_correct"));
+      scheduleHint("", 0);
     } else {
       addDelta(PRIME_MALUS, t("nope"));
+      scheduleHint(suggestSolution(num), 0);
     }
     newNum();
   };
@@ -182,7 +205,7 @@ export function MainArea(props: MainAreaProps) {
             <ScalableRectangleArea num={num} summands={summands} />
           </div>
           <div className="controlArea">
-            <ControlArea functions={functions} summands={summands} disabled={!gameType} />
+            <ControlArea functions={functions} summands={summands} gameType={gameType} />
           </div>
         </div>
       </div>

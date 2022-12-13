@@ -61,6 +61,8 @@ i18n.use(initReactI18next).init({
           "watch out: Calling a number a prime that is actually not a prime will " +
           "lose 10 diamonds. <br/><br/> If you're not sure what to do with a number, " +
           "you can always <strong>SKIP</strong> it. This will cost you 2 diamonds.",
+        was_prime: "{{n}} was PRIME",
+        factorization: "Next time, try {{i}} x {{i2}}",
       },
     },
     de: {
@@ -119,6 +121,8 @@ i18n.use(initReactI18next).init({
           "verlierst Du 10 Diamanten. <br/><br/> Wenn Du bei einer Zahl mal nicht weiter weißt, " +
           "kannst Du auch den <strong>WEITER</strong>-Knopf drücken, um die nächste Zahl anzuzeigen. " +
           "Das kostet Dich allerdings 2 Diamanten.",
+        was_prime: "{{n}} war eine PRIMZAHL",
+        factorization: "Das wäre {{i}} x {{i2}} gewesen",
       },
     },
   },
