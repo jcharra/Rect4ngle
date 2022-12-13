@@ -6,9 +6,3 @@
   padding-top: 10px;
   font-weight: 700;
 }
-
-@media (orientation: portrait) and (max-width: 400px) {
-  .hint {
-    display: none;
-  }
-}

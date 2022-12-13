@@ -132,7 +132,7 @@ export function MainArea(props: MainAreaProps) {
       return t("was_prime", { n });
     } else {
       for (let i = 9; i > 1; i--) {
-        if (n % i === 0) {
+        if (n % i === 0 && n / i > 1) {
           return t("factorization", { n, i, i2: n / i });
         }
       }

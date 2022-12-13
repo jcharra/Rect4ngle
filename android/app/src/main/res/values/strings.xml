@@ -4,4 +4,5 @@
     <string name="title_activity_main">Rect4ngle</string>
     <string name="package_name">de.charra.rectangle</string>
     <string name="custom_url_scheme">de.charra.rectangle</string>
+    <string name="admob_app_id">ca-app-pub-4673310281337186~4471463631</string>
 </resources>
