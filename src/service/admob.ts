@@ -16,3 +16,4 @@ export async function showInterstitial(): Promise<void> {
 }
 
 export const INTERSTITIAL_FREQUENCY = 3;
+export const REVIEW_FREQUENCY = 30;

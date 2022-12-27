@@ -46,9 +46,10 @@ import Timer from "./components/parts/Timer";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 import { AdMob } from "@capacitor-community/admob";
-import { INTERSTITIAL_FREQUENCY, showInterstitial } from "./service/admob";
+import { INTERSTITIAL_FREQUENCY, REVIEW_FREQUENCY, showInterstitial } from "./service/admob";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
 import { TESTING_DEVICES_IDS } from "./testingDevicesIds";
+import { RateApp } from "capacitor-rate-app";
 
 setupIonicReact({
   mode: "md",
@@ -101,8 +102,11 @@ const App: React.FC = () => {
     setLatestScore({ score, gameType: gameType! });
 
     const stats = await getGameStats();
+    console.log("Stats:", stats);
     if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
       await showInterstitial().catch(console.error);
+    } else if ((stats + 1) % REVIEW_FREQUENCY === 7) {
+      await RateApp.requestReview();
     }
     await saveGameStats(stats + 1);
 
