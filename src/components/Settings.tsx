@@ -15,33 +15,12 @@ import {
 import { useTranslation } from "react-i18next";
 import { Settings } from "../hooks/settingsHook";
 import "./Settings.css";
-import { Device } from "@capacitor/device";
-
-const LANGUAGES: { code: string; name: string }[] = [
-  { code: "de", name: "Deutsch" },
-  { code: "en", name: "English" },
-];
-
-export async function loadLanguageFromDevice(i18n: any) {
-  const langCode = await Device.getLanguageCode();
-  let languageSet = false;
-  LANGUAGES.forEach((entry) => {
-    if (entry.code === langCode.value) {
-      console.log("Found", entry.code);
-      i18n.changeLanguage(langCode.value);
-      languageSet = true;
-    }
-  });
-
-  if (!languageSet) {
-    i18n.changeLanguage("en");
-  }
-}
+import { LANGUAGES } from "../service/playerService";
 
 export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () => void; settings: Settings }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
-  const { activePlayerIndex, playerNames, selectPlayer, changePlayerName } = settings;
+  const { activePlayerIndex, playerNames, selectPlayer, changePlayerName, language, changeLanguage } = settings;
   return (
     <>
       <IonHeader>
@@ -96,8 +75,8 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
             <IonSelect
               slot="end"
               interface="popover"
-              value={i18n.language}
-              onIonChange={(e) => i18n.changeLanguage(e.detail.value)}
+              value={language.code}
+              onIonChange={(e) => changeLanguage(e.detail.value)}
             >
               {LANGUAGES.map((lang) => (
                 <IonSelectOption key={lang.code} value={lang.code}>

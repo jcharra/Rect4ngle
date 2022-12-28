@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getPlayerConfig, savePlayerConfig } from "../service/playerService";
+import { ENGLISH, LANGUAGES, Language, getPlayerConfig, savePlayerConfig } from "../service/playerService";
 
 export interface Settings {
   activePlayerName: string;
@@ -7,6 +7,8 @@ export interface Settings {
   selectPlayer: (n: number) => void;
   playerNames: string[];
   changePlayerName: (name: string, idx: number) => void;
+  language: Language;
+  changeLanguage: (code: string) => void;
 }
 
 const SettingsCtx = createContext<Settings>({
@@ -16,19 +18,21 @@ const SettingsCtx = createContext<Settings>({
     console.log("Dummy select");
   },
   playerNames: ["Player 1"],
-  changePlayerName: (name: string, idx: number) => {
-    console.log("Dummy");
-  },
+  changePlayerName: (name: string, idx: number) => {},
+  language: ENGLISH,
+  changeLanguage: (code: string) => {},
 });
 
 export function SettingsContextProvider({ children }: { children: React.ReactNode }) {
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
+  const [language, setLanguage] = useState<Language>(ENGLISH);
 
   async function loadConfigFromPreferences() {
-    const { activePlayer, names } = await getPlayerConfig();
+    const { activePlayer, names, language } = await getPlayerConfig();
     setActivePlayerIndex(activePlayer);
     setPlayerNames(names);
+    setLanguage(language);
   }
 
   useEffect(() => {
@@ -45,6 +49,7 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
     savePlayerConfig({
       names: updatedPlayerNames,
       activePlayer: activePlayerIndex,
+      language,
     });
     setPlayerNames(updatedPlayerNames);
   }
@@ -53,8 +58,23 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
     savePlayerConfig({
       names: playerNames,
       activePlayer: index,
+      language,
     });
     setActivePlayerIndex(index);
+  }
+
+  function changeLanguage(code: string) {
+    for (let lang of LANGUAGES) {
+      if (lang.code === code) {
+        savePlayerConfig({
+          names: playerNames,
+          activePlayer: activePlayerIndex,
+          language: lang,
+        });
+        setLanguage(lang);
+        break;
+      }
+    }
   }
 
   return (
@@ -65,6 +85,8 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
         activePlayerName: playerNames[activePlayerIndex],
         playerNames,
         changePlayerName,
+        language,
+        changeLanguage,
       }}
     >
       {children}

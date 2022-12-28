@@ -36,20 +36,20 @@ import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores, { GameScore } from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
-import SettingsWindow, { loadLanguageFromDevice } from "./components/Settings";
+import SettingsWindow from "./components/Settings";
 import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
 import { saveScore } from "./service/scoreService";
 /* Theme variables */
-import { setupIonicReact } from "@ionic/react";
-import Timer from "./components/parts/Timer";
-import "./theme/variables.css";
-import { GameType } from "./types/GameType";
 import { AdMob } from "@capacitor-community/admob";
+import { setupIonicReact } from "@ionic/react";
+import { RateApp } from "capacitor-rate-app";
+import Timer from "./components/parts/Timer";
 import { INTERSTITIAL_FREQUENCY, REVIEW_FREQUENCY, showInterstitial } from "./service/admob";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
 import { TESTING_DEVICES_IDS } from "./testingDevicesIds";
-import { RateApp } from "capacitor-rate-app";
+import "./theme/variables.css";
+import { GameType } from "./types/GameType";
 
 setupIonicReact({
   mode: "md",
@@ -130,13 +130,17 @@ const App: React.FC = () => {
   useEffect(() => {
     // init AdMob
     initialize();
-
-    loadLanguageFromDevice(i18n);
   }, []);
 
   useEffect(() => {
     setTimer(gameType ? getSecondsForGameType(gameType) : -1);
   }, [gameType]);
+
+  useEffect(() => {
+    if (settings.language?.code) {
+      i18n.changeLanguage(settings.language.code);
+    }
+  }, [settings.language, i18n]);
 
   return (
     <IonApp>
