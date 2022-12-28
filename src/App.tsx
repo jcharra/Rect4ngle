@@ -36,7 +36,7 @@ import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores, { GameScore } from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
-import SettingsWindow from "./components/Settings";
+import SettingsWindow, { loadLanguageFromDevice } from "./components/Settings";
 import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
 import { saveScore } from "./service/scoreService";
@@ -65,7 +65,7 @@ export async function initialize(): Promise<void> {
 }
 
 const App: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [latestScore, setLatestScore] = useState<GameScore | undefined>();
   const [gameType, setGameType] = useState<GameType | undefined>();
@@ -102,7 +102,6 @@ const App: React.FC = () => {
     setLatestScore({ score, gameType: gameType! });
 
     const stats = await getGameStats();
-    console.log("Stats:", stats);
     if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
       await showInterstitial().catch(console.error);
     } else if ((stats + 1) % REVIEW_FREQUENCY === 7) {
@@ -131,6 +130,8 @@ const App: React.FC = () => {
   useEffect(() => {
     // init AdMob
     initialize();
+
+    loadLanguageFromDevice(i18n);
   }, []);
 
   useEffect(() => {

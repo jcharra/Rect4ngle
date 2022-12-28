@@ -15,11 +15,28 @@ import {
 import { useTranslation } from "react-i18next";
 import { Settings } from "../hooks/settingsHook";
 import "./Settings.css";
+import { Device } from "@capacitor/device";
 
 const LANGUAGES: { code: string; name: string }[] = [
   { code: "de", name: "Deutsch" },
   { code: "en", name: "English" },
 ];
+
+export async function loadLanguageFromDevice(i18n: any) {
+  const langCode = await Device.getLanguageCode();
+  let languageSet = false;
+  LANGUAGES.forEach((entry) => {
+    if (entry.code === langCode.value) {
+      console.log("Found", entry.code);
+      i18n.changeLanguage(langCode.value);
+      languageSet = true;
+    }
+  });
+
+  if (!languageSet) {
+    i18n.changeLanguage("en");
+  }
+}
 
 export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () => void; settings: Settings }) {
   const { t, i18n } = useTranslation();
