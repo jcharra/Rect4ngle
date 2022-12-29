@@ -165,6 +165,7 @@ export function MainArea(props: MainAreaProps) {
   const checkPrime = () => {
     if (PRIMES.indexOf(num) > -1) {
       addDelta(PRIME_BONUS, t("prime_correct"));
+      (document as any).getElementById("prime").play();
       scheduleHint("", 0);
     } else {
       addDelta(PRIME_MALUS, t("nope"));
