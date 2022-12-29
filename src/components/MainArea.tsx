@@ -11,6 +11,7 @@ import "./MainArea.css";
 import ScalableRectangleArea from "./parts/ScalableRectangleArea";
 import Scoreboard from "./Scoreboard";
 import useBonus from "../hooks/bonusHook";
+import { countdownSound, gameStartSound, powerUpSound, primeSound } from "../service/audioService";
 
 interface TimerData {
   timer: number;
@@ -36,7 +37,7 @@ export function MainArea(props: MainAreaProps) {
   const [startCountdown, setStartCountdown] = useState(-1);
   const { activePlayerName } = useSettings();
   const { scheduleHint } = useHint();
-  const { getBonus, upgradeBonus, resetBonuses } = useBonus();
+  const { getBonus, upgradeBonus, downgradeBonuses, resetBonuses } = useBonus();
 
   useEffect(() => {
     if (intervalRef) {
@@ -45,8 +46,7 @@ export function MainArea(props: MainAreaProps) {
     }
 
     if (startCountdown > 0) {
-      (document as any).getElementById(`beep${startCountdown}`).play();
-
+      countdownSound();
       setNum(0);
       setDiamonds(0);
       setTimeout(() => {
@@ -54,7 +54,7 @@ export function MainArea(props: MainAreaProps) {
       }, 1000);
     } else if (startCountdown === 0) {
       if (num === 0) {
-        (document as any).getElementById("success").play();
+        gameStartSound();
         newNum();
       }
 
@@ -100,6 +100,7 @@ export function MainArea(props: MainAreaProps) {
       setStartCountdown(-1);
       setNum(0);
       setSummands([]);
+      resetBonuses();
     }
     // eslint-disable-next-line
   }, [gameType, setTimer]);
@@ -149,14 +150,14 @@ export function MainArea(props: MainAreaProps) {
       if (summands[0] === summands.length) {
         addDelta(10 * getBonus(summands[0]), t("square"));
         upgradeBonus(summands.length);
-        (document as any).getElementById("bonus").play();
+        powerUpSound();
       } else {
         addDelta(summands[0] * getBonus(summands[0]), t("correct"));
       }
       scheduleHint("", 0);
     } else {
       addDelta(-5, t("wrong"));
-      resetBonuses();
+      downgradeBonuses();
       scheduleHint(suggestSolution(num), 0);
     }
     newNum();
@@ -165,11 +166,11 @@ export function MainArea(props: MainAreaProps) {
   const checkPrime = () => {
     if (PRIMES.indexOf(num) > -1) {
       addDelta(PRIME_BONUS, t("prime_correct"));
-      (document as any).getElementById("prime").play();
+      primeSound();
       scheduleHint("", 0);
     } else {
       addDelta(PRIME_MALUS, t("nope"));
-      resetBonuses();
+      downgradeBonuses();
       scheduleHint(suggestSolution(num), 0);
     }
     newNum();

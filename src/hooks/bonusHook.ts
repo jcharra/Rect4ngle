@@ -15,6 +15,10 @@ export default function useBonus() {
     });
   };
 
+  const downgradeBonuses = () => {
+    setBonuses((bs: number[]) => bs.map((b) => b - 1 || 1));
+  };
+
   const resetBonuses = () => {
     setBonuses(INITIAL_BONUSES);
   };
@@ -22,6 +26,7 @@ export default function useBonus() {
   return {
     getBonus,
     upgradeBonus,
+    downgradeBonuses,
     resetBonuses,
   };
 }

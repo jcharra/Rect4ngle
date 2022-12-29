@@ -54,7 +54,7 @@ i18n.use(initReactI18next).init({
           "high as it is wide, you receive 10 diamonds and a <strong>power-up</strong>" +
           " for the respective number: Your points will count twice (or even 3x, 4x, ...)" +
           " for every rectangle you build afterwards. But look out: <strong>Any mistake will " +
-          "make that bonus disappear again!</strong>",
+          "downgrade all of your power-ups again!</strong>",
         help_3:
           "<h5>Prime numbers</h5>" +
           "Sometimes there's a number that cannot be built as a rectangle. These " +
@@ -116,7 +116,7 @@ i18n.use(initReactI18next).init({
           "Ein Spezialfall ist das <strong>QUADRAT</strong>: Wenn Dein Rechteck genau so " +
           "hoch wie breit ist, erhältst Du 10 Diamanten und die verwendete Zahl erhält ein <strong>Power-Up</strong>: " +
           "Alle weiteren Rechtecke, die Du mit dieser Zahl baust, zählen doppelt (mit weiteren Power-Ups sogar " +
-          "dreifach, vierfach, ...). Aber sieh Dich vor: Bei einem Fehler verlierst Du alle Power-Ups wieder.",
+          "dreifach, vierfach, ...). Aber sieh Dich vor: Bei jedem Fehler verringern sich alle Deine Power-Ups wieder.",
         help_3:
           "<h5>Primzahlen</h5>" +
           "Manchmal erscheint eine Zahl auf der Tafel, die man gar nicht als Rechteck bauen kann. " +
