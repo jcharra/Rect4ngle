@@ -14,3 +14,12 @@
   color: white;
   font-family: "orbitron";
 }
+
+strong {
+  color: yellow;
+}
+
+h5 {
+  font-weight: 900;
+  color: lightgreen;
+}

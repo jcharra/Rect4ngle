@@ -47,11 +47,14 @@ i18n.use(initReactI18next).init({
         help_2:
           "<h5>Gaining diamonds</h5>" +
           "If you think that you've built a matching rectangle, you can click on " +
-          "the <strong>CHECK</strong> button to check your result. If you got it " +
+          "the <strong>checkmark</strong> button to check your result. If you got it " +
           "right, you receive as many diamonds as your rectangle is high. If your " +
           "rectangle does not match the number, you lose 5 diamonds. <br/><br/> " +
           "A special case is the <strong>SQUARE</strong>: If your rectangle is as " +
-          "high as it is wide, you receive 10 diamonds.",
+          "high as it is wide, you receive 10 diamonds and a <strong>power-up</strong>" +
+          " for the respective number: Your points will count twice (or even 3x, 4x, ...)" +
+          " for every rectangle you build afterwards. But look out: <strong>Any mistake will " +
+          "make that bonus disappear again!</strong>",
         help_3:
           "<h5>Prime numbers</h5>" +
           "Sometimes there's a number that cannot be built as a rectangle. These " +
@@ -60,7 +63,8 @@ i18n.use(initReactI18next).init({
           "is very tricky, so finding a prime will give you 20 diamonds. But " +
           "watch out: Calling a number a prime that is actually not a prime will " +
           "lose 10 diamonds. <br/><br/> If you're not sure what to do with a number, " +
-          "you can always <strong>SKIP</strong> it. This will cost you 2 diamonds.",
+          "you can always <strong>SKIP</strong> it. This will cost you 2 diamonds, but " +
+          "all of your power-ups will remain active.",
         was_prime: "{{n}} was PRIME",
         factorization: "Next time, try {{i}} x {{i2}}",
       },
@@ -106,11 +110,13 @@ i18n.use(initReactI18next).init({
         help_2:
           "<h5>Diamanten sammeln</h5>" +
           "Immer wenn Du glaubst dass Du ein passendes Rechteck für die angezeigte Zahl " +
-          "gebaut hast, klicke den <strong>PRÜFEN</strong>-Knopf. Wenn Du alles richtig gemacht " +
+          "gebaut hast, klicke den <strong>grünen Knopf mit dem Haken</strong>. Wenn Du alles richtig gemacht " +
           "hast, erhältst Du so viele Diamanten wie Dein Rechteck Punkte hoch ist. Wenn Du daneben liegst, " +
           " verlierst Du leider 5 Diamanten. <br/><br/> " +
           "Ein Spezialfall ist das <strong>QUADRAT</strong>: Wenn Dein Rechteck genau so " +
-          "hoch wie breit ist, erhältst Du 10 Diamanten.",
+          "hoch wie breit ist, erhältst Du 10 Diamanten und die verwendete Zahl erhält ein <strong>Power-Up</strong>: " +
+          "Alle weiteren Rechtecke, die Du mit dieser Zahl baust, zählen doppelt (mit weiteren Power-Ups sogar " +
+          "dreifach, vierfach, ...). Aber sieh Dich vor: Bei einem Fehler verlierst Du alle Power-Ups wieder.",
         help_3:
           "<h5>Primzahlen</h5>" +
           "Manchmal erscheint eine Zahl auf der Tafel, die man gar nicht als Rechteck bauen kann. " +
@@ -119,8 +125,8 @@ i18n.use(initReactI18next).init({
           "ist recht schwierig, gibt dafür aber auch einen großen Gewinn: <strong>20 Diamanten!</strong> Aber sei " +
           "vorsichtig: Wenn Du den Primzahl-Knopf drückst und es wäre doch ein Rechteck möglich gewesen " +
           "verlierst Du 10 Diamanten. <br/><br/> Wenn Du bei einer Zahl mal nicht weiter weißt, " +
-          "kannst Du auch den <strong>WEITER</strong>-Knopf drücken, um die nächste Zahl anzuzeigen. " +
-          "Das kostet Dich allerdings 2 Diamanten.",
+          "kannst Du auch den gelben <strong>WEITER</strong>-Knopf drücken, um die aktuelle Aufgabe zu überspringen. " +
+          "Das kostet Dich zwar 2 Diamanten, aber Deine Power-Ups bleiben bestehen.",
         was_prime: "{{n}} war eine PRIMZAHL",
         factorization: "Das wäre {{i}} x {{i2}} gewesen",
       },
