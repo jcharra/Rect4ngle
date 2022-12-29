@@ -1,15 +1,22 @@
 export function countdownSound() {
-  (document as any).getElementById("beep1").play();
+  playSound("beep1");
 }
 
 export function powerUpSound() {
-  (document as any).getElementById("bonus").play();
+  playSound("bonus");
 }
 
 export function primeSound() {
-  (document as any).getElementById("prime").play();
+  playSound("prime");
 }
 
 export function gameStartSound() {
-  (document as any).getElementById("success").play();
+  playSound("success");
+}
+
+function playSound(soundId: string) {
+  const audioSrc = (document as any).getElementById(soundId).src;
+  const sound = new Audio();
+  sound.autoplay = true;
+  sound.src = audioSrc;
 }
