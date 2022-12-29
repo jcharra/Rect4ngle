@@ -17,11 +17,12 @@ interface ControlAreaProps {
     retry: () => void;
   };
   summands: number[];
+  getBonus: (n: number) => number;
   gameType?: GameType;
 }
 
 export default function ControlArea(props: ControlAreaProps) {
-  const { functions, summands, gameType } = props;
+  const { functions, summands, gameType, getBonus } = props;
   const { add, check, skip, backspace, checkPrime, retry } = functions;
   const { t } = useTranslation();
   const { activePlayerName } = useSettings();
@@ -38,6 +39,7 @@ export default function ControlArea(props: ControlAreaProps) {
         add={add}
         selectedValue={summands.length > 0 ? summands[0] : undefined}
         disabled={controlsDisabled || summands.length === 12}
+        getBonus={getBonus}
       />
 
       <div className="actionsContainer">

@@ -10,6 +10,21 @@
   flex-basis: 25%;
 }
 
+.bonus {
+  font-size: 0.6em;
+  position: absolute;
+  bottom: 3px;
+  right: -9px;
+  color: white !important;
+}
+
+.bonused {
+  color: lightgreen !important;
+  font-weight: 900;
+  font-size: 1.5em;
+  transition: 1s;
+}
+
 @media (orientation: portrait) {
   .addButton {
     flex-basis: 25%;

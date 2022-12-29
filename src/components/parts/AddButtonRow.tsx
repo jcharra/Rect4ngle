@@ -5,10 +5,11 @@ interface AddButtonRowProps {
   add: (n: number) => void;
   selectedValue?: number;
   disabled: boolean;
+  getBonus: (n: number) => number;
 }
 
 export default function AddButtonRow(props: AddButtonRowProps) {
-  const { add, selectedValue, disabled } = props;
+  const { add, selectedValue, disabled, getBonus } = props;
 
   return (
     <>
@@ -20,7 +21,8 @@ export default function AddButtonRow(props: AddButtonRowProps) {
             onClick={() => add(num)}
             disabled={disabled || (!!selectedValue && num !== selectedValue)}
           >
-            +{num}
+            <span className={getBonus(num) > 1 ? "bonused" : ""}>+{num}</span>
+            {getBonus(num) > 1 && <span className="bonus">x{getBonus(num)}</span>}
           </IonButton>
         ))}
       </div>
@@ -32,7 +34,8 @@ export default function AddButtonRow(props: AddButtonRowProps) {
             onClick={() => add(num)}
             disabled={disabled || (!!selectedValue && num !== selectedValue)}
           >
-            +{num}
+            <span className={getBonus(num) > 1 ? "bonused" : ""}>+{num}</span>
+            {getBonus(num) > 1 && <span className="bonus">x{getBonus(num)}</span>}
           </IonButton>
         ))}
       </div>

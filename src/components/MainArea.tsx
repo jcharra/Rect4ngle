@@ -10,6 +10,7 @@ import ControlArea from "./ControlArea";
 import "./MainArea.css";
 import ScalableRectangleArea from "./parts/ScalableRectangleArea";
 import Scoreboard from "./Scoreboard";
+import useBonus from "../hooks/bonusHook";
 
 interface TimerData {
   timer: number;
@@ -35,6 +36,7 @@ export function MainArea(props: MainAreaProps) {
   const [startCountdown, setStartCountdown] = useState(-1);
   const { activePlayerName } = useSettings();
   const { scheduleHint } = useHint();
+  const { getBonus, upgradeBonus, resetBonuses } = useBonus();
 
   useEffect(() => {
     if (intervalRef) {
@@ -145,13 +147,16 @@ export function MainArea(props: MainAreaProps) {
 
     if (sum === num) {
       if (summands[0] === summands.length) {
-        addDelta(10, t("square"));
+        addDelta(10 * getBonus(summands[0]), t("square"));
+        upgradeBonus(summands.length);
+        (document as any).getElementById("bonus").play();
       } else {
-        addDelta(summands[0], t("correct"));
+        addDelta(summands[0] * getBonus(summands[0]), t("correct"));
       }
       scheduleHint("", 0);
     } else {
       addDelta(-5, t("wrong"));
+      resetBonuses();
       scheduleHint(suggestSolution(num), 0);
     }
     newNum();
@@ -163,6 +168,7 @@ export function MainArea(props: MainAreaProps) {
       scheduleHint("", 0);
     } else {
       addDelta(PRIME_MALUS, t("nope"));
+      resetBonuses();
       scheduleHint(suggestSolution(num), 0);
     }
     newNum();
@@ -205,7 +211,7 @@ export function MainArea(props: MainAreaProps) {
             <ScalableRectangleArea num={num} summands={summands} />
           </div>
           <div className="controlArea">
-            <ControlArea functions={functions} summands={summands} gameType={gameType} />
+            <ControlArea functions={functions} summands={summands} gameType={gameType} getBonus={getBonus} />
           </div>
         </div>
       </div>
