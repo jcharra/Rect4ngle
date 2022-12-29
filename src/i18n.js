@@ -111,7 +111,7 @@ i18n.use(initReactI18next).init({
           "<h5>Diamanten sammeln</h5>" +
           "Immer wenn Du glaubst dass Du ein passendes Rechteck für die angezeigte Zahl " +
           "gebaut hast, klicke den <strong>grünen Knopf mit dem Haken</strong>. Wenn Du alles richtig gemacht " +
-          "hast, erhältst Du so viele Diamanten wie Dein Rechteck Punkte hoch ist. Wenn Du daneben liegst, " +
+          "hast, erhältst Du so viele Diamanten wie Dein Rechteck Kästchen hoch ist. Wenn Du daneben liegst, " +
           " verlierst Du leider 5 Diamanten. <br/><br/> " +
           "Ein Spezialfall ist das <strong>QUADRAT</strong>: Wenn Dein Rechteck genau so " +
           "hoch wie breit ist, erhältst Du 10 Diamanten und die verwendete Zahl erhält ein <strong>Power-Up</strong>: " +

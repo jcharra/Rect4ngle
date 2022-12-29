@@ -73,6 +73,7 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
           <IonItem>
             <IonLabel slot="start">{t("language")}</IonLabel>
             <IonSelect
+              className="select-full-width"
               slot="end"
               interface="popover"
               value={language.code}
