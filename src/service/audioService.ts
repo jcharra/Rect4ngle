@@ -1,5 +1,5 @@
 export function countdownSound() {
-  playSound("beep1");
+  playSound("beep");
 }
 
 export function powerUpSound() {
