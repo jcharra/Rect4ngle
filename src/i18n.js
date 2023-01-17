@@ -37,7 +37,7 @@ i18n.use(initReactI18next).init({
         playing: "playing",
         local_scores: "Local",
         online_scores: "Online",
-        save_online: "Publish highscores",
+        save_online: "Public highscore",
         scores_unavailable: "Scores not available",
         help_1:
           "In Rect4ngle, your goal is to build rectangles with a given number of " +
@@ -105,7 +105,7 @@ i18n.use(initReactI18next).init({
         playing: "spielt",
         local_scores: "Lokal",
         online_scores: "Online",
-        save_online: "Hishcores veröffentlichen",
+        save_online: "Hishcore online",
         scores_unavailable: "Highscores nicht verfügbar",
         help_1:
           "Bei Rect4ngle musst Du Rechtecke bauen, die eine vorgegebene Anzahl von Kästchen enthalten. Die Anzahl Kästchen " +
