@@ -100,7 +100,10 @@ const App: React.FC = () => {
   const onGameFinished = async (playerName: string, score: number) => {
     await saveScore(playerName, score, gameType!);
     setLatestScore({ score, gameType: gameType! });
-    await saveOnlineScore(playerName, score, gameType!);
+
+    if (settings.scoresPublic) {
+      await saveOnlineScore(playerName, score, gameType!);
+    }
 
     const stats = await getGameStats();
     if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
