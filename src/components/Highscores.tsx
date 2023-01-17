@@ -1,53 +1,11 @@
-import { IonButton, IonButtons, IonChip, IonCol, IonGrid, IonHeader, IonRow, IonTitle, IonToolbar } from "@ionic/react";
-import { format } from "date-fns";
-import { differenceInSeconds } from "date-fns/esm";
-import { useAsync } from "react-async-hook";
+import { IonButton, IonButtons, IonHeader, IonIcon, IonLabel, IonTitle, IonToolbar } from "@ionic/react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getScores, NUMBER_OF_SCORES_TO_KEEP, ScoreDict, ScoreRecord } from "../service/scoreService";
+import { ScoreDict, getOfflineScores, getOnlineScores } from "../service/scoreService";
 import { GameType } from "../types/GameType";
+import HallOfFame from "./HallOfFame";
 import "./Highscores.css";
-
-function isRecent(score: ScoreRecord) {
-  return differenceInSeconds(new Date(), score.date) < 3;
-}
-
-function colorForRank(rank: number) {
-  return (
-    {
-      0: "gold",
-      1: "silver",
-      2: "bronze",
-    }[rank] || "default"
-  );
-}
-
-function GameTypeRows({ scores }: { scores: ScoreRecord[] }) {
-  const { t } = useTranslation();
-  let scoreIterable: (ScoreRecord | null)[] = [...scores];
-  for (let i = scoreIterable.length; i < NUMBER_OF_SCORES_TO_KEEP; i++) {
-    scoreIterable.push(null);
-  }
-
-  return (
-    <>
-      {scoreIterable.map((score, index) => (
-        <IonRow
-          key={"score-" + index}
-          className={score && isRecent(score) ? "recentScore ion-align-items-center" : "ion-align-items-center"}
-        >
-          <IonCol size="2" className="ion-self-align-center">
-            <IonChip class={colorForRank(index)}>{index + 1}</IonChip>
-          </IonCol>
-          <IonCol size="5" className="left-aligned">
-            {score ? score.playerName : t("empty_score")}
-          </IonCol>
-          <IonCol size="2">{score ? score.score : ""}</IonCol>
-          <IonCol size="3">{score ? format(score.date, "dd.MM.yy") : ""}</IonCol>
-        </IonRow>
-      ))}
-    </>
-  );
-}
+import { globeOutline, locationOutline } from "ionicons/icons";
 
 export interface GameScore {
   gameType: GameType;
@@ -55,20 +13,18 @@ export interface GameScore {
 }
 
 export default function Highscores({ latestScore, onDismiss }: { latestScore?: GameScore; onDismiss: () => void }) {
-  const { loading, error, result } = useAsync(getScores, []);
-
+  const [isOnline, setOnline] = useState(false);
+  const [scores, setScores] = useState<ScoreDict | null | undefined>();
   const { t } = useTranslation();
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const fetchScores = useCallback(async () => {
+    setScores(undefined);
+    setScores(isOnline ? await getOnlineScores() : await getOfflineScores());
+  }, [isOnline]);
 
-  if (error) {
-    console.log("Error:", error);
-    return <div>ERROR!</div>;
-  }
-
-  const scores = result as ScoreDict;
+  useEffect(() => {
+    fetchScores();
+  }, [isOnline, fetchScores]);
 
   return (
     <>
@@ -79,41 +35,22 @@ export default function Highscores({ latestScore, onDismiss }: { latestScore?: G
             <IonButton onClick={onDismiss}>{t("close")}</IonButton>
           </IonButtons>
         </IonToolbar>
+        <div className="switchBar">
+          <IonTitle className={`tab ${!isOnline ? "activeTab" : ""}`} onClick={() => setOnline(false)}>
+            <IonLabel>
+              <IonIcon icon={locationOutline} /> {t("local_scores")}
+            </IonLabel>
+          </IonTitle>
+          <IonTitle className={`tab ${isOnline ? "activeTab" : ""}`} onClick={() => setOnline(true)}>
+            <IonLabel>
+              <IonIcon icon={globeOutline} />
+              <span className="bottomPadded"> {t("online_scores")}</span>
+            </IonLabel>
+          </IonTitle>
+        </div>
       </IonHeader>
-      <IonGrid class="ion-text-center highscoreContainer" style={{ width: "100%" }}>
-        {latestScore ? (
-          <IonRow className="latestScore">
-            {t("your_score")}: {latestScore.score}
-          </IonRow>
-        ) : null}
 
-        {(!latestScore || latestScore.gameType === GameType.ONE_MINUTE) && (
-          <>
-            <IonRow className="gameTypeHeader">
-              <IonCol>{t("one_minute_header")}</IonCol>
-            </IonRow>
-            <GameTypeRows scores={scores[GameType.ONE_MINUTE]} />
-          </>
-        )}
-
-        {(!latestScore || latestScore.gameType === GameType.TWO_MINUTES) && (
-          <>
-            <IonRow className="gameTypeHeader">
-              <IonCol>{t("two_minutes_header")}</IonCol>
-            </IonRow>
-            <GameTypeRows scores={scores[GameType.TWO_MINUTES]} />
-          </>
-        )}
-
-        {(!latestScore || latestScore.gameType === GameType.THREE_MINUTES) && (
-          <>
-            <IonRow className="gameTypeHeader">
-              <IonCol>{t("three_minutes_header")}</IonCol>
-            </IonRow>
-            <GameTypeRows scores={scores[GameType.THREE_MINUTES]} />
-          </>
-        )}
-      </IonGrid>
+      <HallOfFame scores={scores} latestScore={latestScore} />
     </>
   );
 }

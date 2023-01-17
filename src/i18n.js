@@ -35,6 +35,10 @@ i18n.use(initReactI18next).init({
         two_minutes_header: "Two minutes",
         three_minutes_header: "Three minutes",
         playing: "playing",
+        local_scores: "Local",
+        online_scores: "Online",
+        save_online: "Publish highscores",
+        scores_unavailable: "Scores not available",
         help_1:
           "In Rect4ngle, your goal is to build rectangles with a given number of " +
           "cells. The target number of cells is written on the blackboard. A rectangle is built from " +
@@ -99,6 +103,10 @@ i18n.use(initReactI18next).init({
         two_minutes_header: "Zwei Minuten",
         three_minutes_header: "Drei Minuten",
         playing: "spielt",
+        local_scores: "Lokal",
+        online_scores: "Online",
+        save_online: "Hishcores veröffentlichen",
+        scores_unavailable: "Highscores nicht verfügbar",
         help_1:
           "Bei Rect4ngle musst Du Rechtecke bauen, die eine vorgegebene Anzahl von Kästchen enthalten. Die Anzahl Kästchen " +
           "die Du brauchst steht links auf der schwarzen Tafel. Ein Rechteck besteht immer aus " +

@@ -69,3 +69,24 @@ ion-chip.default {
   --color: white;
   font-weight: 700;
 }
+
+.switchBar {
+  height: 50px;
+  border-top: 1px solid #bbb;
+}
+
+.tab {
+  text-align: center;
+  width: 50%;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  color: white;
+  background-color: #aaa;
+}
+.activeTab {
+  background-color: gray;
+  color: yellow;
+  font-weight: 900;
+  text-shadow: 2px 2px #444;
+}

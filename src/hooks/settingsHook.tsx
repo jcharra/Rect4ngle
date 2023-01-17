@@ -9,6 +9,8 @@ export interface Settings {
   changePlayerName: (name: string, idx: number) => void;
   language: Language;
   changeLanguage: (code: string) => void;
+  scoresPublic: boolean;
+  setScoresPublic: (isPublic: boolean) => void;
 }
 
 const SettingsCtx = createContext<Settings>({
@@ -21,12 +23,15 @@ const SettingsCtx = createContext<Settings>({
   changePlayerName: (name: string, idx: number) => {},
   language: ENGLISH,
   changeLanguage: (code: string) => {},
+  scoresPublic: true,
+  setScoresPublic: (isPublic: boolean) => {},
 });
 
 export function SettingsContextProvider({ children }: { children: React.ReactNode }) {
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [language, setLanguage] = useState<Language>(ENGLISH);
+  const [scoresPublic, _setScoresPublic] = useState(true);
 
   async function loadConfigFromPreferences() {
     const { activePlayer, names, language } = await getPlayerConfig();
@@ -50,6 +55,7 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
       names: updatedPlayerNames,
       activePlayer: activePlayerIndex,
       language,
+      scoresPublic,
     });
     setPlayerNames(updatedPlayerNames);
   }
@@ -59,6 +65,7 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
       names: playerNames,
       activePlayer: index,
       language,
+      scoresPublic,
     });
     setActivePlayerIndex(index);
   }
@@ -70,11 +77,22 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
           names: playerNames,
           activePlayer: activePlayerIndex,
           language: lang,
+          scoresPublic,
         });
         setLanguage(lang);
         break;
       }
     }
+  }
+
+  function setScoresPublic(visible: boolean) {
+    _setScoresPublic(visible);
+    savePlayerConfig({
+      names: playerNames,
+      activePlayer: activePlayerIndex,
+      language,
+      scoresPublic: visible,
+    });
   }
 
   return (
@@ -87,6 +105,8 @@ export function SettingsContextProvider({ children }: { children: React.ReactNod
         changePlayerName,
         language,
         changeLanguage,
+        scoresPublic,
+        setScoresPublic,
       }}
     >
       {children}

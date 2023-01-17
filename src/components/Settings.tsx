@@ -10,6 +10,7 @@ import {
   IonSelect,
   IonSelectOption,
   IonTitle,
+  IonToggle,
   IonToolbar,
 } from "@ionic/react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +21,16 @@ import { LANGUAGES } from "../service/playerService";
 export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () => void; settings: Settings }) {
   const { t } = useTranslation();
 
-  const { activePlayerIndex, playerNames, selectPlayer, changePlayerName, language, changeLanguage } = settings;
+  const {
+    activePlayerIndex,
+    playerNames,
+    selectPlayer,
+    changePlayerName,
+    language,
+    changeLanguage,
+    scoresPublic,
+    setScoresPublic,
+  } = settings;
   return (
     <>
       <IonHeader>
@@ -85,6 +95,10 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
                 </IonSelectOption>
               ))}
             </IonSelect>
+          </IonItem>
+          <IonItem>
+            <IonLabel slot="start">{t("save_online")}</IonLabel>
+            <IonToggle slot="end" checked={scoresPublic} onIonChange={() => setScoresPublic(!scoresPublic)}></IonToggle>
           </IonItem>
         </IonList>
       </IonContent>

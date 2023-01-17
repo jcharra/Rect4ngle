@@ -29,6 +29,7 @@ export interface PlayerConfig {
   activePlayer: number;
   names: string[];
   language: Language;
+  scoresPublic: boolean;
 }
 
 export async function savePlayerConfig(config: PlayerConfig) {
@@ -42,6 +43,7 @@ export const DEFAULT_PLAYER_CONFIG = {
   activePlayer: 0,
   names: ["Player 1"],
   language: ENGLISH,
+  scoresPublic: true,
 };
 
 export async function getPlayerConfig(): Promise<PlayerConfig> {
@@ -58,6 +60,9 @@ export async function getPlayerConfig(): Promise<PlayerConfig> {
   // backwards compat
   if (!parsed.language) {
     parsed.language = ENGLISH;
+  }
+  if (parsed.scoresPublic === undefined) {
+    parsed.scoresPublic = true;
   }
 
   return parsed;

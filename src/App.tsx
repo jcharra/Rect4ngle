@@ -39,7 +39,7 @@ import { MainArea } from "./components/MainArea";
 import SettingsWindow from "./components/Settings";
 import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
-import { saveScore } from "./service/scoreService";
+import { saveOnlineScore, saveScore } from "./service/scoreService";
 /* Theme variables */
 import { AdMob } from "@capacitor-community/admob";
 import { setupIonicReact } from "@ionic/react";
@@ -100,6 +100,7 @@ const App: React.FC = () => {
   const onGameFinished = async (playerName: string, score: number) => {
     await saveScore(playerName, score, gameType!);
     setLatestScore({ score, gameType: gameType! });
+    await saveOnlineScore(playerName, score, gameType!);
 
     const stats = await getGameStats();
     if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
