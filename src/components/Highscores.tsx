@@ -38,13 +38,16 @@ export default function Highscores({ latestScore, onDismiss }: { latestScore?: G
         <div className="switchBar">
           <IonTitle className={`tab ${!isOnline ? "activeTab" : ""}`} onClick={() => setOnline(false)}>
             <IonLabel>
-              <IonIcon icon={locationOutline} /> {t("local_scores")}
+              <IonIcon icon={locationOutline} />
+              &nbsp;
+              {t("local_scores")}
             </IonLabel>
           </IonTitle>
           <IonTitle className={`tab ${isOnline ? "activeTab" : ""}`} onClick={() => setOnline(true)}>
             <IonLabel>
               <IonIcon icon={globeOutline} />
-              <span className="bottomPadded"> {t("online_scores")}</span>
+              &nbsp;
+              {t("online_scores")}
             </IonLabel>
           </IonTitle>
         </div>

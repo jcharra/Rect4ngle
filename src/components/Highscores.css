@@ -90,3 +90,9 @@ ion-chip.default {
   font-weight: 900;
   text-shadow: 2px 2px #444;
 }
+
+ion-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
