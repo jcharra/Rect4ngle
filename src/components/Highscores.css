@@ -75,6 +75,31 @@ ion-chip.default {
   border-top: 1px solid #bbb;
 }
 
+.monthBar {
+  height: 40px;
+  border-top: 1px solid #bbb;
+  text-align: center;
+  line-height: 40px;
+  user-select: none;
+}
+
+.nextMonth {
+  float: right;
+  padding-right: 10px;
+  margin-top: 2px;
+}
+
+.previousMonth {
+  float: left;
+  padding-left: 10px;
+  margin-top: 2px;
+}
+
+.inactive {
+  pointer-events: none;
+  color: #eee;
+}
+
 .tab {
   text-align: center;
   width: 50%;

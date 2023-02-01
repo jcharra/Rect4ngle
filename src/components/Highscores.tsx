@@ -1,11 +1,12 @@
 import { IonButton, IonButtons, IonHeader, IonIcon, IonLabel, IonTitle, IonToolbar } from "@ionic/react";
+import { addMonths, isAfter, isSameMonth, startOfMonth } from "date-fns";
+import { arrowBackOutline, arrowForwardOutline, globeOutline, locationOutline } from "ionicons/icons";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScoreDict, getOfflineScores, getOnlineScores } from "../service/scoreService";
 import { GameType } from "../types/GameType";
 import HallOfFame from "./HallOfFame";
 import "./Highscores.css";
-import { globeOutline, locationOutline } from "ionicons/icons";
 
 export interface GameScore {
   gameType: GameType;
@@ -15,16 +16,24 @@ export interface GameScore {
 export default function Highscores({ latestScore, onDismiss }: { latestScore?: GameScore; onDismiss: () => void }) {
   const [isOnline, setOnline] = useState(false);
   const [scores, setScores] = useState<ScoreDict | null | undefined>();
+  const [selectedMonth, setSelectedMonth] = useState<Date>(startOfMonth(new Date()));
   const { t } = useTranslation();
 
   const fetchScores = useCallback(async () => {
     setScores(undefined);
-    setScores(isOnline ? await getOnlineScores() : await getOfflineScores());
-  }, [isOnline]);
+    setScores(isOnline ? await getOnlineScores(selectedMonth) : await getOfflineScores());
+  }, [isOnline, selectedMonth]);
+
+  const changeMonth = useCallback(
+    (diff) => {
+      setSelectedMonth(addMonths(selectedMonth, diff));
+    },
+    [selectedMonth]
+  );
 
   useEffect(() => {
     fetchScores();
-  }, [isOnline, fetchScores]);
+  }, [isOnline, fetchScores, selectedMonth]);
 
   return (
     <>
@@ -51,6 +60,17 @@ export default function Highscores({ latestScore, onDismiss }: { latestScore?: G
             </IonLabel>
           </IonTitle>
         </div>
+        {isOnline && (
+          <div className="monthBar">
+            <span className={`previousMonth ${!isAfter(selectedMonth, new Date(2023, 0, 1)) ? "inactive" : ""}`}>
+              <IonIcon icon={arrowBackOutline} onClick={() => changeMonth(-1)} />
+            </span>
+            {t("month_" + selectedMonth.getMonth())} {selectedMonth.getFullYear()}
+            <span className={`nextMonth ${isSameMonth(selectedMonth, new Date()) ? "inactive" : ""}`}>
+              <IonIcon icon={arrowForwardOutline} onClick={() => changeMonth(1)} />
+            </span>
+          </div>
+        )}
       </IonHeader>
 
       <HallOfFame scores={scores} latestScore={latestScore} />

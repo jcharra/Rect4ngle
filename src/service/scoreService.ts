@@ -1,5 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
-import { differenceInSeconds, endOfMonth, startOfMonth } from "date-fns";
+import { differenceInSeconds, endOfMonth, isSameMonth } from "date-fns";
 import { getSubapaseClient } from "../db/supabaseClient";
 import { GameType } from "../types/GameType";
 
@@ -96,13 +96,27 @@ function getEmptyScores(): ScoreDict {
   };
 }
 
+interface ScoreLog {
+  [monthStart: string]: ScoreDict;
+}
+
+const PREVIOUS_SCORES: ScoreLog = {};
+
 let lastFetchDate: Date | null = null;
 let cachedScores = getEmptyScores();
-export const getOnlineScores = async () => {
+export const getOnlineScores = async (monthStart: Date) => {
   let scores: ScoreDict = getEmptyScores();
 
-  if (cachedScores && lastFetchDate && differenceInSeconds(new Date(), lastFetchDate) < 10) {
+  const isCurrentMonth = isSameMonth(monthStart, new Date());
+
+  if (isCurrentMonth && cachedScores && lastFetchDate && differenceInSeconds(new Date(), lastFetchDate) < 10) {
     return cachedScores;
+  }
+
+  const monthStartIso = monthStart.toISOString();
+  const monthEndIso = endOfMonth(monthStart).toISOString();
+  if (!isCurrentMonth && PREVIOUS_SCORES[monthStartIso]) {
+    return PREVIOUS_SCORES[monthStartIso];
   }
 
   const supabaseClient = getSubapaseClient();
@@ -110,8 +124,8 @@ export const getOnlineScores = async () => {
     return null;
   }
 
-  const lower_lim = startOfMonth(new Date()).toISOString();
-  const upper_lim = endOfMonth(new Date()).toISOString();
+  const lower_lim = monthStartIso;
+  const upper_lim = monthEndIso;
   let { data, error, status } = await supabaseClient
     .from("highscores")
     .select(`player_name, score, created_at, game_type`)
@@ -140,8 +154,12 @@ export const getOnlineScores = async () => {
     } catch {}
   }
 
-  lastFetchDate = new Date();
-  cachedScores = scores;
+  if (isCurrentMonth) {
+    lastFetchDate = new Date();
+    cachedScores = scores;
+  } else {
+    PREVIOUS_SCORES[monthStartIso] = scores;
+  }
 
   return scores;
 };
