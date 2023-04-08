@@ -6,6 +6,7 @@ import {
   IonFooter,
   IonIcon,
   IonModal,
+  IonPopover,
   IonTitle,
   IonToolbar,
   useIonActionSheet,
@@ -32,7 +33,7 @@ import {
   stopwatchOutline,
 } from "ionicons/icons";
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores, { GameScore } from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
@@ -47,6 +48,7 @@ import { RateApp } from "capacitor-rate-app";
 import Timer from "./components/parts/Timer";
 import { INTERSTITIAL_FREQUENCY, REVIEW_FREQUENCY, showInterstitial } from "./service/admob";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
+import { hasBeenSeen, markAsSeen } from "./service/tutorialService";
 import { TESTING_DEVICES_IDS } from "./testingDevicesIds";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
@@ -81,6 +83,10 @@ const App: React.FC = () => {
 
   const helpModal = useRef<HTMLIonModalElement>(null);
   const [helpOpen, setHelpOpen] = useState(false);
+
+  const tutorialModal = useRef<HTMLIonModalElement>(null);
+  const tutorialRef = useRef<HTMLIonPopoverElement>(null);
+  const [tutorialOpen, setTutorialOpen] = useState(false);
 
   const [timer, setTimer] = useState(0);
 
@@ -131,9 +137,19 @@ const App: React.FC = () => {
     setTimer: setTimer,
   };
 
+  const checkTutorialSeen = async () => {
+    if (!(await hasBeenSeen())) {
+      setTutorialOpen(true);
+      markAsSeen();
+    }
+  };
+
   useEffect(() => {
     // init AdMob
     initialize();
+
+    // check tutorial already seen
+    checkTutorialSeen();
   }, []);
 
   useEffect(() => {
@@ -150,6 +166,11 @@ const App: React.FC = () => {
     <IonApp>
       <IonContent>
         <MainArea gameType={gameType} timerData={timerData} onGameFinished={onGameFinished} />
+        <IonPopover ref={tutorialRef} isOpen={tutorialOpen} onDidDismiss={() => setTutorialOpen(false)}>
+          <IonContent class="ion-padding">
+            <Trans i18nKey="tutorial" t={t} components={{ h5: <h5 /> }}></Trans>
+          </IonContent>
+        </IonPopover>
       </IonContent>
       <IonFooter>
         <IonToolbar color="dark" mode="ios">

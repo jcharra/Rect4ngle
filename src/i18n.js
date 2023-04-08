@@ -93,6 +93,8 @@ i18n.use(initReactI18next).init({
           "An orange rectangle means you've gone too high ... remove one piece with the x-arrow button or remove all pieces with the trash button.",
         hint_correct_rect:
           "That looks like a pretty good match. Now validate your rectangle with the green checkmark button.",
+        tutorial:
+          "<h5>Welcome to Rect4ngle!</h5>This is the first time you start Rect4ngle.<br><br> Try the training mode (game controller icon in the bottom left) to get instructions on how to play. You can also read the full game instructions - click the light bulb to view them.",
       },
     },
     de: {
@@ -179,7 +181,9 @@ i18n.use(initReactI18next).init({
           "Ein Rechteck muss immer aus mehr als einem Teil bestehen. Sobald Du ein Teil hinzugefügt hast, kannst Du keine Teile von anderer Länge mehr hinzufügen.",
         hint_sum_too_high:
           "Wenn das Rechteck orange wird bedeutet das, dass Deine Summe zu hoch ist. Entferne dann entweder ein einzelnes Teil mit dem x-Pfeil-Knopf, oder lösche alle Teile mit dem Mülleimer-Icon.",
-        hint_correct_rect: "Das sieht doch ziemlich gut aus. Prüfe Dein Rechteck jetzt mit dem grünen Häkchen-Knopf.",
+        hint_correct_rect: "Das sieht gut aus. Prüfe Dein Rechteck jetzt mit dem grünen Häkchen-Knopf.",
+        tutorial:
+          "<h5>Willkommen bei Rect4ngle!</h5>Dies ist das erste mal, dass du Rect4ngle startest.<br><br> Am besten fängst Du im Trainingsmodus an. Klicke dazu auf den Game Controller unten links. Oder Du liest zuerst die Anleitung - klicke dazu auf die Glühbirne.",
       },
     },
   },
