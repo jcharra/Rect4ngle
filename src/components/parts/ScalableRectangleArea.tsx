@@ -84,6 +84,7 @@ export default function ScalableRectangleArea({
       setPopoverText(t(hint, hintArgs));
       hintLimits[hint]--;
     }
+    /* eslint-disable-next-line */
   }, [num, gameType, status]);
 
   return (

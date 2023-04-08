@@ -84,7 +84,6 @@ const App: React.FC = () => {
   const helpModal = useRef<HTMLIonModalElement>(null);
   const [helpOpen, setHelpOpen] = useState(false);
 
-  const tutorialModal = useRef<HTMLIonModalElement>(null);
   const tutorialRef = useRef<HTMLIonPopoverElement>(null);
   const [tutorialOpen, setTutorialOpen] = useState(false);
 
@@ -168,6 +167,7 @@ const App: React.FC = () => {
         <MainArea gameType={gameType} timerData={timerData} onGameFinished={onGameFinished} />
         <IonPopover ref={tutorialRef} isOpen={tutorialOpen} onDidDismiss={() => setTutorialOpen(false)}>
           <IonContent class="ion-padding">
+            {/* eslint-disable-next-line */}
             <Trans i18nKey="tutorial" t={t} components={{ h5: <h5 /> }}></Trans>
           </IonContent>
         </IonPopover>
