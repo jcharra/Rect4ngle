@@ -1,6 +1,6 @@
 export const COLUMN_LIMIT = 50;
 
-const isPrime = (n: number) => {
+export const isPrime = (n: number) => {
   for (let i = 2; i <= Math.sqrt(n); i++) {
     if (n % i === 0) {
       return false;

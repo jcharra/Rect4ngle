@@ -6,6 +6,8 @@ const colorForStatus = {
   INCOMPLETE: "gray",
   VALID: "green",
   TOO_HIGH: "orange",
+  EMPTY: "",
+  CORRECT: "green", // don't give a color clue here ... :)
 };
 
 export default function Blip({

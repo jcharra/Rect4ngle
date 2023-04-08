@@ -210,7 +210,7 @@ export function MainArea(props: MainAreaProps) {
             <Scoreboard diamonds={diamonds} delta={delta} comment={comment} />
           </div>
           <div className="rectangleBox">
-            <ScalableRectangleArea num={num} summands={summands} />
+            <ScalableRectangleArea num={num} summands={summands} gameType={gameType} />
           </div>
           <div className="controlArea">
             <ControlArea functions={functions} summands={summands} gameType={gameType} getBonus={getBonus} />

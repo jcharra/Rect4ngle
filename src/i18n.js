@@ -83,6 +83,16 @@ i18n.use(initReactI18next).init({
         month_9: "October",
         month_10: "November",
         month_11: "December",
+        hint_no_pieces:
+          "Try to build a rectangle covering exactly {{num}} boxes. Use the blue buttons below to add pieces with length 2, 3, 4, ...",
+        hint_no_pieces_prime:
+          "Try to build a rectangle covering exactly {{num}} boxes. If that is not possible, click the PRIME button.",
+        hint_one_piece_not_allowed:
+          "A rectangle must always contain more than one piece. After picking your first piece, it is not possible to add pieces of a different size.",
+        hint_sum_too_high:
+          "An orange rectangle means you've gone too high ... remove one piece with the x-arrow button or remove all pieces with the trash button.",
+        hint_correct_rect:
+          "That looks like a pretty good match. Now validate your rectangle with the green checkmark button.",
       },
     },
     de: {
@@ -161,6 +171,15 @@ i18n.use(initReactI18next).init({
         month_9: "Oktober",
         month_10: "November",
         month_11: "Dezember",
+        hint_no_pieces:
+          "Versuche eine Rechteck zu bauen, das exakt {{num}} Kästchen hat. Verwende die blauen Knöpfe unten, um Teile der Länge 2, 3, 4 ... hinzuzufügen.",
+        hint_no_pieces_prime:
+          "Versuche eine Rechteck zu bauen, das exakt {{num}} Kästchen hat. Falls das nicht möglich ist, klicke den grünen PRIM-Knopf.",
+        hint_one_piece_not_allowed:
+          "Ein Rechteck muss immer aus mehr als einem Teil bestehen. Sobald Du ein Teil hinzugefügt hast, kannst Du keine Teile von anderer Länge mehr hinzufügen.",
+        hint_sum_too_high:
+          "Wenn das Rechteck orange wird bedeutet das, dass Deine Summe zu hoch ist. Entferne dann entweder ein einzelnes Teil mit dem x-Pfeil-Knopf, oder lösche alle Teile mit dem Mülleimer-Icon.",
+        hint_correct_rect: "Das sieht doch ziemlich gut aus. Prüfe Dein Rechteck jetzt mit dem grünen Häkchen-Knopf.",
       },
     },
   },
