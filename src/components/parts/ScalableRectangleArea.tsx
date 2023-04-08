@@ -28,12 +28,12 @@ const getRectStatus = (summands: number[], target: number): RectStatus => {
   const currentSum = getSum(summands);
   if (currentSum > target) {
     return RectStatus.TOO_HIGH;
-  } else if (currentSum === target) {
-    return RectStatus.CORRECT;
   } else if (summands.length === 0) {
     return RectStatus.EMPTY;
   } else if (summands.length === 1) {
     return RectStatus.INCOMPLETE;
+  } else if (currentSum === target) {
+    return RectStatus.CORRECT;
   } else {
     return RectStatus.VALID;
   }
@@ -81,8 +81,14 @@ export default function ScalableRectangleArea({
     }
 
     if (hint && hintLimits[hint] > 0) {
-      setPopoverText(t(hint, hintArgs));
+      let text = t(hint, hintArgs);
       hintLimits[hint]--;
+
+      if (hintLimits[hint] === 0) {
+        text += t("hint_last_time");
+      }
+
+      setPopoverText(text);
     }
     /* eslint-disable-next-line */
   }, [num, gameType, status]);
