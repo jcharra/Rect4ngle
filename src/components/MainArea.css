@@ -132,11 +132,6 @@ ion-backdrop {
   transform: translate(-50%, -50%);
 }
 
-#helpIcon {
-  animation: pulse 2s;
-  animation-iteration-count: 3;
-}
-
 @keyframes pulse {
   0% {
     transform: scale(1);
