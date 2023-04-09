@@ -89,10 +89,7 @@ const App: React.FC = () => {
 
   const [timer, setTimer] = useState(0);
 
-  const [noGamesPlayed, setNoGamesPlayed] = useState(true);
-
   const startGame = (gameType: GameType) => {
-    setNoGamesPlayed(false);
     setLatestScore(undefined);
     setGameType(gameType);
   };
