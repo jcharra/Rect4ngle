@@ -1,10 +1,12 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'de.charra.rectangle',
-  appName: 'Rect4ngle',
+  appId: 'io.ionic.starter',
+  appName: 'multiplication',
   webDir: 'build',
-  bundledWebRuntime: false
+  server: {
+    androidScheme: 'https'
+  }
 };
 
 export default config;

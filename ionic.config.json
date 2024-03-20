@@ -1,5 +1,7 @@
 {
   "name": "multiplication",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react"
 }
