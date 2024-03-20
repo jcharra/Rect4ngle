@@ -1,6 +1,8 @@
 {
-	"appId": "de.charra.rectangle",
-	"appName": "Rect4ngle",
+	"appId": "io.ionic.starter",
+	"appName": "multiplication",
 	"webDir": "build",
-	"bundledWebRuntime": false
+	"server": {
+		"androidScheme": "https"
+	}
 }
