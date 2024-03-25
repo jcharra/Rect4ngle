@@ -38,7 +38,7 @@ export function MainArea(props: MainAreaProps) {
   const [intervalRef, setIntervalRef] = useState<any>(null);
   const [startCountdown, setStartCountdown] = useState(-1);
   const { activePlayerName } = useSettings();
-  const { scheduleHint } = useHint();
+  const { showHint, clearHint } = useHint();
   const { getBonus, upgradeBonus, downgradeBonuses, resetBonuses } = useBonus();
 
   useEffect(() => {
@@ -165,15 +165,15 @@ export function MainArea(props: MainAreaProps) {
       } else {
         addDelta(summands[0] * getBonus(summands[0]), t("correct"));
       }
-      scheduleHint("", 0);
+      clearHint();
     } else {
       addDelta(-5, t("wrong"));
       downgradeBonuses();
-      scheduleHint(suggestSolution(num), 0);
+      showHint(suggestSolution(num), 0);
     }
 
     if (gameType === GameType.TUTORIAL && !correct) {
-      scheduleHint(t("tutorial_not_yet_correct"), 0);
+      showHint(t("tutorial_not_yet_correct"), 0);
     } else {
       nextNumber();
     }
@@ -185,15 +185,15 @@ export function MainArea(props: MainAreaProps) {
     if (isPrime) {
       addDelta(PRIME_BONUS, t("prime_correct"));
       primeSound();
-      scheduleHint("", 0);
+      clearHint();
     } else {
       addDelta(PRIME_MALUS, t("nope"));
       downgradeBonuses();
-      scheduleHint(suggestSolution(num), 0);
+      showHint(suggestSolution(num), 0);
     }
 
     if (gameType === GameType.TUTORIAL && !isPrime) {
-      scheduleHint(t("tutorial_not_a_prime"), 0);
+      showHint(t("tutorial_not_a_prime"), 0);
     } else {
       nextNumber();
     }

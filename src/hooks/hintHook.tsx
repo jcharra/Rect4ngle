@@ -2,44 +2,43 @@ import React, { createContext, useContext, useState } from "react";
 
 interface HintContext {
   hint: string;
-  scheduleHint: (hint: string, timeout: number) => void;
+  showHint: (hint: string, timeout: number) => void;
+  clearHint: () => void;
 }
 
 const HintCtx = createContext<HintContext>({
   hint: "",
-  scheduleHint: (h: string, t: number) => {},
+  showHint: (h: string, t: number) => {},
+  clearHint: () => {},
 });
 
 export function HintContextProvider({ children }: { children: React.ReactNode }) {
   const [hint, setHint] = useState("");
-  const [scheduleRef, setScheduleRef] = useState<NodeJS.Timeout | undefined>();
+  const [clearRef, setClearRef] = useState<NodeJS.Timeout | undefined>();
 
-  function scheduleHint(hint: string, timeout: number) {
-    if (scheduleRef) {
-      clearTimeout(scheduleRef);
+  function showHint(hint: string) {
+    if (clearRef) {
+      clearTimeout(clearRef);
     }
 
-    if (timeout) {
-      const newRef = setTimeout(() => {
-        setHint(hint);
-        scheduleHint("", 3000);
-      }, timeout);
+    setHint(hint);
+    const cRef = setTimeout(clearHint, 3000);
+    setClearRef(cRef);
+  }
 
-      setScheduleRef(newRef);
-    } else {
-      setHint(hint);
-
-      if (hint) {
-        scheduleHint("", 3000);
-      }
+  function clearHint() {
+    if (clearRef) {
+      clearTimeout(clearRef);
     }
+    setHint("");
   }
 
   return (
     <HintCtx.Provider
       value={{
         hint,
-        scheduleHint,
+        showHint,
+        clearHint,
       }}
     >
       {children}
