@@ -1,4 +1,5 @@
 export enum GameType {
+  TUTORIAL = "TUTORIAL",
   TRAINING = "TRAINING",
   ONE_MINUTE = "ONE_MINUTE",
   TWO_MINUTES = "TWO_MINUTES",

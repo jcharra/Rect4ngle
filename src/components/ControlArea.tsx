@@ -65,7 +65,7 @@ export default function ControlArea(props: ControlAreaProps) {
         </IonButton>
       </div>
 
-      {gameType === GameType.TRAINING && <TrainingHint />}
+      {(gameType === GameType.TRAINING || gameType === GameType.TUTORIAL) && <TrainingHint />}
     </div>
   );
 }

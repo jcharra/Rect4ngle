@@ -26,6 +26,7 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 import {
   bulbOutline,
+  footstepsOutline,
   gameControllerOutline,
   settingsOutline,
   statsChartOutline,
@@ -60,7 +61,6 @@ setupIonicReact({
 export async function initialize(): Promise<void> {
   await AdMob.trackingAuthorizationStatus();
   await AdMob.initialize({
-    requestTrackingAuthorization: false,
     testingDevices: TESTING_DEVICES_IDS,
     initializeForTesting: true,
   });
@@ -121,6 +121,7 @@ const App: React.FC = () => {
 
   const getSecondsForGameType = (gt: GameType) => {
     return {
+      TUTORIAL: -1,
       TRAINING: -1,
       ONE_MINUTE: 60,
       TWO_MINUTES: 120,
@@ -215,6 +216,9 @@ const App: React.FC = () => {
                   }
                 >
                   <IonIcon slot="icon-only" icon={stopwatchOutline} />
+                </IonButton>
+                <IonButton onClick={() => startGame(GameType.TUTORIAL)}>
+                  <IonIcon slot="icon-only" icon={footstepsOutline} />
                 </IonButton>
               </>
             )}

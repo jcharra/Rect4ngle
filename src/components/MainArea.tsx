@@ -12,6 +12,7 @@ import ScalableRectangleArea from "./parts/ScalableRectangleArea";
 import Scoreboard from "./Scoreboard";
 import useBonus from "../hooks/bonusHook";
 import { countdownSound, gameStartSound, powerUpSound, primeSound } from "../service/audioService";
+import { TUTORIAL_NUMBERS } from "../service/tutorialService";
 
 interface TimerData {
   timer: number;
@@ -30,6 +31,7 @@ export function MainArea(props: MainAreaProps) {
   const { t } = useTranslation();
   const [summands, setSummands] = useState<number[]>([]);
   const [num, setNum] = useState(0);
+  const [tutorialIndex, setTutorialIndex] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
   const [delta, setDelta] = useState<number | undefined>();
   const [comment, setComment] = useState<string>("");
@@ -55,7 +57,7 @@ export function MainArea(props: MainAreaProps) {
     } else if (startCountdown === 0) {
       if (num === 0) {
         gameStartSound();
-        newNum();
+        nextNumber();
       }
 
       if (timer > 0) {
@@ -91,15 +93,16 @@ export function MainArea(props: MainAreaProps) {
     }
 
     if (gameType) {
-      newNum();
+      nextNumber();
 
-      if (gameType !== GameType.TRAINING) {
+      if (gameType !== GameType.TRAINING && gameType !== GameType.TUTORIAL) {
         setStartCountdown(3);
       }
     } else {
       setStartCountdown(-1);
       setNum(0);
       setSummands([]);
+      setTutorialIndex(0);
       resetBonuses();
     }
     // eslint-disable-next-line
@@ -113,12 +116,18 @@ export function MainArea(props: MainAreaProps) {
     }
   };
 
-  const newNum = () => {
-    let newRandomNum = generateRandomNumber();
-    while (newRandomNum === num) {
-      newRandomNum = generateRandomNumber();
+  const nextNumber = () => {
+    if (gameType === GameType.TUTORIAL) {
+      setTutorialIndex((t) => t + 1);
+      setNum(TUTORIAL_NUMBERS[tutorialIndex]);
+    } else {
+      let newRandomNum = generateRandomNumber();
+      while (newRandomNum === num) {
+        newRandomNum = generateRandomNumber();
+      }
+      setNum(newRandomNum);
     }
-    setNum(newRandomNum);
+
     setSummands([]);
   };
 
@@ -155,12 +164,14 @@ export function MainArea(props: MainAreaProps) {
         addDelta(summands[0] * getBonus(summands[0]), t("correct"));
       }
       scheduleHint("", 0);
-    } else {
+      nextNumber();
+    } else if (gameType !== GameType.TUTORIAL) {
       addDelta(-5, t("wrong"));
       downgradeBonuses();
       scheduleHint(suggestSolution(num), 0);
+    } else {
+      scheduleHint(t("tutorial_not_yet_correct"), 0);
     }
-    newNum();
   };
 
   const checkPrime = () => {
@@ -173,7 +184,7 @@ export function MainArea(props: MainAreaProps) {
       downgradeBonuses();
       scheduleHint(suggestSolution(num), 0);
     }
-    newNum();
+    nextNumber();
   };
 
   const addDelta = (delta: number, comment: string = "") => {
@@ -188,7 +199,7 @@ export function MainArea(props: MainAreaProps) {
 
   const skip = () => {
     addDelta(-2);
-    newNum();
+    nextNumber();
   };
 
   const functions = { add, check, skip, backspace, checkPrime, retry };

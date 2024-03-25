@@ -1,5 +1,5 @@
 import { createContext, createRef, useEffect, useRef, useState } from "react";
-import { getSum, isPrime } from "../../utils/numberUtils";
+import { getSum } from "../../utils/numberUtils";
 import Column from "./Column";
 import "./ScalableRectangleArea.css";
 import { IonContent, IonPopover } from "@ionic/react";
@@ -15,14 +15,6 @@ export enum RectStatus {
 }
 
 export const RectStatusContext = createContext<RectStatus>(RectStatus.EMPTY);
-
-const hintLimits: { [key: string]: number } = {
-  hint_no_pieces: 5,
-  hint_no_pieces_prime: 3,
-  hint_one_piece_not_allowed: 2,
-  hint_sum_too_high: 3,
-  hint_correct_rect: 3,
-};
 
 const getRectStatus = (summands: number[], target: number): RectStatus => {
   const currentSum = getSum(summands);
@@ -56,40 +48,15 @@ export default function ScalableRectangleArea({
   const status = getRectStatus(summands, num);
 
   useEffect(() => {
-    if (!num || gameType !== GameType.TRAINING) {
+    if (gameType !== GameType.TUTORIAL || !num || summands.length > 0) {
       return;
     }
 
-    let hint = "";
-    let hintArgs = {};
+    const hintKey = "tutorial_num_" + num;
+    const text = t(hintKey);
 
-    // Case 1: No pieces yet
-    if (summands.length === 0) {
-      console.log("Empty with num", num);
-      if (isPrime(num)) {
-        hint = "hint_no_pieces_prime";
-      } else {
-        hint = "hint_no_pieces";
-      }
-      hintArgs = { num };
-    } else if (status === RectStatus.INCOMPLETE) {
-      hint = "hint_one_piece_not_allowed";
-    } else if (status === RectStatus.TOO_HIGH) {
-      hint = "hint_sum_too_high";
-    } else if (status === RectStatus.CORRECT) {
-      hint = "hint_correct_rect";
-    }
+    setPopoverText(text);
 
-    if (hint && hintLimits[hint] > 0) {
-      let text = t(hint, hintArgs);
-      hintLimits[hint]--;
-
-      if (hintLimits[hint] === 0) {
-        text += t("hint_last_time");
-      }
-
-      setPopoverText(text);
-    }
     /* eslint-disable-next-line */
   }, [num, gameType, status]);
 
