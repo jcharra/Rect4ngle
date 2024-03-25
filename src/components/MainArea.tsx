@@ -153,10 +153,12 @@ export function MainArea(props: MainAreaProps) {
   };
 
   const check = () => {
-    const sum = summands.reduce((a, b) => a + b, 0);
+    const correct = summands.reduce((a, b) => a + b, 0) === num;
 
-    if (sum === num) {
-      if (summands[0] === summands.length) {
+    if (correct) {
+      const isSquare = summands[0] === summands.length;
+
+      if (isSquare) {
         addDelta(10 * getBonus(summands[0]), t("square"));
         upgradeBonus(summands.length);
         powerUpSound();
@@ -164,18 +166,23 @@ export function MainArea(props: MainAreaProps) {
         addDelta(summands[0] * getBonus(summands[0]), t("correct"));
       }
       scheduleHint("", 0);
-      nextNumber();
-    } else if (gameType !== GameType.TUTORIAL) {
+    } else {
       addDelta(-5, t("wrong"));
       downgradeBonuses();
       scheduleHint(suggestSolution(num), 0);
-    } else {
+    }
+
+    if (gameType === GameType.TUTORIAL && !correct) {
       scheduleHint(t("tutorial_not_yet_correct"), 0);
+    } else {
+      nextNumber();
     }
   };
 
   const checkPrime = () => {
-    if (PRIMES.indexOf(num) > -1) {
+    const isPrime = PRIMES.indexOf(num) > -1;
+
+    if (isPrime) {
       addDelta(PRIME_BONUS, t("prime_correct"));
       primeSound();
       scheduleHint("", 0);
@@ -184,7 +191,12 @@ export function MainArea(props: MainAreaProps) {
       downgradeBonuses();
       scheduleHint(suggestSolution(num), 0);
     }
-    nextNumber();
+
+    if (gameType === GameType.TUTORIAL && !isPrime) {
+      scheduleHint(t("tutorial_not_a_prime"), 0);
+    } else {
+      nextNumber();
+    }
   };
 
   const addDelta = (delta: number, comment: string = "") => {
