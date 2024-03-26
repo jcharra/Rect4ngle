@@ -95,7 +95,25 @@ i18n.use(initReactI18next).init({
           "That looks like a pretty good match. Now validate your rectangle with the green checkmark button.",
         hint_last_time: " This is the last time this hint is shown.",
         tutorial:
-          "<h5>Welcome to Rect4ngle!</h5>This is the first time you start Rect4ngle.<br><br> Try the training mode (game controller icon in the bottom left) to get instructions on how to play. You can also read the full game instructions - click the light bulb to view them.",
+          "<h5>Welcome to Rect4ngle!</h5>This is the first time you start Rect4ngle.<br><br> Maybe you want to start with the tutorial? Click on the footsteps icon at the bottom of the screen!",
+        tutorial_not_yet_correct: "Sorry, that's not the solution. Try again!",
+        tutorial_not_a_prime: "This one can be built as a rectangle!",
+        tutorial_num_20:
+          "Your first task is to build a rectangle with 20 cases. <br><br>Use the <b>+5</b> button for that.",
+        tutorial_num_32:
+          "Good. Since you used the <b>+5</b> button you receive 5 points. <br><br>Next, try to build a rectangle with 32 cases. Do you have an idea how to achieve this?",
+        tutorial_num_25:
+          "You're doing great!<br><br>Next comes the <b>25</b>. I'll let you find the solution, I bet it won't take you long.",
+        tutorial_num_9:
+          "Awesome. You earned special points for this because you constucted a <b>square</b>! This added a powerup to the 5, so that it counts twice from now on.<br><br>Now comes the <b>9</b>. <br><br>At first you might think you could just use the <b>+9</b> button here, but think twice: A rectangle must always contain at least two pieces.",
+        tutorial_num_17:
+          "Wow, yet another square, well done!<br><br>The next number <b>17</b> is a tough one ... how is that supposed to work?<br><br>The answer is: It doesn't! Some numbers are <b>primes</b> and cannot be built as a rectangle. <br><br>These unwieldy folks need to be identified with the <b>PRIME</b> button.",
+        tutorial_num_36:
+          "Next up is the <b>36</b>. <br><br>I'll let you find the solution on your own. There are several possibilities ... can you find the best one?",
+        tutorial_num_11:
+          "Nice. I think you've understood this game quite well. <br><br>Here's yet another challenge: The number <b>11</b>. <br><br>I'm curious if you can solve this one ...",
+        tutorial_num_30:
+          "EXACTLY, that was a prime number again - well done!<br><br>I think that's enough for now. How about you finish the last number and do some real training afterwards by clicking the game controller at the bottom? <br><br>As soon as you feel up to it, you can also start a game against the clock using the stopwatch icon. Have fun!",
       },
     },
     de: {
@@ -186,6 +204,8 @@ i18n.use(initReactI18next).init({
         hint_last_time: " Dieser Hinweis wird nun nicht mehr angezeigt.",
         tutorial:
           "<h5>Willkommen bei Rect4ngle!</h5>Dies ist das erste mal, dass du Rect4ngle startest.<br><br> Am besten fängst Du mit der Einführung an. Klicke dazu auf den Fußspuren unten in der schwarzen Leiste.",
+        tutorial_not_yet_correct: "Das ist noch nicht richtig. Versuche es weiter!",
+        tutorial_not_a_prime: "Die Zahl kann als Rechteck gebaut werden!",
         tutorial_num_20:
           "Als Erstes baust Du ein Rechteck mit 20 Kästchen. <br><br>Verwende dazu den blauen Knopf <b>+5</b>.",
         tutorial_num_32:
