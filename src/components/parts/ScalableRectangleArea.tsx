@@ -4,7 +4,7 @@ import Column from "./Column";
 import "./ScalableRectangleArea.css";
 import { IonContent, IonPopover } from "@ionic/react";
 import { GameType } from "../../types/GameType";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 export enum RectStatus {
   INCOMPLETE = "INCOMPLETE",
@@ -42,7 +42,7 @@ export default function ScalableRectangleArea({
 }) {
   const ref = createRef<HTMLDivElement>();
   const popover = useRef<HTMLIonPopoverElement>(null);
-  const [popoverText, setPopoverText] = useState("");
+  const [popoverI18nKey, setPopoverI18nKey] = useState("");
   const { t } = useTranslation();
 
   const status = getRectStatus(summands, num);
@@ -52,10 +52,7 @@ export default function ScalableRectangleArea({
       return;
     }
 
-    const hintKey = "tutorial_num_" + num;
-    const text = t(hintKey);
-
-    setPopoverText(text);
+    setPopoverI18nKey("tutorial_num_" + num);
 
     /* eslint-disable-next-line */
   }, [num, gameType, status]);
@@ -71,8 +68,10 @@ export default function ScalableRectangleArea({
           ))}
         </RectStatusContext.Provider>
       </div>
-      <IonPopover ref={popover} isOpen={!!popoverText} onDidDismiss={() => setPopoverText("")}>
-        <IonContent class="ion-padding">{popoverText}</IonContent>
+      <IonPopover ref={popover} isOpen={!!popoverI18nKey} onDidDismiss={() => setPopoverI18nKey("")}>
+        <IonContent class="ion-padding">
+          <Trans i18nKey={popoverI18nKey} t={t} components={{ br: <br />, b: <b /> }}></Trans>
+        </IonContent>
       </IonPopover>
     </div>
   );

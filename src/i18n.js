@@ -185,7 +185,23 @@ i18n.use(initReactI18next).init({
         hint_correct_rect: "Das sieht gut aus. Prüfe Dein Rechteck jetzt mit dem grünen Häkchen-Knopf.",
         hint_last_time: " Dieser Hinweis wird nun nicht mehr angezeigt.",
         tutorial:
-          "<h5>Willkommen bei Rect4ngle!</h5>Dies ist das erste mal, dass du Rect4ngle startest.<br><br> Am besten fängst Du im Trainingsmodus an. Klicke dazu auf den Game Controller unten links. Oder Du liest zuerst die Anleitung - klicke dazu auf die Glühbirne.",
+          "<h5>Willkommen bei Rect4ngle!</h5>Dies ist das erste mal, dass du Rect4ngle startest.<br><br> Am besten fängst Du mit der Einführung an. Klicke dazu auf den Fußspuren unten in der schwarzen Leiste.",
+        tutorial_num_20:
+          "Als Erstes baust Du ein Rechteck mit 20 Kästchen. <br><br>Verwende dazu den blauen Knopf <b>+5</b>.",
+        tutorial_num_32:
+          "Sehr gut. Weil Du die <b>+5</b> verwendet hast erhältst Du für die Lösung 5 Punkte. <br><br>Als Nächstes baust Du ein Rechteck mit 32 Kästchen. Hast Du eine Idee, welches Teil Du dafür verwenden könntest?",
+        tutorial_num_25:
+          "Toll, das klappt ja super. <br><br>Als nächstes kommt die 25. Das findest Du jetzt bestimmt auch ganz schnell, oder?",
+        tutorial_num_9:
+          "Klasse! Du hast jetzt sogar besonders viele Punkte bekommen, weil Du ein <b>Quadrat</b> gebaut hast. Außerdem zählt die 5 ab sofort <b>doppelt</b>. <br><br> Jetzt kommt die 9.<br><br> Hier denkst Du vielleicht, dass Du einfach den <b>+9</b>-Knopf verwenden kannst, aber Vorsicht: Ein Rechteck muss immer aus mindestens zwei Teilen bestehen!",
+        tutorial_num_17:
+          "Wow, nochmal ein Quadrat, sehr gut! <br><br> Die nächste Zahl <b>17</b> bereitet Dir vielleicht etwas Kopfzerbrechen ... wie soll das denn gehen? <br><br>Die Antwort: Gar nicht! Manche Zahlen sind <b>Primzahlen</b> und lassen sich nicht als Rechteck bauen.<br><br> Diese schrägen Gesellen kannst Du mit dem <b>PRIM</b>-Knopf entlarven.",
+        tutorial_num_36:
+          "Die nächste Zahl ist die <b>36</b>. <br><br>Ich lasse Dich mal selbst die Lösung finden. Es gibt mehrere Möglichkeiten ... aber eine davon gibt besonders viele Punkte!",
+        tutorial_num_11:
+          "Super, ich glaube Du hast das Prinzip nun gut verstanden. <br><br>Hier ist nochmal eine kleine Herausforderung: Die Zahl <b>11</b>. <br><br>Ich bin gespannt ob Du hier die Lösung findest ...",
+        tutorial_num_30:
+          "GENAU, das war nämlich wieder so ein krummes Ding - eine <b>Primzahl</b>.<br><br>Ich glaube, das genügt nun zur Einführung. Wie wäre es, wenn Du als nächstes den Gamecontroller unten links verwendest, um im Trainingsmodus ein wenig zu üben? <br><br>Wenn Du Dich fit fühlst, kannst Du mit der Stoppuhr auch ein Spiel auf Zeit machen. Viel Spaß!",
       },
     },
   },

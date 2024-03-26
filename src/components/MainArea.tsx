@@ -22,11 +22,12 @@ interface TimerData {
 interface MainAreaProps {
   gameType?: GameType;
   timerData: TimerData;
+  stopGame: () => void;
   onGameFinished: (name: string, n: number) => void;
 }
 
 export function MainArea(props: MainAreaProps) {
-  const { gameType, timerData, onGameFinished } = props;
+  const { gameType, timerData, stopGame, onGameFinished } = props;
   const { timer, setTimer } = timerData;
   const { t } = useTranslation();
   const [summands, setSummands] = useState<number[]>([]);
@@ -119,7 +120,13 @@ export function MainArea(props: MainAreaProps) {
   const nextNumber = () => {
     if (gameType === GameType.TUTORIAL) {
       setTutorialIndex((t) => t + 1);
-      setNum(TUTORIAL_NUMBERS[tutorialIndex]);
+      const n = TUTORIAL_NUMBERS[tutorialIndex];
+      if (n) {
+        setNum(n);
+      } else {
+        setNum(0);
+        stopGame();
+      }
     } else {
       let newRandomNum = generateRandomNumber();
       while (newRandomNum === num) {

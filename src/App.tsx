@@ -162,7 +162,7 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonContent>
-        <MainArea gameType={gameType} timerData={timerData} onGameFinished={onGameFinished} />
+        <MainArea gameType={gameType} timerData={timerData} stopGame={stopGame} onGameFinished={onGameFinished} />
         <IonPopover ref={tutorialRef} isOpen={tutorialOpen} onDidDismiss={() => setTutorialOpen(false)}>
           <IonContent class="ion-padding">
             {/* eslint-disable-next-line */}
