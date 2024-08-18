@@ -44,7 +44,7 @@ import "./i18n";
 import { saveOnlineScore, saveScore } from "./service/scoreService";
 /* Theme variables */
 import { setupIonicReact } from "@ionic/react";
-import { RateApp } from "capacitor-rate-app";
+import { InAppReview } from "@capacitor-community/in-app-review";
 import Timer from "./components/parts/Timer";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
 import { hasBeenSeen, markAsSeen } from "./service/tutorialService";
@@ -97,10 +97,8 @@ const App: React.FC = () => {
     }
 
     const stats = await getGameStats();
-    if ((stats + 1) % INTERSTITIAL_FREQUENCY === 0) {
-      await showInterstitial().catch(console.error);
-    } else if ((stats + 1) % REVIEW_FREQUENCY === 7) {
-      await RateApp.requestReview();
+    if ((stats + 1) % 30 === 7) {
+      await InAppReview.requestReview();
     }
     await saveGameStats(stats + 1);
 

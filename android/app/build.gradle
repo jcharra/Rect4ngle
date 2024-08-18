@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
 
     namespace 'de.charra.rectangle'
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "de.charra.rectangle"
         minSdkVersion rootProject.ext.minSdkVersion
