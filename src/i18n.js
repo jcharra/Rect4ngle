@@ -99,7 +99,7 @@ i18n.use(initReactI18next).init({
         tutorial_not_yet_correct: "Sorry, that's not the solution. Try again!",
         tutorial_not_a_prime: "This one can be built as a rectangle!",
         tutorial_num_20:
-          "Your first task is to build a rectangle with 20 cases. <br><br>Use the <b>+5</b> button for that.",
+          "Welcome to the Tutorial! <br><br>Your first task is to build a rectangle with 20 cases. <br><br>Use the <b>+5</b> button multiple times for that.<br><br>Click on the green check mark when you're done.",
         tutorial_num_32:
           "Good. Since you used the <b>+5</b> button you receive 5 points. <br><br>Next, try to build a rectangle with 32 cases. Do you have an idea how to achieve this?",
         tutorial_num_25:
@@ -207,7 +207,7 @@ i18n.use(initReactI18next).init({
         tutorial_not_yet_correct: "Das ist noch nicht richtig. Versuche es weiter!",
         tutorial_not_a_prime: "Die Zahl kann als Rechteck gebaut werden!",
         tutorial_num_20:
-          "Als Erstes baust Du ein Rechteck mit 20 Kästchen. <br><br>Verwende dazu den blauen Knopf <b>+5</b>.",
+          "Willkommen beim Tutorial!<br><br>Als Erstes baust Du ein Rechteck mit 20 Kästchen. <br><br>Verwende dazu den blauen Knopf <b>+5</b> mehrere Male. <br><br>Klicke auf das grüne Häkchen wenn Du glaubst, dass Deine Eingabe stimmt.",
         tutorial_num_32:
           "Sehr gut. Weil Du die <b>+5</b> verwendet hast erhältst Du für die Lösung 5 Punkte. <br><br>Als Nächstes baust Du ein Rechteck mit 32 Kästchen. Hast Du eine Idee, welches Teil Du dafür verwenden könntest?",
         tutorial_num_25:

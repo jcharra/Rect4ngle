@@ -3,7 +3,7 @@ ion-backdrop {
 }
 
 .app {
-  background-image: url("space.jpg");
+  background: linear-gradient(to bottom right, #2c3e50, #34495e, #4a69bd, #2c3e50);
   background-size: cover;
   height: 100%;
 }
