@@ -43,28 +43,17 @@ import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
 import { saveOnlineScore, saveScore } from "./service/scoreService";
 /* Theme variables */
-import { AdMob } from "@capacitor-community/admob";
 import { setupIonicReact } from "@ionic/react";
 import { RateApp } from "capacitor-rate-app";
 import Timer from "./components/parts/Timer";
-import { INTERSTITIAL_FREQUENCY, REVIEW_FREQUENCY, showInterstitial } from "./service/admob";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
 import { hasBeenSeen, markAsSeen } from "./service/tutorialService";
-import { TESTING_DEVICES_IDS } from "./testingDevicesIds";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 
 setupIonicReact({
   mode: "md",
 });
-
-export async function initialize(): Promise<void> {
-  await AdMob.trackingAuthorizationStatus();
-  await AdMob.initialize({
-    testingDevices: TESTING_DEVICES_IDS,
-    initializeForTesting: true,
-  });
-}
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -142,9 +131,6 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // init AdMob
-    initialize();
-
     // check tutorial already seen
     checkTutorialSeen();
   }, []);
