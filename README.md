@@ -1,8 +1,9 @@
-# Rectangles and Primes (formerly "Rect4ngle")
+# Rectangles and Primes
 
 Multiplication table trainer built with react and Ionic.
 
 App store: https://apps.apple.com/us/app/rectangles-primes/id1572074176
+
 Play store: https://play.google.com/store/apps/details?id=de.charra.rectangle&hl=de
 
 ## Target audience
