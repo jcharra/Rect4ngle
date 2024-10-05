@@ -68,11 +68,11 @@ export async function saveOnlineScore(playerName: string, score: number, gameTyp
 export async function getOfflineScores(): Promise<ScoreDict> {
   const existing = await Preferences.get({ key: SCORES });
   if (!existing || !existing.value) {
-    return _emptyScoreDict();
+    return getEmptyScores();
   }
 
   const data = JSON.parse(existing.value) as ScoreDict;
-  let formattedData = _emptyScoreDict();
+  let formattedData = getEmptyScores();
 
   for (const gameType of [GameType.ONE_MINUTE, GameType.TWO_MINUTES, GameType.THREE_MINUTES]) {
     const scores = data[gameType as GameType];
@@ -92,7 +92,6 @@ function getEmptyScores(): ScoreDict {
     ONE_MINUTE: [],
     TWO_MINUTES: [],
     THREE_MINUTES: [],
-    TRAINING: [],
   };
 }
 
@@ -131,8 +130,7 @@ export const getOnlineScores = async (monthStart: Date) => {
     .select(`player_name, score, created_at, game_type`)
     .gt("created_at", lower_lim)
     .lt("created_at", upper_lim)
-    .order("score", { ascending: false })
-    .limit(10);
+    .order("score", { ascending: false });
 
   if (!!error || status >= 400) {
     console.error(`Status: ${status}, error: ${error}`);
@@ -155,6 +153,10 @@ export const getOnlineScores = async (monthStart: Date) => {
     } catch {}
   }
 
+  for (let gt of [GameType.ONE_MINUTE, GameType.TWO_MINUTES, GameType.THREE_MINUTES]) {
+    scores[gt] = scores[gt].slice(0, 10);
+  }
+
   if (isCurrentMonth) {
     lastFetchDate = new Date();
     cachedScores = scores;
@@ -164,12 +166,3 @@ export const getOnlineScores = async (monthStart: Date) => {
 
   return scores;
 };
-
-function _emptyScoreDict(): ScoreDict {
-  return {
-    TRAINING: [],
-    ONE_MINUTE: [],
-    TWO_MINUTES: [],
-    THREE_MINUTES: [],
-  };
-}
