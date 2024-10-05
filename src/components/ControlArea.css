@@ -13,3 +13,7 @@
   justify-content: center;
   align-items: center;
 }
+
+ion-button {
+  text-wrap: wrap;
+}
