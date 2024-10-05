@@ -131,7 +131,8 @@ export const getOnlineScores = async (monthStart: Date) => {
     .select(`player_name, score, created_at, game_type`)
     .gt("created_at", lower_lim)
     .lt("created_at", upper_lim)
-    .order("score", { ascending: false });
+    .order("score", { ascending: false })
+    .limit(10);
 
   if (!!error || status >= 400) {
     console.error(`Status: ${status}, error: ${error}`);
