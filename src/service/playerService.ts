@@ -10,8 +10,9 @@ export interface Language {
 
 export const ENGLISH = { code: "en", name: "English" };
 export const GERMAN = { code: "de", name: "Deutsch" };
+export const FRENCH = { code: "fr", name: "Français" };
 
-export const LANGUAGES: Language[] = [GERMAN, ENGLISH];
+export const LANGUAGES: Language[] = [GERMAN, ENGLISH, FRENCH];
 
 async function loadLanguageFromDevice() {
   const langCode = await Device.getLanguageCode();

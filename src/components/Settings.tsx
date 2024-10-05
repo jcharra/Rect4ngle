@@ -66,9 +66,9 @@ export default function SettingsWindow({ onDismiss, settings }: { onDismiss: () 
           {[0, 1, 2, 3, 4].map((i) => {
             return (
               <IonItem key={"player" + i}>
-                <IonLabel>
+                <span>
                   {t("player")} {i + 1}
-                </IonLabel>
+                </span>
                 <IonInput
                   slot="end"
                   type="text"
