@@ -40,7 +40,7 @@ i18n.use(initReactI18next).init({
         save_online: "Public highscore",
         scores_unavailable: "Scores not available",
         help_1:
-          "In Rect4ngle, your goal is to build rectangles with a given number of " +
+          "In Rectangles & Primes, your goal is to build rectangles with a given number of " +
           "cells. The target number of cells is written on the blackboard. A rectangle is built from " +
           "<strong>at least two pieces</strong> and all pieces must have the same length. <br /><br />" +
           "On the bottom left you find two icons to start playing. One is for the " +
@@ -95,7 +95,7 @@ i18n.use(initReactI18next).init({
           "That looks like a pretty good match. Now validate your rectangle with the green checkmark button.",
         hint_last_time: " This is the last time this hint is shown.",
         tutorial:
-          "<h5>Welcome to Rect4ngle!</h5>This is the first time you start Rect4ngle.<br><br> Maybe you want to start with the tutorial? Click on the footsteps icon at the bottom of the screen!",
+          "<h5>Welcome to Rectangles & Primes!</h5>This is the first time you start Rectangles & Primes.<br><br> Maybe you want to start with the tutorial? Click on the footsteps icon at the bottom of the screen!",
         tutorial_not_yet_correct: "Sorry, that's not the solution. Try again!",
         tutorial_not_a_prime: "This one can be built as a rectangle!",
         tutorial_num_20:
@@ -151,7 +151,7 @@ i18n.use(initReactI18next).init({
         save_online: "Hishcore online",
         scores_unavailable: "Highscores nicht verfügbar",
         help_1:
-          "Bei Rect4ngle musst Du Rechtecke bauen, die eine vorgegebene Anzahl von Kästchen enthalten. Die Anzahl Kästchen " +
+          "Bei Rectangles & Primes musst Du Rechtecke bauen, die eine vorgegebene Anzahl von Kästchen enthalten. Die Anzahl Kästchen " +
           "die Du brauchst steht links auf der schwarzen Tafel. Ein Rechteck besteht immer aus " +
           "<strong>mindestens zwei Teilen</strong>, und alle Teile müssen gleich lang sein.<br /><br />" +
           "In der Ecke unten links findest Du zwei Möglichkeiten, ein Spiel zu starten: " +
@@ -203,7 +203,7 @@ i18n.use(initReactI18next).init({
         hint_correct_rect: "Das sieht gut aus. Prüfe Dein Rechteck jetzt mit dem grünen Häkchen-Knopf.",
         hint_last_time: " Dieser Hinweis wird nun nicht mehr angezeigt.",
         tutorial:
-          "<h5>Willkommen bei Rect4ngle!</h5>Dies ist das erste mal, dass du Rect4ngle startest.<br><br> Am besten fängst Du mit der Einführung an. Klicke dazu auf den Fußspuren unten in der schwarzen Leiste.",
+          "<h5>Willkommen bei Rectangles & Primes!</h5>Dies ist das erste mal, dass du Rectangles & Primes startest.<br><br> Am besten fängst Du mit der Einführung an. Klicke dazu auf den Fußspuren unten in der schwarzen Leiste.",
         tutorial_not_yet_correct: "Das ist noch nicht richtig. Versuche es weiter!",
         tutorial_not_a_prime: "Die Zahl kann als Rechteck gebaut werden!",
         tutorial_num_20:
@@ -259,7 +259,7 @@ i18n.use(initReactI18next).init({
         save_online: "Enregistrer un score public",
         scores_unavailable: "Scores non disponibles",
         help_1:
-          "Dans Rect4ngle, votre objectif est de construire des rectangles avec un certain nombre de " +
+          "Dans Rectangles & Primes, votre objectif est de construire des rectangles avec un certain nombre de " +
           "cellules. Le nombre cible de cellules est écrit sur le tableau noir. Un rectangle est construit à partir de " +
           "<strong>au moins deux pièces</strong> et toutes les pièces doivent avoir la même longueur. <br /><br />" +
           "En bas à gauche, vous trouverez deux icônes pour commencer à jouer. L'une est pour le " +
@@ -313,7 +313,7 @@ i18n.use(initReactI18next).init({
           "Cela semble être une bonne correspondance. Validez maintenant votre rectangle avec le bouton de validation vert.",
         hint_last_time: "C'est la dernière fois que cet indice est affiché.",
         tutorial:
-          "<h5>Bienvenue dans Rect4ngle!</h5>C'est la première fois que vous lancez Rect4ngle.<br><br> Peut-être souhaitez-vous commencer par le tutoriel ? Cliquez sur l'icône des pas en bas de l'écran!",
+          "<h5>Bienvenue dans Rectangles & Primes!</h5>C'est la première fois que vous lancez Rectangles & Primes.<br><br> Peut-être souhaitez-vous commencer par le tutoriel ? Cliquez sur l'icône des pas en bas de l'écran!",
         tutorial_not_yet_correct: "Désolé, ce n'est pas la solution. Réessayez!",
         tutorial_not_a_prime: "Celui-ci peut être construit comme un rectangle!",
         tutorial_num_20:
