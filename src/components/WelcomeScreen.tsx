@@ -8,16 +8,17 @@ export default function WelcomeScreen() {
   return (
     <>
       <div className="languageSelector">
-        <IonChip color="primary" onClick={() => i18n.changeLanguage("de")}>
-          🇩🇪
+        <IonChip color={i18n.language === "de" ? "primary" : "light"} onClick={() => i18n.changeLanguage("de")}>
+          <span className="flag">🇩🇪</span>
         </IonChip>
-        <IonChip color="primary" onClick={() => i18n.changeLanguage("fr")}>
-          🇫🇷
+        <IonChip color={i18n.language === "fr" ? "primary" : "light"} onClick={() => i18n.changeLanguage("fr")}>
+          <span className="flag">🇫🇷</span>
         </IonChip>
-        <IonChip color="primary" onClick={() => i18n.changeLanguage("en")}>
-          🇬🇧
+        <IonChip color={i18n.language === "en" ? "primary" : "light"} onClick={() => i18n.changeLanguage("en")}>
+          <span className="flag">🇬🇧</span>
         </IonChip>
       </div>
+      {/* eslint-disable-next-line jsx-a11y/heading-has-content */}
       <Trans i18nKey="tutorial" t={t} components={{ h5: <h5 /> }}></Trans>
     </>
   );

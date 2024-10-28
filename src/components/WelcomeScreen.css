@@ -1,4 +1,7 @@
 .languageSelector {
   text-align: center;
-  font-size: 20pt;
+}
+
+.flag {
+  font-size: 24pt !important;
 }
