@@ -48,7 +48,7 @@ import { setupIonicReact } from "@ionic/react";
 import Timer from "./components/parts/Timer";
 import WelcomeScreen from "./components/WelcomeScreen";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
-import { hasBeenSeen } from "./service/tutorialService";
+import { hasBeenSeen, markAsSeen } from "./service/tutorialService";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 
@@ -125,7 +125,7 @@ const App: React.FC = () => {
   const checkTutorialSeen = async () => {
     if (!(await hasBeenSeen())) {
       setTutorialOpen(true);
-      //markAsSeen();
+      markAsSeen();
     }
   };
 
