@@ -247,7 +247,7 @@ i18n.use(initReactI18next).init({
         nope: "Non",
         your_score: "Votre score",
         empty_score: "<vide>",
-        hall_of_fame: "Temple de la renommée",
+        hall_of_fame: "Highscores",
         no_scores_yet: "Aucune entrée pour l'instant",
         rectangle_rules: "Règles du jeu",
         one_minute_header: "Une minute",
