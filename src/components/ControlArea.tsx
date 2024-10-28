@@ -60,7 +60,7 @@ export default function ControlArea(props: ControlAreaProps) {
         <IonButton onClick={() => skip()} disabled={controlsDisabled} color="warning">
           <IonIcon icon={arrowForwardCircleOutline} />
         </IonButton>
-        <IonButton color="success" onClick={() => checkPrime()} size="default" disabled={controlsDisabled}>
+        <IonButton color="secondary" onClick={() => checkPrime()} size="default" disabled={controlsDisabled}>
           {t("prime")}
         </IonButton>
       </div>

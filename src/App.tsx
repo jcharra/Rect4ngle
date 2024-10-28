@@ -34,7 +34,7 @@ import {
   stopwatchOutline,
 } from "ionicons/icons";
 import { useEffect, useRef, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Help from "./components/Help";
 import Highscores, { GameScore } from "./components/Highscores";
 import { MainArea } from "./components/MainArea";
@@ -43,11 +43,12 @@ import { useSettings } from "./hooks/settingsHook";
 import "./i18n";
 import { saveOnlineScore, saveScore } from "./service/scoreService";
 /* Theme variables */
-import { setupIonicReact } from "@ionic/react";
 import { InAppReview } from "@capacitor-community/in-app-review";
+import { setupIonicReact } from "@ionic/react";
 import Timer from "./components/parts/Timer";
+import WelcomeScreen from "./components/WelcomeScreen";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
-import { hasBeenSeen, markAsSeen } from "./service/tutorialService";
+import { hasBeenSeen } from "./service/tutorialService";
 import "./theme/variables.css";
 import { GameType } from "./types/GameType";
 
@@ -124,7 +125,7 @@ const App: React.FC = () => {
   const checkTutorialSeen = async () => {
     if (!(await hasBeenSeen())) {
       setTutorialOpen(true);
-      markAsSeen();
+      //markAsSeen();
     }
   };
 
@@ -149,8 +150,7 @@ const App: React.FC = () => {
         <MainArea gameType={gameType} timerData={timerData} stopGame={stopGame} onGameFinished={onGameFinished} />
         <IonPopover ref={tutorialRef} isOpen={tutorialOpen} onDidDismiss={() => setTutorialOpen(false)}>
           <IonContent class="ion-padding">
-            {/* eslint-disable-next-line */}
-            <Trans i18nKey="tutorial" t={t} components={{ h5: <h5 /> }}></Trans>
+            <WelcomeScreen />
           </IonContent>
         </IonPopover>
       </IonContent>

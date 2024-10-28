@@ -203,7 +203,7 @@ i18n.use(initReactI18next).init({
         hint_correct_rect: "Das sieht gut aus. Prüfe Dein Rechteck jetzt mit dem grünen Häkchen-Knopf.",
         hint_last_time: " Dieser Hinweis wird nun nicht mehr angezeigt.",
         tutorial:
-          "<h5>Willkommen bei Rectangles & Primes!</h5>Dies ist das erste mal, dass du Rectangles & Primes startest.<br><br> Am besten fängst Du mit der Einführung an. Klicke dazu auf den Fußspuren unten in der schwarzen Leiste.",
+          "<h5>Willkommen bei Rectangles & Primes!</h5>Dies ist das erste mal, dass du Rectangles & Primes startest.<br><br> Am besten fängst Du mit der Einführung an. Klicke dazu auf die Fußspuren unten in der schwarzen Leiste.",
         tutorial_not_yet_correct: "Das ist noch nicht richtig. Versuche es weiter!",
         tutorial_not_a_prime: "Die Zahl kann als Rechteck gebaut werden!",
         tutorial_num_20:
