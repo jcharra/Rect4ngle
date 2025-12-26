@@ -50,6 +50,7 @@ import WelcomeScreen from "./components/WelcomeScreen";
 import { getGameStats, saveGameStats } from "./service/gameStatsService";
 import { hasBeenSeen, markAsSeen } from "./service/tutorialService";
 import "./theme/variables.css";
+import "./globals.css"
 import { GameType } from "./types/GameType";
 
 setupIonicReact({
